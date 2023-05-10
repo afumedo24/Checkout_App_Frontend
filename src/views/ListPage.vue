@@ -1,5 +1,9 @@
 <template>
   <ion-page>
+    <ion-header>
+      <app-header> </app-header>
+    </ion-header>
+
     <ion-content :fullscreen="true">
       <div id="container">
        <p> ListPage </p>      
@@ -9,14 +13,16 @@
 </template>
 
 <script>
-import { IonContent, IonPage } from '@ionic/vue';
-
+import { IonContent, IonPage, IonHeader } from '@ionic/vue';
+import AppHeader from '../components/Header.vue';
 
 
 export default {
   components: {
     IonContent,
     IonPage,
+    IonHeader,
+    AppHeader
   },
 
 }

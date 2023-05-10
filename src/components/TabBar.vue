@@ -47,12 +47,39 @@ data() {
 
 <style scoped>
   
+  
 ion-fab-button {
+    scale: 1.27;
     --background: linear-gradient(130deg,#FFB600, #ED8B00);
     --background-hover: var(--ion-color-primary-shade);
     --border-radius: 15px;
     --box-shadow: 0px 1px 2px 0px rgba(0,0,0,.3), 0px 1px 3px 1px rgba(0,0,0,.15);
     --color: black;
+    margin-bottom: 30px;;
 }
+
+
+ion-tab-bar{
+ background: var(--ion-color-primary);
+ height: 70px;;
+
+}
+ion-tab-button{
+    background: var(--ion-color-primary);
+    padding: px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: -3px;
+}
+
+ion-icon{
+    color: var(--ion-color-light);
+    scale: 1.2;
+}
+ion-label{
+    color: var(--ion-color-light);
+}
+
+
 
 </style>
