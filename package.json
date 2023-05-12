@@ -12,8 +12,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@capacitor-community/barcode-scanner": "^4.0.1",
-    "@capacitor-mlkit/barcode-scanning": "^5.0.0",
     "@capacitor/android": "4.8.0",
     "@capacitor/app": "4.1.1",
     "@capacitor/core": "4.8.0",
@@ -24,6 +22,7 @@
     "@ionic/vue-router": "^7.0.0",
     "ionicons": "^7.0.0",
     "vue": "^3.2.45",
+    "vue-barcode-reader": "^1.0.3",
     "vue-qrcode-reader": "^3.1.6",
     "vue-router": "^4.1.6"
   },
