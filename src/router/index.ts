@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import TabBar from '../components/TabBar.vue'
+import { Component } from 'ionicons/dist/types/stencil-public-runtime';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -27,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'list',
         component: () => import('../views/ListPage.vue'),
+      },
+      {
+        path:'user',
+        component: () => import('../views/UserPage.vue'),
+
       },
     ],
   },
