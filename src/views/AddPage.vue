@@ -14,24 +14,48 @@
                     <ion-card-content >
                         <ion-list style="text-align: center;">
                             <ion-item>
-                            <ion-input placeholder="Enter user name"></ion-input>
+                            <ion-input label="" value="User" :readonly="true"></ion-input>
                             </ion-item>
 
-                            <ion-item>
-                            <ion-input placeholder="Ausgewählte Geräte"></ion-input>
-                            </ion-item>
 
                             <ion-item>
-                            <ion-input label="Input with value" value="121 S Pinckney St #300"></ion-input>
+                            <ion-select label="Geräte" label-placement="floating" placeholder="Enter text">
+                                <ion-select-option value="">No Game Console</ion-select-option>
+                                <ion-select-option value="nes">NES</ion-select-option>
+                                <ion-select-option value="n64">Nintendo64</ion-select-option>
+                                <ion-select-option value="ps">PlayStation</ion-select-option>
+                                <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+                                <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+                                <ion-select-option value="snes">SNES</ion-select-option>
+                            </ion-select>
                             </ion-item>
+  
 
-                            <ion-item>
-                            <ion-input label="Readonly input" value="Madison" :readonly="true"></ion-input>
-                            </ion-item>
+                            
+                            
+                            
+                            <!--ion-datetime slot="start"></ion-datetime>
+                        <ion-datetime presentation="month-year"></ion-datetime>
+                            <ion-datetime slot="end"></ion-datetime-->
+                           
 
-                            <ion-item>
-                            <ion-input label="Disabled input" value="53703" :disabled="true"></ion-input>
+                        </ion-list>
+                    </ion-card-content>
+                    <ion-card-content >
+                        <ion-list style="text-align: center;">
+                                                  
+                        <ion-item >    
+                            <ion-item >  
+                                                        
+                              <ion-datetime slot="start"></ion-datetime>
                             </ion-item>
+                            <ion-item >  
+                                <ion-datetime slot="end"></ion-datetime>
+                            </ion-item>
+                        </ion-item>
+
+                            
+                            <ion-button slot="center" size="large"> Submit </ion-button>
                         </ion-list>
                     </ion-card-content>
                 </ion-card>

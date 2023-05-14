@@ -1,12 +1,14 @@
 <template>
     <ion-datetime></ion-datetime>
+    <ion-item>
+  <ion-input label="Floating Input" label-placement="floating" placeholder="Enter text"></ion-input>
+    </ion-item>
   </template>
   
-  <script lang="ts">
-    import { IonDatetime } from '@ionic/vue';
-    import { defineComponent } from 'vue';
+  <script>
+    import { IonDatetime, IonItem } from '@ionic/vue';
   
     export default defineComponent({
-      components: { IonDatetime },
+      components: { IonDatetime, IonItem },
     });
   </script>

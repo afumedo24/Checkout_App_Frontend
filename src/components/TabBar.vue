@@ -20,7 +20,7 @@
         </ion-tabs> 
 
         <ion-fab vertical="bottom" horizontal="center" slot="fixed"> 
-            <ion-fab-button tab="add" router-link="/add">
+            <ion-fab-button tab="add" href="/add">
                 <ion-icon  :icon="addSharp" size="large"></ion-icon>
             </ion-fab-button>
         </ion-fab>
