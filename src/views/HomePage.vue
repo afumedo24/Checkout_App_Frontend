@@ -5,7 +5,8 @@
     </ion-header>
     <ion-content>
       <div id="container">
-       <p> HomePage </p>      
+       <p> HomePage </p>  
+      <scanner> </scanner>
       </div>
     </ion-content>
   </ion-page>
@@ -14,6 +15,7 @@
 <script>
 import { IonHeader, IonContent, IonPage, IonToolbar } from '@ionic/vue';
 import AppHeader from '../components/Header.vue';
+import Scanner from '../components/Scanner.vue';
 
 
 export default {
@@ -23,6 +25,7 @@ export default {
     IonPage,
     AppHeader,
     IonToolbar,
+    Scanner
 },
 
 }
