@@ -6,12 +6,12 @@
         <ion-content>
             <p> AddPage</p>
                 <ion-card>
-                    <ion-card-header style="text-align: center;">
-                        <ion-card-title >Ausleihen</ion-card-title>
-                        <ion-card-subtitle>Bitte Überprüfen Sie Ihre Daten!</ion-card-subtitle>
+                    <ion-card-header style="text-align: center; background-color: grey;" >
+                        <ion-card-title >Daten für das Ausleihen</ion-card-title>
+                        <ion-card-subtitle style="color: red">Bitte Überprüfen Sie Ihre Daten!</ion-card-subtitle>
                     </ion-card-header>
 
-                    <ion-card-content >
+                    <ion-card-content style="background-color: grey;">
                         <ion-list style="text-align: center;">
                             <ion-item>
                             <ion-input label="" value="User" :readonly="true"></ion-input>
@@ -19,7 +19,7 @@
 
 
                             <ion-item>
-                            <ion-select label="Geräte" label-placement="floating" placeholder="Enter text">
+                            <ion-select label="Geräte" label-placement="floating" placeholder="Geräte auswählen">
                                 <ion-select-option value="">No Game Console</ion-select-option>
                                 <ion-select-option value="nes">NES</ion-select-option>
                                 <ion-select-option value="n64">Nintendo64</ion-select-option>
@@ -41,17 +41,44 @@
 
                         </ion-list>
                     </ion-card-content>
-                    <ion-card-content >
+                    <ion-card-content style="background-color: grey;">
                         <ion-list style="text-align: center;">
                                                   
                         <ion-item >    
-                            <ion-item >  
+                            <ion-item slot="start">  
                                                         
-                              <ion-datetime slot="start"></ion-datetime>
+                                <ion-accordion-group>
+                            <ion-accordion value="start">
+                                <ion-item slot="header">
+                                <ion-label>Von</ion-label>
+                                <ion-note slot="start" id="datetimeValue"></ion-note>
+                                </ion-item>
+                                <ion-datetime
+                                id="datetime"
+                                slot="content"
+                                display-format="MMMM YY"
+                                
+                                ></ion-datetime>
+                            </ion-accordion>
+                            </ion-accordion-group>
                             </ion-item>
-                            <ion-item >  
-                                <ion-datetime slot="end"></ion-datetime>
+                            <ion-item slot="end">  
+                                <ion-accordion-group>
+                            <ion-accordion value="end">
+                                <ion-item slot="header">
+                                <ion-label>Bis</ion-label>
+                                <ion-note slot="end" id="datetimeValue"></ion-note>
+                                </ion-item>
+                                <ion-datetime
+                                id="datetime"
+                                slot="content"
+                                display-format="MMMM YY"
+                                
+                                ></ion-datetime>
+                            </ion-accordion>
+                            </ion-accordion-group>
                             </ion-item>
+                        
                         </ion-item>
 
                             
@@ -65,12 +92,12 @@
 </template>
 
 <script>
-import { IonContent, IonPage, IonHeader,IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList} from '@ionic/vue';
+import { IonContent, IonPage, IonHeader,IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup} from '@ionic/vue';
 import AppHeader from '../components/Header.vue';
 
 export default {
 components: {
-    AppHeader, IonPage, IonContent, IonHeader, IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList
+    AppHeader, IonPage, IonContent, IonHeader, IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup
 }
 };
 
