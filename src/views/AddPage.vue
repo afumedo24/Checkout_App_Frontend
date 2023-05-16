@@ -90,7 +90,7 @@
                             
                            
                         </ion-list>
-                        
+                        <ion-button slot="center" size="large"> Submit </ion-button>
                     </ion-card-content>
                 </ion-card>
             <!--ion-datetime></ion-datetime-->
