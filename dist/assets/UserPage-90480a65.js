@@ -1,1 +1,0 @@
-import{C as o,k as t,_ as n,d as s,o as a,i as c}from"./index-a8ef46ee.js";const r=o({components:{IonDatetime:t}});function p(_,i,m,d,f,l){const e=s("ion-datetime");return a(),c(e)}const $=n(r,[["render",p]]);export{$ as default};
