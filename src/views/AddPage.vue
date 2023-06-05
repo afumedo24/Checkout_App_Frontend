@@ -46,7 +46,52 @@
                         </ion-list>
                     </ion-card-content>
                     <ion-card-content style="background-color: grey;">
-                        <ion-list style="text-align: center;">
+
+                        <ion-item>
+                                    <ion-item style="width: fit-content;">
+                                    <ion-list >
+                                        <ion-item id="open-modal">
+                                        <ion-label>Von</ion-label>
+                                        <ion-note slot="start" id="datetimeValue"></ion-note>
+                                        </ion-item>
+                                    </ion-list>
+                                    </ion-item>
+
+                                    <ion-modal trigger="open-modal">
+                                    <ion-content>
+                                        <ion-datetime
+                                        id="datetime"
+                                        presentation="date"
+
+                                        ></ion-datetime>
+                                    </ion-content>
+                                    </ion-modal>
+
+                                </ion-item>
+                                <ion-item style="width: fit-content;">
+                                
+                                    <ion-item >
+                                    <ion-list >
+                                        <ion-item id="open-modal">
+                                        <ion-label>Von</ion-label>
+                                        <ion-note slot="start" id="datetimeValue"></ion-note>
+                                        </ion-item>
+                                    </ion-list>
+                                    </ion-item>
+
+                                    <ion-modal trigger="open-modal">
+                                    <ion-content>
+                                        <ion-datetime
+                                        id="datetime"
+                                        presentation="date"
+
+                                        ></ion-datetime>
+                                    </ion-content>
+                                    </ion-modal>
+
+                                </ion-item>
+                               
+                        <!--ion-list style="text-align: center;">
                                                   
                             <ion-item >    
                                 <ion-item slot="start" style="width: fit-content ;">  
@@ -89,7 +134,7 @@
                         
                             
                            
-                        </ion-list>
+                        </ion-list-->
                         <ion-button slot="center" size="large"> Submit </ion-button>
                     </ion-card-content>
                 </ion-card>
@@ -112,7 +157,15 @@ components: {
 </script>
 
 <style scoped>
+ion-modal {
+        --width: 290px;
+        --height: 382px;
+        --border-radius: 8px;
+      }
 
+      ion-modal ion-datetime {
+        height: 382px;
+      }
 
 </style>
 
