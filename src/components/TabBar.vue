@@ -5,7 +5,7 @@
        
             <ion-tab-bar slot="bottom" color="light">  
                 <ion-tab-button tab="home" href="/home">
-                    <ion-icon aria-hidden="true" :icon="homeSharp"> </ion-icon>
+                    <ion-icon :icon="homeSharp" aria-hidden="true"></ion-icon>
                     <ion-label>Home</ion-label>  
                 </ion-tab-button>  
 
@@ -13,14 +13,14 @@
             
 
                 <ion-tab-button tab="list" href="/list">  
-                    <ion-icon aria-hidden="true" :icon="listSharp" ></ion-icon>
+                    <ion-icon :icon="listSharp" aria-hidden="true"></ion-icon>
                     <ion-label>List</ion-label>  
                 </ion-tab-button>  
             </ion-tab-bar>  
         </ion-tabs> 
 
         <ion-fab vertical="bottom" horizontal="center" slot="fixed"> 
-            <ion-fab-button tab="add" href="/add">
+            <ion-fab-button href="/add">
                 <ion-icon  :icon="addSharp" size="large"></ion-icon>
             </ion-fab-button>
         </ion-fab>
@@ -29,17 +29,18 @@
 
 <script>
 
-import { IonTabs, IonTabBar, IonTabButton, IonRouterOutlet, IonIcon, IonFab, IonFabButton } from '@ionic/vue';
+import { IonTabs, IonTabBar, IonTabButton, IonRouterOutlet, IonIcon, IonFab, IonFabButton, IonLabel } from '@ionic/vue';
 import { homeSharp, addSharp, listSharp, } from 'IonIcons/icons'
 
 export default {
 components: {
-    IonTabs, IonTabBar, IonTabButton, IonRouterOutlet, IonIcon, IonFab, IonFabButton
+    IonTabs, IonTabBar, IonTabButton, IonRouterOutlet, IonIcon, IonFab, IonFabButton, IonLabel, 
 },
 data() {
     
+
     return {
-        homeSharp, addSharp, listSharp,
+        homeSharp, addSharp, listSharp, 
     };
 },
 }
@@ -51,7 +52,7 @@ data() {
 ion-fab-button {
     scale: 1.27;
     --background: linear-gradient(130deg,#FFB600, #ED8B00);
-    --background-hover: var(--ion-color-primary-shade);
+    --background-hover: var(--ion-color-secondary-shade);
     --border-radius: 15px;
     --box-shadow: 0px 1px 2px 0px rgba(0,0,0,.3), 0px 1px 3px 1px rgba(0,0,0,.15);
     --color: black;
@@ -61,7 +62,7 @@ ion-fab-button {
 
 ion-tab-bar{
  background: var(--ion-color-primary);
- height: 70px;;
+ height: 60px;;
 
 }
 ion-tab-button{
@@ -74,7 +75,6 @@ ion-tab-button{
 
 ion-icon{
     color: var(--ion-color-light);
-    scale: 1.2;
 }
 ion-label{
     color: var(--ion-color-light);

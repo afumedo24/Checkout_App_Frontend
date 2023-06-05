@@ -1,6 +1,9 @@
 <template>
     <div>
-        <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
+        <StreamBarcodeReader 
+            @decode="onDecode" 
+            @loaded="onLoaded">
+        </StreamBarcodeReader>
         <h2>The decoded value in QR/barcode is</h2>
         <h2>{{ decodedText }}</h2>
     </div>

@@ -1,1 +1,0 @@
-System.register(["./index-legacy-ca8919d0.js"],(function(e,t){"use strict";var n,r,i,o,u,c;return{setters:[function(e){n=e.C,r=e.k,i=e._,o=e.d,u=e.o,c=e.i}],execute:function(){var t=n({components:{IonDatetime:r}});e("default",i(t,[["render",function(e,t,n,r,i,s){var a=o("ion-datetime");return u(),c(a)}]]))}}}));
