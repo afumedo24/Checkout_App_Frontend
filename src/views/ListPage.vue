@@ -11,7 +11,7 @@
       <div class="device-list-container">
         
           <ion-list class="device-list">
-            
+            <h2 class="title"> Alle Geräte </h2>
                 <ion-item v-for="device in displayedDevices" :key="device.id" class="device-item">  <!-- devices -->
                   <ion-thumbnail slot="start"> 
                     <img :src="device.image" :alt="device.name"/>
@@ -74,10 +74,6 @@ export default {
         { id: 13, name: 'Device 13' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
         { id: 14, name: 'Device 14' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
         { id: 15, name: 'Device 15' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
-      
-      
-      
-      
       ],
       displayedDevices: [],
       batchSize: 8, // Number of devices to load at a time
@@ -119,17 +115,16 @@ export default {
   width: 90%;
   margin-top: 5%;
   margin-left: 5%;
-  background-color: grey;
+  background-color: #D9D9D9;
   border-radius: 20px;
   
 }
 .device-item {
   padding: 10px;
-  border-block-end: 1px solid black;
+  border-block-end: 1px solid #7E7E7E;
   display: block;
-  background-color: #ccc;
- 
- 
+  background-color: #D9D9D9;
+  object-fit: cover; 
 }
 
 .device-item img {
@@ -141,17 +136,21 @@ export default {
 }
 
 .status-green{
-color: green;
+color: var(--ion-color-success);
 }
 .status-red{
-  color: red;
+  color: var(--ion-color-danger);
 }
 .borrow-button{
   --background: var( --ion-color-secondary-shade);
   height: 4.5vh;
   width: 9.5vh;
-  margin: 0 0;
-  font-size: 16px;
+  margin: 0 0;;
+}
+.title{
+  font-size: 28px;
+  font-weight: bolder;
+  margin-left: 10px;
 }
 
 

@@ -22,7 +22,6 @@ export default {
     IonHeader,
     IonPage
   },
-
 }
 </script>
 
