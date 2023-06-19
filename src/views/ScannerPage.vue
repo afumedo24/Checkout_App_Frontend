@@ -26,39 +26,21 @@
 <script>
 import {  IonContent,  modalController, IonPage, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle } from '@ionic/vue'
 import { ref } from "vue";
+import axios from 'axios';
 import ScanModal from '../components/ScanModal.vue';
 
 
 export default {
     components: {
          IonContent, ref, ScanModal,  modalController, IonPage, 
-         IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle 
+         IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, axios
     },
     data() {
         const decodedText = ref("");
         const scannedDevice = ref("");
       
 
-        return { decodedText, scannedDevice,
-            devices: [
-                { id: 1, name: 'Device 1' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Available'},
-                { id: 2, name: 'Device 2' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Available'},
-                { id: 3, name: 'Device 3' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
-                { id: 4, name: 'Device 4' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Available'},
-                { id: 5, name: 'Device 5' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
-                { id: 6, name: 'Device 6' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
-                { id: 7, name: 'Device 7' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Available'},
-                { id: 8, name: 'Device 8' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Available'},
-                { id: 9, name: 'Device 9' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Available'},
-                { id: 10, name: 'Device 10' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
-                { id: 11, name: 'Device 11' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Available'},
-                { id: 12, name: 'Device 12' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Available'},
-                { id: 13, name: 'Device 13' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
-                { id: 14, name: 'Device 14' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
-                { id: 15, name: 'Device 15' , image: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK2A3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1628010471000', status: 'Not Available'},
-            ], 
-            
-        };
+        return { decodedText, scannedDevice,    };
     },
     methods: {
         
@@ -74,9 +56,19 @@ export default {
             console.log(role); //delete it later
             if(role === 'confirm') {
                 this.decodedText = data.result;
-                //
-                this.scannedDevice = this.devices[(this.decodedText) - 1];
-                console.log(this.devices[(this.decodedText) - 1]);
+
+                const apiUrl = 'http://localhost:8300/api/devices/' + this.decodedText; 
+
+                axios.get(apiUrl)
+                    .then((response) => {
+                    this.scannedDevice = response.data;
+                    console.log('Device Data:', this.scannedDevice);
+                    // Do something with the device data in your app
+                    })
+                    .catch((err) => {
+                    console.error(err);
+                    // Handle error scenarios in your app
+                    });
             }
             else {
                 this.decodedText = 'Nothing Found to Scan';
@@ -87,6 +79,7 @@ export default {
     mounted() {
         this.openModal();
     },
+
 };
  
 </script>

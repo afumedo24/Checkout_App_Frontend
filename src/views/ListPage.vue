@@ -45,6 +45,7 @@
 <script>
 import { IonContent, IonPage, IonHeader, IonList, IonItem, IonLabel, IonThumbnail, IonInfiniteScroll, IonInfiniteScrollContent,  } from '@ionic/vue';
 import DeviceList from '@/components/list/DeviceList.vue';
+import axios from 'axios';
 
 
 
@@ -54,7 +55,8 @@ export default {
     IonPage,
     IonHeader,
     IonList, IonItem, IonLabel , IonThumbnail, IonInfiniteScroll, IonInfiniteScrollContent,
-    DeviceList 
+    DeviceList,
+    axios
   },
   data() {
     return {
@@ -78,10 +80,12 @@ export default {
       displayedDevices: [],
       batchSize: 8, // Number of devices to load at a time
       allDevicesLoaded: false,
+      Devices: []
     };
   },
   mounted() {
     this.loadMoreDevices();
+    this.loadDevices();
   },
   methods: {
     loadMoreDevices() {
@@ -103,6 +107,22 @@ export default {
       // Implement your borrowing functionality here
       console.log('Borrowing device:', device.name);
     },
+
+    loadDevices() {
+      const apiUrl = 'http://localhost:8300/api/devices'; 
+
+      axios.get(apiUrl)
+          .then((response) => {
+          this.Devices = JSON.stringify(response.data);
+          //console.log(response.data);
+          console.log('Devices:', this.Devices);
+          // Do something with the device data in your app
+          })
+          .catch((err) => {
+          console.error(err);
+          // Handle error scenarios in your app
+          });
+    }
   },
 }
 </script>
