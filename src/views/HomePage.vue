@@ -6,6 +6,7 @@
     <ion-content>
       <div id="container">
        <p> HomePage </p>  
+       <h2> Welcome User </h2>
       </div>
       
     </ion-content>

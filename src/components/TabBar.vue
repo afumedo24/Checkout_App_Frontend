@@ -21,7 +21,7 @@
 
         <ion-fab vertical="bottom" horizontal="center" slot="fixed"> 
             <ion-fab-button href="/add">
-                <ion-icon  :icon="addSharp" size="large"></ion-icon>
+                <ion-icon  :icon="qrCodeSharp" size="large"></ion-icon>
             </ion-fab-button>
         </ion-fab>
     </div>
@@ -30,7 +30,7 @@
 <script>
 
 import { IonTabs, IonTabBar, IonTabButton, IonRouterOutlet, IonIcon, IonFab, IonFabButton, IonLabel } from '@ionic/vue';
-import { homeSharp, addSharp, listSharp, } from 'IonIcons/icons'
+import { homeSharp, listSharp, qrCodeSharp} from 'IonIcons/icons'
 
 export default {
 components: {
@@ -40,7 +40,7 @@ data() {
     
 
     return {
-        homeSharp, addSharp, listSharp, 
+        homeSharp, qrCodeSharp, listSharp, 
     };
 },
 }
@@ -67,7 +67,6 @@ ion-tab-bar{
 }
 ion-tab-button{
     background: var(--ion-color-primary);
-    padding: px;
     margin-left: 30px;
     margin-right: 30px;
     margin-bottom: -3px;
