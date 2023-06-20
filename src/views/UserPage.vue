@@ -3,16 +3,15 @@
       <ion-header> 
           <app-header> </app-header>
       </ion-header>
-      <ion-content>
-          <p> AddPage</p>
-              <ion-card >
+      <ion-content >
+              <ion-card class="user-list">
                   <ion-card-header style="text-align: center; background-color: grey;" >
                       <ion-card-title >Daten für das Ausleihen</ion-card-title>
                       <ion-card-subtitle style="color: red">Bitte Überprüfen Sie Ihre Daten!</ion-card-subtitle>
                   </ion-card-header>
 
-                  <ion-card-content style="background-color: grey;">
-                      <ion-list style="text-align: center;width:fit-content;" >
+                  <ion-card-content>
+                      <ion-list  style=": center;width:fit-content;" >
                           <ion-item >
                           <ion-input label="" value="User" :readonly="true"></ion-input>
                           </ion-item>
@@ -46,51 +45,8 @@
                       </ion-list>
                   </ion-card-content>
                   <ion-card-content style="background-color: grey;">
-                      <ion-list style="text-align: center;">
-                                                
-                          <ion-item >    
-                              <ion-item slot="start" style="width: fit-content ;">  
-                                                          
-                                  <ion-accordion-group >
-                                      <ion-accordion value="start">
-                                      <ion-item slot="header">
-                                      <ion-label>Von</ion-label>
-                                      <ion-note slot="start" id="datetimeValue"></ion-note>
-                                      </ion-item>
-                                      <ion-datetime
-                                      id="datetime"
-                                      presentation="date"
-                                      slot="content"
-                                      display-format="MMMM YY"
-                                      
-                                      ></ion-datetime>
-                                      </ion-accordion>
-                                  </ion-accordion-group>
-                              </ion-item>
-                              <ion-item slot="end" style="width: fit-content ;">  
-                                  <ion-accordion-group>
-                                      <ion-accordion value="end">
-                                      <ion-item slot="header">
-                                      <ion-label>Bis</ion-label>
-                                      <ion-note slot="end" id="datetimeValue"></ion-note>
-                                      </ion-item>
-                                      <ion-datetime
-                                      id="datetime"
-                                      presentation="date"
-                                      slot="content"
-                                      display-format="MMMM YY"
-                                  
-                                      ></ion-datetime>
-                                      </ion-accordion>
-                                  </ion-accordion-group>
-                              </ion-item>
-                          
-                          </ion-item>
                       
-                          
-                         
-                      </ion-list>
-                      <ion-button slot="center" size="large"> Submit </ion-button>
+                      <ion-button class="borrow-button" slot="center" size="large"> Submit </ion-button>
                   </ion-card-content>
               </ion-card>
           <!--ion-datetime></ion-datetime-->
@@ -101,7 +57,7 @@
 <script>
 import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup} from '@ionic/vue';
 import AppHeader from '../components/Header.vue';
-
+import axios from 'axios';
 
 export default {
 components: {
@@ -112,6 +68,51 @@ components: {
 </script>
 
 <style scoped>
+.user-list {
+  display: block;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 90%;
+  margin-top: 5%;
+  margin-left: 5%;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  
+}
+.user-item {
+  padding: 10px;
+  border-block-end: 1px solid #7E7E7E;
+  display: block;
+  background-color: #D9D9D9;
+  object-fit: cover; 
+}
+
+.device-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.status-green{
+color: var(--ion-color-success);
+}
+.status-red{
+  color: var(--ion-color-danger);
+}
+.borrow-button{
+  --background: var( --ion-color-secondary-shade);
+  height: 4.5vh;
+  width: 9.5vh;
+  margin: 0 0;;
+}
+.title{
+  font-size: 28px;
+  font-weight: bolder;
+  margin-left: 10px;
+}
+
 
 
 </style>

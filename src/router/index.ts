@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'home',
-        component: () => import('../views/HomePage.vue'),
+        component: () => import('../views/UserPage.vue'),
       },
       {
         path: 'add',
