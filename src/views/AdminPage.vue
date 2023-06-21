@@ -6,24 +6,43 @@
       <ion-content >
               <ion-card class="user-list">
                   <ion-card-header class="title" >
-                      <ion-card-title >Zum Konto Einlogen</ion-card-title>
-                      <ion-card-subtitle style="color: red">Bitte NFC-TAG scannen!</ion-card-subtitle>
+                      <ion-card-title > Konto Einfügen</ion-card-title>
+                      <ion-card-subtitle style="color: red">Bitte Überprüfen Sie die Daten!</ion-card-subtitle>
                   </ion-card-header>
                  
 
                   <ion-card-content>
-                      <ion-list  class="user-item" >
-                          <ion-item >
-                          <ion-input v-model="user" labelPlacement="standard" placeholder="User" ></ion-input>
-                          </ion-item>
-                      </ion-list>
+                            <ion-list  class="user-item" >
+                                <ion-item >
+                                <ion-input v-model="id" labelPlacement="standard" placeholder="ID" ></ion-input>
+                                </ion-item>
+                            </ion-list>
+
+                        
+                            <ion-list  class="user-item" >
+                                <ion-item >
+                                <ion-input v-model="user" labelPlacement="standard" placeholder="User" ></ion-input>
+                                </ion-item>
+                            </ion-list>
+                        
+                            <ion-list  class="user-item" >
+                                <ion-item >
+                                <ion-input v-model="date" labelPlacement="standard" placeholder="Date" ></ion-input>
+                                </ion-item>
+                            </ion-list>
+                            
+                            <ion-list  class="user-item" >
+                                <ion-item >
+                                <ion-input v-model="name" labelPlacement="standard" placeholder="Name" ></ion-input>
+                                </ion-item>
+                            </ion-list>
                       
 
                   </ion-card-content>
-                  
+                  +
                   <ion-card-content >
                       
-                      <ion-button v-on:click="signUp" class="borrow-button"> LOGIN </ion-button>
+                      <ion-button v-on:click="signUp" class="borrow-button"> Senden </ion-button>
                   </ion-card-content>
               </ion-card>
           <!--ion-datetime></ion-datetime-->
@@ -70,7 +89,7 @@ components: {
   width: 60%;
   margin-top: 10%;
   margin-left: 20%;
-  background-color: #aaa8a8;
+  background-color: #6a6a6a;
   border-radius: 20px;
   text-align: center;
   
