@@ -11,17 +11,17 @@
                   </ion-card-header>
 
                   <ion-card-content>
-                      <ion-list  style=": center;width:fit-content;" >
+                      <ion-list  class="user-item" >
                           <ion-item >
                           <ion-input label="" value="User" :readonly="true"></ion-input>
                           </ion-item>
                       </ion-list>
                   </ion-card-content>
-                  <ion-card-content style="background-color: grey;">
-                      <ion-list style="text-align: center;width:fit-content;">
+                  <ion-card-content>
+                      <ion-list class="user-item">
 
 
-                          <ion-item>
+                          <ion-item >
                           <ion-select label="Geräte" label-placement="floating" placeholder="Geräte auswählen">
                               <ion-select-option value="">No Game Console</ion-select-option>
                               <ion-select-option value="nes">NES</ion-select-option>
@@ -44,9 +44,9 @@
 
                       </ion-list>
                   </ion-card-content>
-                  <ion-card-content style="background-color: grey;">
+                  <ion-card-content >
                       
-                      <ion-button class="borrow-button" slot="center" size="large"> Submit </ion-button>
+                      <ion-button class="borrow-button"> Senden </ion-button>
                   </ion-card-content>
               </ion-card>
           <!--ion-datetime></ion-datetime-->
@@ -75,16 +75,22 @@ components: {
   width: 90%;
   margin-top: 5%;
   margin-left: 5%;
-  background-color: #D9D9D9;
+  background-color: #6a6a6a;
   border-radius: 20px;
+  text-align: center;
   
 }
 .user-item {
   padding: 10px;
-  border-block-end: 1px solid #7E7E7E;
   display: block;
-  background-color: #D9D9D9;
-  object-fit: cover; 
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 90%;
+  margin-top: 5%;
+  margin-left: 5%;
+  color: #D9D9D9;
+  border-radius: 20px;
+ 
 }
 
 .device-item img {
@@ -102,10 +108,10 @@ color: var(--ion-color-success);
   color: var(--ion-color-danger);
 }
 .borrow-button{
+    
   --background: var( --ion-color-secondary-shade);
   height: 4.5vh;
   width: 9.5vh;
-  margin: 0 0;;
 }
 .title{
   font-size: 28px;
