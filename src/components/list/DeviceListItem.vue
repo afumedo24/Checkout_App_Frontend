@@ -10,7 +10,7 @@
         <ion-button class="borrow-button" slot="end" @click="borrowDevice(device)"> Borrow</ion-button>
       </ion-item>
 </template>
-import {}
+
 <script>
 import { IonContent, IonPage, IonHeader, IonList, IonItem, IonLabel, IonThumbnail } from '@ionic/vue';
 

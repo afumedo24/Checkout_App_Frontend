@@ -1,46 +1,51 @@
 <!-- eslint-disable vue/no-unused-components -->
 <template>
     <ion-page>
-      
         <ion-content>
-           <h2> The scanned QR-Code is </h2>
-            <h1 > {{ decodedText }} </h1>
-
-
-            <ion-card >
+            <ion-card>
                 <img :alt="scannedDevice.name" :src="scannedDevice.image" />
                 <ion-card-header>
                   <ion-card-title>{{ scannedDevice.name }}</ion-card-title>
-                  <ion-card-header class="" >{{ scannedDevice.status  }}</ion-card-header>
+                  <ion-card-subtitle :class="scannedDevice.status  === 1 ? 'status-green' : 'status-red'"> {{ devicestatus }} </ion-card-subtitle>
                 </ion-card-header>
-            
-                <ion-card-content>
-                    id: {{ scannedDevice.id  }}
-                </ion-card-content>
+
+                <ion-toolbar> 
+                <div class="btn-container"> 
+                    <ion-button class="cancel-btn">
+                        <ion-label> Cancel </ion-label>
+                    </ion-button>
+
+                    <ion-button class="ok-btn" >
+                        <ion-label> Borrow  </ion-label>
+                    </ion-button>
+                </div>
+            </ion-toolbar> 
+               
               </ion-card>
-            
         </ion-content>
       </ion-page>
 </template>
 
 <script>
-import {  IonContent,  modalController, IonPage, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle } from '@ionic/vue'
+import {  IonContent,  modalController, IonPage, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar} from '@ionic/vue'
 import { ref } from "vue";
 import axios from 'axios';
 import ScanModal from '../components/ScanModal.vue';
 
 
+
 export default {
     components: {
          IonContent, ref, ScanModal,  modalController, IonPage, 
-         IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, axios
+         IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar, axios
     },
     data() {
         const decodedText = ref("");
         const scannedDevice = ref("");
+        var devicestatus = '';
       
 
-        return { decodedText, scannedDevice,    };
+        return { decodedText, scannedDevice, devicestatus };
     },
     methods: {
         
@@ -53,7 +58,7 @@ export default {
             modal.present();
 
             const { data, role } = await modal.onWillDismiss();
-            console.log(role); //delete it later
+            // console.log(role);                                   //delete it later
             if(role === 'confirm') {
                 this.decodedText = data.result;
 
@@ -63,7 +68,18 @@ export default {
                     .then((response) => {
                     this.scannedDevice = response.data;
                     console.log('Device Data:', this.scannedDevice);
-                    // Do something with the device data in your app
+
+                    //for the device status variable 
+                    if(this.scannedDevice.status === 1)
+                    {
+                        this.devicestatus = 'Verfügbar';
+                    }
+                    else 
+                    {
+                        this.devicestatus = 'Nicht Verfügbar';
+                    }
+
+                    
                     })
                     .catch((err) => {
                     console.error(err);
@@ -86,7 +102,64 @@ export default {
 
 
 <style scoped>
-h1{
-    color: blue;
+
+ion-card{
+    margin-top: 10vh;
+    padding: 2vh;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
+img {
+    --background-color: red;
+    align-content: center;
+    justify-content: center;
+}
+
+ion-card-header{
+    justify-content: center;
+    align-items: center;
+}
+ion-card-subtitle{
+    font-size: larger;
+}
+
+ion-toolbar{
+    --background: none;
+}
+
+.btn-container{
+    
+    margin-bottom: 0.5vh;
+    margin-left: 0vh;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+.cancel-btn{
+    --background: var(--ion-color-danger);
+    width: 13vh;
+    height: 6vh;
+    --ripple-color: red;
+    
+    
+}
+.ok-btn{
+    --background: var(--ion-color-success);
+    width: 13vh;
+    height: 6vh;
+    
+}
+
+ion-label{
+    font-size: larger;
+}
+
+.status-green{
+    color: var(--ion-color-success);
+    }
+    .status-red{
+      color: var(--ion-color-danger);
+    }
+
 </style>
+

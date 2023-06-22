@@ -30,7 +30,7 @@
                   </ion-infinite-scroll-content>
                 </ion-infinite-scroll>
 
-            <!-- 
+   <!--        
                <ion-item v-for="device in devices" :key="device.id">
               <ion-label>{{ device.name }}</ion-label>
             </ion-item>
@@ -88,6 +88,7 @@ export default {
     this.loadDevices();
   },
   methods: {
+  
     loadMoreDevices() {
       const startIndex = this.displayedDevices.length;
       const endIndex = startIndex + this.batchSize;
@@ -102,10 +103,10 @@ export default {
       this.displayedDevices = this.displayedDevices.concat(this.devices.slice(startIndex, endIndex));
 
 
-    },
+    }, 
     borrowDevice(device) {
       // Implement your borrowing functionality here
-      console.log('Borrowing device:', device.name);
+      console.log('Borrowing device:' + device.name);
     },
 
     loadDevices() {
@@ -165,7 +166,7 @@ color: var(--ion-color-success);
   --background: var( --ion-color-secondary-shade);
   height: 4.5vh;
   width: 9.5vh;
-  margin: 0 0;;
+  margin: 0 0;
 }
 .title{
   font-size: 28px;
