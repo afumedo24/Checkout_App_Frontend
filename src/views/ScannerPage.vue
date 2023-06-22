@@ -16,7 +16,7 @@ import {  IonContent,  modalController, IonPage } from '@ionic/vue'
 import { ref } from "vue";
 import axios from 'axios';
 import ScanModal from '../components/ScanModal.vue';
-import ScannedDeviceCard from '@/components/scanner/ScannedDeviceCard.vue';
+import ScannedDeviceCard from '../components/scanner/ScannedDeviceCard.vue';
 
 
 
