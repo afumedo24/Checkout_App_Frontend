@@ -1,8 +1,5 @@
 <template>
   <ion-page>
-      <ion-header> 
-          <app-header> </app-header>
-      </ion-header>
       <ion-content >
               <ion-card class="user-list">
                   <ion-card-header class="title" >
@@ -14,7 +11,7 @@
                   <ion-card-content>
                       <ion-list  class="user-item" >
                           <ion-item >
-                          <ion-input v-model="user" labelPlacement="standard" placeholder="User" ></ion-input>
+                          <ion-input v-model="userID" labelPlacement="standard" placeholder="User" ></ion-input>
                           </ion-item>
                       </ion-list>
                       
@@ -23,7 +20,7 @@
                   
                   <ion-card-content >
                       
-                      <ion-button v-on:click="signUp" class="borrow-button"> LOGIN </ion-button>
+                      <ion-button @click="signUp" class="borrow-button"> LOGIN </ion-button>
                   </ion-card-content>
               </ion-card>
           <!--ion-datetime></ion-datetime-->
@@ -33,29 +30,36 @@
 
 <script>
 import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup} from '@ionic/vue';
-import AppHeader from '../components/Header.vue';
 import axios from 'axios';
 
 export default {
 components: {
-  AppHeader, IonPage, IonContent, IonModal, IonHeader, IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup
+  IonPage, IonContent, IonModal, IonHeader, IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup
 },
    
     data()
     {
+      const userID = '';
         return{
-            user:'',
+          userID,
+          loggedUser: []
         }
     },
-    methods:{
-    async signUp()
-    {
-        let result = await axios.get("http://localhost:8300/api/users/",{
-            user:this.user
+    methods: {
+      async signUp()
+      {   
+        const apiUrl = 'http://localhost:8300/api/users/' + this.userID; 
 
-        });
-        console.warn(result)    
-    }
+        await axios.get(apiUrl)
+         .then((response) => {
+          this.loggedUser = response.data;
+          console.log('User Data:', this.loggedUser);
+        })
+         .catch((err) => {
+          console.error(err.message);
+          console.error(err); 
+        });  
+      }
 }
 };
 
