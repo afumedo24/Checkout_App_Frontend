@@ -1,14 +1,17 @@
 <template>
+    <!-- ein IonCard soll die Informationen von dem gescannte Device darstellen -->
     <ion-card>
         <img :alt="devicetitle" :src="deviceimage" />
         <ion-card-header>
           <ion-card-title>{{ devicetitle }}</ion-card-title>
-          <ion-card-subtitle :class="devicestatus  === 1 ? 'status-green' : 'status-red'"> {{ devicestatus }} </ion-card-subtitle>
+          <!-- hier wird die class dynamisch zugewiesen damit wir die entsprechende Farbe bekommen -->
+          <ion-card-subtitle :class="devicestatus  === 'Verfügbar' ? 'status-green' : 'status-red'"> {{ devicestatus }} </ion-card-subtitle>
         </ion-card-header>
 
         <ion-toolbar> 
         <div class="btn-container"> 
-            <ion-button class="cancel-btn">
+            <!-- $router.back bricht den Scan Vorgang ab und leitet uns an der HmePage weiter bzw. die letzte Seite -->
+            <ion-button class="cancel-btn" @click="$router.back()">
                 <ion-label> Cancel </ion-label>
             </ion-button>
 
@@ -27,7 +30,7 @@ import {
 } from '@ionic/vue';
 
 export default {
-    props: [devicetitle, deviceimage, devicestatus ],
+    props: [ 'devicetitle', 'deviceimage', 'devicestatus' ],
     components: {
         IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar
     }
@@ -84,10 +87,11 @@ ion-label{
 
 .status-green{
     color: var(--ion-color-success);
-    }
-    .status-red{
-      color: var(--ion-color-danger);
-    }
+}
+
+ .status-red{
+    color: var(--ion-color-danger);
+}
 
 
 </style>
