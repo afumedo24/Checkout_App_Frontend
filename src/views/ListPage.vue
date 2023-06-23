@@ -53,8 +53,8 @@ export default {
           console.error(err);
           // Handle error scenarios in your app
           });
-    }
-  },
+    },
+  }
 }
 </script>
 

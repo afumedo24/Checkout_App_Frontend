@@ -18,17 +18,24 @@ components: {
 
 <style scoped>
 
-ion-avatar {
-  --border-radius: 4px;
-  padding: 10px;
-  margin-left: 20px;
-}
 ion-toolbar{
     --background: var(--ion-color-primary);
-    height: 60px;
+    height: 9vh;
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-start;
 }
+
+ion-avatar {
+  --border-radius: 0px;
+  margin-left: 2vh;
+}
+
 ion-title{
     color: white;
+    font-size: 3.8vh;
+    font-weight: 650;
 }
 
 </style>

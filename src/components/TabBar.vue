@@ -4,7 +4,7 @@
             <ion-router-outlet></ion-router-outlet>
        
             <ion-tab-bar slot="bottom" color="light">  
-                <ion-tab-button tab="home" href="/home">
+                <ion-tab-button tab="home" class="home-tab" href="/home">
                     <ion-icon :icon="homeSharp" aria-hidden="true"></ion-icon>
                     <ion-label>Home</ion-label>  
                 </ion-tab-button>  
@@ -12,7 +12,7 @@
                 <!-- -->
             
 
-                <ion-tab-button tab="list" href="/list">  
+                <ion-tab-button tab="list" class="list-tab" href="/list">  
                     <ion-icon :icon="listSharp" aria-hidden="true"></ion-icon>
                     <ion-label>List</ion-label>  
                 </ion-tab-button>  
@@ -50,32 +50,39 @@ data() {
   
   
 ion-fab-button {
-    scale: 1.27;
+    height: 9vh;
+    width: 9vh;
     --background: linear-gradient(130deg,#FFB600, #ED8B00);
     --background-hover: var(--ion-color-secondary-shade);
     --border-radius: 15px;
     --box-shadow: 0px 1px 2px 0px rgba(0,0,0,.3), 0px 1px 3px 1px rgba(0,0,0,.15);
-    --color: black;
-    margin-bottom: 30px;;
+    margin-bottom: 3vh;
 }
-
 
 ion-tab-bar{
  background: var(--ion-color-primary);
- height: 60px;;
-
+ height: 9vh;
+ display: flex;
+ justify-content: space-evenly;
 }
 ion-tab-button{
     background: var(--ion-color-primary);
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-bottom: -3px;
+    margin-bottom: 1vh;
+    margin-right: 1vh;
+    margin-left: 3.3vh;
+
 }
 
+
+
+
 ion-icon{
+    height: 5vh;
+    width: 5vh;
     color: var(--ion-color-light);
 }
 ion-label{
+    font-size: 1.6vh;
     color: var(--ion-color-light);
 }
 
