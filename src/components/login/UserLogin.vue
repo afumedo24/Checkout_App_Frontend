@@ -1,50 +1,38 @@
 <template>
-                <ion-card-content  v-if="loggedUser != 0">
-                    <ion-list  class="user-text">
-                        <ion-item>
-                              <h2 class="waviy">
-                                       <span style="--i:1">Welcome </span> <span style="--i:2"> {{ loggedUser.FullName }}</span>
-                              </h2>
-                        </ion-item>
-                    </ion-list>
-                </ion-card-content>
+  <ion-card-content  v-if="loggedUser">  <!-- hier habe ich was verandert, ist dasselbe wie was du hier vorher stehen hattest -->
+      <ion-list  class="user-text">
+          <ion-item>
+                <h2 class="waviy">
+                  <span style="--i:1"> Welcome </span> <span style="--i:2"> {{ loggedUser.FullName }}</span>
+                </h2>
+          </ion-item>
+      </ion-list>
+  </ion-card-content>
 
 
 
-                <ion-card class="user-list">
-                    <ion-card-header  >
-                        <ion-card-title class="title">Zum Konto Einlogen</ion-card-title>
-                        <ion-card-subtitle class="subtitle">Bitte NFC-TAG scannen!</ion-card-subtitle>
-                    </ion-card-header>
-                   
-  
-                    <ion-card-content>
-                        <ion-list  class="user-item" >
-                            <ion-item >
-                            <ion-input v-model="userID" labelPlacement="standard" placeholder="User" ></ion-input>
-                            </ion-item>
-                        </ion-list>
-                        
-  
-                    </ion-card-content>
+  <ion-card class="user-list" v-if="!loggedUser"> <!-- hier habe ich was verandert damit die Einloggen funktion verschwendet  -->
+    <ion-card-header>
+      <ion-card-title class="title">Zum Konto Einlogen</ion-card-title>
+      <ion-card-subtitle class="subtitle">Bitte NFC-TAG scannen!</ion-card-subtitle>
+    </ion-card-header>
+          
+    <ion-card-content>
+      <ion-list  class="user-item">
+        <ion-item>
+          <ion-input v-model="userID" labelPlacement="standard" placeholder="User" ></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
                     
-                    <ion-card-content >
-                        
-                        <ion-button @click="signUp" class="borrow-button"> LOGIN </ion-button>
-                    </ion-card-content>
-
-                   
-                    
-                      
-                  
-                </ion-card>
-                  
+    <ion-card-content>
+      <ion-button @click="signUp" class="borrow-button"> LOGIN </ion-button>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-button @click="signOut" class="logout-button"> LOGOUT </ion-button>
                 
-
-                
-                <ion-button @click="signOut" class="logout-button"> LOGOUT </ion-button>
-                
-  </template>
+</template>
   
   <script>
   import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup} from '@ionic/vue';
@@ -55,35 +43,36 @@
     IonPage, IonContent, IonModal, IonHeader, IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup
   },
      
-      data()
-      {
-        const userID = '';
-          return{
-            userID,
-            loggedUser: []
-          }
-      },
-      methods: {
-        async signUp()
-        {   
-          const apiUrl = 'http://localhost:8300/api/users/' + this.userID; 
-  
-          await axios.get(apiUrl)
-           .then((response) => {
-            this.loggedUser = response.data;
-            console.log('User Data:', this.loggedUser);
-          })
-           .catch((err) => {
-            console.error(err.message);
-            console.error(err); 
-          });  
-        },
-        async signOut()
-        {   
-           this.loggedUser = 0;
-  
-          
-        }
+  data()
+  {
+    const userID = '';
+      return{
+        userID,
+        loggedUser: []
+      }
+  },
+  methods: {
+    async signUp()
+    {   
+      const apiUrl = 'http://localhost:8300/api/users/' + this.userID; 
+
+      await axios.get(apiUrl)
+        .then((response) => {
+        this.loggedUser = response.data;
+        console.log('User Data:', this.loggedUser);
+      })
+        .catch((err) => {
+        console.error(err.message);
+        console.error(err); 
+      });  
+    },
+   
+    async signOut()
+    {   
+        this.loggedUser = null;
+
+      
+    }
   }
   };
   

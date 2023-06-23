@@ -27,7 +27,7 @@ ion-list {
   flex-wrap: wrap;
   justify-content: flex-start;
   width: 90%;
-  margin-top: 20%;
+  margin-top: 10%;
   margin-left: 5%;
   background-color: #D9D9D9;
   border-radius: 15px 15px 0px 0px;

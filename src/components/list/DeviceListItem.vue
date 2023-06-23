@@ -57,7 +57,6 @@ ion-item {
 ion-img {
   width: 6vh;
   height: 6vh;
-  margin: auto;
   object-fit: scale-down;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 50%;
