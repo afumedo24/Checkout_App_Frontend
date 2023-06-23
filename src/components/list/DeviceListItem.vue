@@ -1,26 +1,23 @@
 <template>
-    <ion-item class="device-item">
+    <ion-item>
         <ion-thumbnail slot="start"> 
-          <img :src="device.image" :alt="device.name"/>
+          <ion-img :src="device.image" :alt="device.name"/>
         </ion-thumbnail>
         <ion-label>
-          <h2>{{ device.name }}</h2>
-          <p :class="device.status === 'Available' ? 'status-green' : 'status-red'"> {{ device.status }}</p>
+          <h2> {{ device.name }} </h2>
+          <p :class="device.status === 1 ? 'status-green' : 'status-red'"> {{ displaystatus(device.status) }}</p>
         </ion-label>
-        <ion-button class="borrow-button" slot="end" @click="borrowDevice(device)"> Borrow</ion-button>
+        <ion-button class="borrow-button" slot="end" @click="borrowDevice(device)"> Borrow </ion-button>
       </ion-item>
 </template>
 
 <script>
-import { IonContent, IonPage, IonHeader, IonList, IonItem, IonLabel, IonThumbnail } from '@ionic/vue';
+import { IonItem, IonLabel, IonThumbnail, IonImg } from '@ionic/vue';
 
 export default {
-    props: ['device'],
+  props: ['device'],
   components: {
-    IonContent,
-    IonPage,
-    IonHeader,
-    IonList, 
+    IonImg, 
     IonItem, 
     IonLabel , 
     IonThumbnail,
@@ -31,24 +28,39 @@ export default {
       console.log('Borrowing device:', device.name);
     },
   },
+  computed: {
+    
+    // damit wir den Device Status in einem Wort umwandeln
+    displaystatus() {
+      return (status) => {
+        if (status === 1) {
+          return 'Verfügbar';
+        }
+        else {
+          return "Nicht Verfügbar";
+        }
+      }
+    }
+  },
 }
 </script>
 
 <style scoped>
 
 ion-item {
-    padding: 10px;
-    border: 1px solid #ccc;
-    display: flex;
-   
+  width: 100%;
+  padding: 1.3vh;
+  border-block-end: 1.5px solid #7E7E7E;
+  --background: white; 
 }
-  
-.device-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
+
+ion-img {
+  width: 6vh;
+  height: 6vh;
+  margin: auto;
+  object-fit: scale-down;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 50%;
 }
   
   .status-green{
@@ -57,11 +69,22 @@ ion-item {
   .status-red{
     color: red;
   }
+
+  h2{
+    font-size: 2.5vh;
+    font-weight: 490;
+  }
+
+  p{
+    font-size: 1.7vh;
+    font-weight: 300;
+  }
+
   .borrow-button{
     --background: var( --ion-color-secondary-shade);
     height: 4.5vh;
     width: 9.5vh;
     margin: 0 0;
-    font-size: 16px;
+    font-size: 1.6vh;
   }
 </style>

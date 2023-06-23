@@ -5,7 +5,7 @@
             <scanned-device-card 
                 :devicetitle="scannedDevice.name" 
                 :deviceimage="scannedDevice.image"
-                :devicestatus="devicestatus">
+                :devicestatus="scannedDevice.status">
             </scanned-device-card>
         </ion-content>
       </ion-page>
