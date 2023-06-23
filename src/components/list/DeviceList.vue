@@ -1,7 +1,7 @@
 <template>
 
   <ion-list>
-    <h2 class="title"> Alle Geräte </h2>
+    <h2 class="title"> List of all Devices </h2>
     <device-list-item 
       v-for="device in devices"
        :key="device.id"
@@ -26,17 +26,19 @@ ion-list {
   display: block;
   flex-wrap: wrap;
   justify-content: flex-start;
-  width: 90%;
-  margin-top: 10%;
-  margin-left: 5%;
+  width: 95%;
+  margin-top: 11vh;
+  margin-left: 2.5%;
   background-color: #D9D9D9;
-  border-radius: 15px 15px 0px 0px;
+  border-radius: 1vh 1vh 0 0;
   
 }
 .title{
   font-size: 4vh;
-  font-weight: bolder;
+  font-weight: bold;
   margin-left: 2vh;
+  margin-bottom: 4vh;
+  text-align: center;
 }
 
 

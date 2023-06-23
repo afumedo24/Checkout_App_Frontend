@@ -1,14 +1,14 @@
 <template>
     <ion-item>
-        <ion-thumbnail slot="start"> 
-          <ion-img :src="device.image" :alt="device.name"/>
-        </ion-thumbnail>
-        <ion-label>
-          <h2> {{ device.name }} </h2>
-          <p :class="device.status === 1 ? 'status-green' : 'status-red'"> {{ displaystatus(device.status) }}</p>
-        </ion-label>
-          <ion-button @click="borrowDevice()" class="borrow-button"  slot="end"> Borrow </ion-button>
-      </ion-item>
+      <ion-thumbnail slot="start"> 
+        <ion-img :src="device.image" :alt="device.name"/>
+      </ion-thumbnail>
+      <ion-label>
+        <h2> {{ device.name }} </h2>
+        <p :class="device.status === 1 ? 'status-green' : 'status-red'"> {{ displaystatus(device.status) }}</p>
+      </ion-label>
+      <ion-button @click="borrowDevice()"> Borrow </ion-button>
+    </ion-item>
 </template>
 
 <script>
@@ -53,10 +53,10 @@ export default {
     displaystatus() {
       return (status) => {
         if (status === 1) {
-          return 'Verfügbar';
+          return 'Available';
         }
         else {
-          return "Nicht Verfügbar";
+          return "not Available";
         }
       }
     }
@@ -67,17 +67,28 @@ export default {
 <style scoped>
 
 ion-item {
-  width: 100%;
-  padding: 1.3vh;
-  border-block-end: 1.5px solid #7E7E7E;
-  --background: white; 
-}
+  width: 95%;
+  height: 15vh;
+  padding-left: 2.5vh;
+  padding-right: 0vh;
+  border-radius: 1vh;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  background-color: white; 
+  margin-left: 2.5%;
+  margin-bottom: 1vh;
+  display: flex;
+  
 
+}
+ion-thumbnail{
+  width: 8vh;
+  height: 8vh;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 50%;
+  
+}
 ion-img {
-  width: 6vh;
-  height: 6vh;
   object-fit: scale-down;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 50%;
 }
   
@@ -88,21 +99,31 @@ ion-img {
     color: red;
   }
 
+
+  ion-label {
+    margin-left: 2vh;
+  }
   h2{
-    font-size: 2.5vh;
-    font-weight: 490;
+    font-size: 3vh;
+    font-weight: 500;
   }
 
   p{
-    font-size: 1.7vh;
-    font-weight: 300;
+    font-size: 2vh;
+    font-weight: 380;
   }
 
-  .borrow-button{
+  ion-button {
     --background: var( --ion-color-secondary-shade);
-    height: 4.5vh;
-    width: 9.5vh;
-    margin: 0 0;
-    font-size: 1.6vh;
+    --background-hover: var(--ion-color-secondary-shade);
+    height: 6.5vh;
+    width: 14.5vh;
+    margin-right: 0;
+    font-size: 2.4vh;
+    font-weight: 700;
+    color: white;
+    --border-radius: 1vh;
+    --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    
   }
 </style>
