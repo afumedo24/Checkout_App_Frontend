@@ -1,0 +1,91 @@
+<template>
+    <ion-card>
+        <ion-card-header>
+            <img :src="device.image" :alt="device.name"/> 
+            <ion-card-title> {{ device.name }}  borrowed successfully </ion-card-title>
+            <ion-card-subtitle> 
+                You borrowed {{ device.name }}  successfully! Click on the Button to go back to 
+                the HomePage
+            </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-router-outlet></ion-router-outlet>
+        <ion-button @click="goBackToHome()">
+            <ion-label> Go to HomePage </ion-label>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+</template>
+
+<script>
+import { IonButton, IonCard, IonCardHeader, IonImg, IonCardTitle, IonCardContent } from '@ionic/vue';
+import { useRouter } from 'vue-router';
+
+export default {
+    props: [ 'device' ],
+    components: {
+        IonButton, IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonImg, useRouter
+    },
+    data() {
+        const router = useRouter();
+        return { router };
+    },
+    methods: {
+        goBackToHome() {
+            this.router.push({ path: "/home" });
+        }
+    }
+}
+</script>
+
+<style scoped>
+
+ion-card{
+    width: 90%;
+    margin-top: 10vh;
+    margin-left: 5%;
+    padding: 2vh;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+ion-card-header{
+    justify-items: center;
+    align-items: center;
+}
+
+ion-img {
+    width: 25vh;
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+    object-fit: scale-down;
+}
+ion-card-title{
+    font-size: 4vh;
+    font-weight: bolder;
+    text-align: center;
+    color: var(--ion-color-success-shade);
+}
+
+ion-card-subtitle{
+    width: 100%;
+    font-size: 2.2vh;
+    font-weight: 400;
+    font-display: block;
+    text-align: center;
+    text-transform: none;
+}
+ion-card-content{
+    display: grid;
+}
+
+ion-button {
+    width: 20vh;
+    height: 6vh;  
+    margin: auto;
+    font-size: 2vh;
+    --background: var(--ion-color-secondary-shade);
+    text-transform: none;
+    --border-radius: 1vh;
+    --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+</style>

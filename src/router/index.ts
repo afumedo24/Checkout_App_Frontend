@@ -34,6 +34,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/UserPage.vue'),
 
       },
+      /* For the SuccessPage
+      {
+        path: '/borrow/:id',
+        component: () => import('../views/SucessPage.vue'),
+      }, 
+      */
     ],
   },
 ]

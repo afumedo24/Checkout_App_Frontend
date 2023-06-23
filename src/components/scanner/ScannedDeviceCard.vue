@@ -1,21 +1,21 @@
 <template>
     <!-- ein IonCard soll die Informationen von dem gescannte Device darstellen -->
     <ion-card>
-        <ion-img :alt="devicetitle" :src="deviceimage" />
+        <ion-img :alt="device.name" :src="device.image" />
         <ion-card-header>
-          <ion-card-title>{{ devicetitle }}</ion-card-title>
+          <ion-card-title>{{ device.name }}</ion-card-title>
           <!-- hier wird die class dynamisch zugewiesen damit wir die entsprechende Farbe bekommen -->
-          <ion-card-subtitle :class="devicestatus  === 1 ? 'status-green' : 'status-red'"> {{ dv_status }} </ion-card-subtitle>
+          <ion-card-subtitle :class="device.status  === 1 ? 'status-green' : 'status-red'"> {{ dv_status }} </ion-card-subtitle>
         </ion-card-header>
 
         <ion-toolbar> 
         <div class="btn-container"> 
-            <!-- $router.back bricht den Scan Vorgang ab und leitet uns an der HmePage weiter bzw. die letzte Seite -->
-            <ion-button class="cancel-btn" @click="$router.back()">
+            <!-- $router.push() bricht den Scan Vorgang ab und leitet uns an der HmePage weiter bzw. die letzte Seite -->
+            <ion-button class="cancel-btn" @click="this.$router.push('home')">
                 <ion-label> Cancel </ion-label>
             </ion-button>
 
-            <ion-button :disabled="isDisabled" @click="borrow()" class="ok-btn" >
+            <ion-button :disabled="isDisabled" @click="borrowDevice()" class="ok-btn" >
                 <ion-label> Borrow  </ion-label>
             </ion-button>
         </div>
@@ -28,11 +28,12 @@
 import {
     IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar,
 } from '@ionic/vue';
+import axios from 'axios';
 
 export default {
-    props: [ 'devicetitle', 'deviceimage', 'devicestatus' ],
+    props: [ 'device' ],
     components: {
-        IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar
+        IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar, axios
     },
     data() {
         const dv_status =  '';
@@ -40,15 +41,26 @@ export default {
         return { dv_status, isDisabled }; 
     },
     methods: {
-        borrow() {
-            console.log("Borrowing Device: " + this.devicetitle );
+        //method for changing the device status first prototype
+        async borrowDevice() {
+            console.log("Borrowing Device: " + this.device.name );
+
+            const apiUrl = 'http://localhost:8300/api/devices/' + this.device.id; 
+
+            try{
+                const res = await axios.put(apiUrl, { status: 2 });
+                console.log(res.data);
+            }
+            catch(err) {
+                console.log(err);
+            }
         },
     },
     // damit wir den Device Status in einem Wort umwandeln 
     // und falls nicht ausleihbar den Button deaktivieren
     beforeUpdate() {
 
-            if(this.devicestatus === 1){
+            if(this.device.status === 1){
                 this.dv_status = 'Verfügbar';
                 this.isDisabled = false;
             }
@@ -67,10 +79,11 @@ export default {
 ion-card{
     margin-top: 10vh;
     padding: 2vh;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    --box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
-img{
-
+ion-img{
+    width: 80%;
+    margin-left: 10%;
     object-fit: contain;
 }
 
@@ -101,12 +114,16 @@ ion-toolbar{
     --background: var(--ion-color-danger);
     width: 13vh;
     height: 6vh;  
+    --border-radius: 1vh;
+    --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .ok-btn{
     --background: var(--ion-color-success);
     width: 13vh;
     height: 6vh;  
+    --border-radius: 1vh;
+    --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 ion-label{

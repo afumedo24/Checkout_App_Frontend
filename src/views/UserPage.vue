@@ -1,7 +1,7 @@
 <template>
   <ion-page>
       <ion-content >
-          <user-login > 
+          <user-login> 
             
           </user-login>
       </ion-content>

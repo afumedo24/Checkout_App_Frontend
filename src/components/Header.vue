@@ -1,6 +1,6 @@
 <template>
     <ion-toolbar>
-        <ion-avatar slot="start"> 
+        <ion-avatar> 
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/NFC_logo.svg/2000px-NFC_logo.svg.png"/>
         </ion-avatar>
         <ion-title> Checkout App </ion-title>

@@ -1,5 +1,5 @@
 <template>
-  <ion-card-content  v-if="loggedUser">  <!-- hier habe ich was verandert, ist dasselbe wie was du hier vorher stehen hattest -->
+  <ion-card-content  v-if="loggedUser != 0"> 
       <ion-list  class="user-text">
           <ion-item>
                 <h2 class="waviy">
@@ -11,7 +11,7 @@
 
 
 
-  <ion-card class="user-list" v-if="!loggedUser"> <!-- hier habe ich was verandert damit die Einloggen funktion verschwendet  -->
+  <ion-card class="user-list"> <!-- v-if="!loggedUser" damit das Einloggen Card  verschwindet  -->
     <ion-card-header>
       <ion-card-title class="title">Zum Konto Einlogen</ion-card-title>
       <ion-card-subtitle class="subtitle">Bitte NFC-TAG scannen!</ion-card-subtitle>
@@ -69,7 +69,7 @@
    
     async signOut()
     {   
-        this.loggedUser = null;
+        this.loggedUser = 0;
 
       
     }

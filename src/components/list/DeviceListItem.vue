@@ -7,12 +7,13 @@
           <h2> {{ device.name }} </h2>
           <p :class="device.status === 1 ? 'status-green' : 'status-red'"> {{ displaystatus(device.status) }}</p>
         </ion-label>
-        <ion-button class="borrow-button" slot="end" @click="borrowDevice(device)"> Borrow </ion-button>
+          <ion-button @click="borrowDevice()" class="borrow-button"  slot="end"> Borrow </ion-button>
       </ion-item>
 </template>
 
 <script>
 import { IonItem, IonLabel, IonThumbnail, IonImg } from '@ionic/vue';
+import axios from 'axios';
 
 export default {
   props: ['device'],
@@ -20,13 +21,31 @@ export default {
     IonImg, 
     IonItem, 
     IonLabel , 
-    IonThumbnail,
+    IonThumbnail, axios
   },
+
   methods: {
-    borrowDevice(device) {
-      // Implement your borrowing functionality here
-      console.log('Borrowing device:', device.name);
+    borrowFunction() {
+      this.$router.push({ path: `borrow/${this.device.id}`});
     },
+     //method for changing the device status first prototype
+     async borrowDevice() {
+            console.log("Borrowing Device: " + this.device.name );
+
+            const apiUrl = 'http://localhost:8300/api/devices/' + this.device.id; 
+
+            try{
+                const res = await axios.put(apiUrl, { status: 2 });
+                console.log(res.data);
+                if(res === 'Success'){
+              this.$router.push({ path: `borrow/${this.device.id}`});
+            }
+            }
+            catch(err) {
+                console.log(err);
+            }
+        },
+
   },
   computed: {
     

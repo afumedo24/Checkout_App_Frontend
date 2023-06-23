@@ -3,9 +3,7 @@
     <ion-page>
         <ion-content>
             <scanned-device-card 
-                :devicetitle="scannedDevice.name" 
-                :deviceimage="scannedDevice.image"
-                :devicestatus="scannedDevice.status">
+                :device="this.scannedDevice">
             </scanned-device-card>
         </ion-content>
       </ion-page>
@@ -53,16 +51,6 @@ export default {
                     .then((response) => {
                     this.scannedDevice = response.data;
                     console.log('Device Data:', this.scannedDevice);
-
-                    //turns the device status attribute into a word 
-                    if(this.scannedDevice.status === 1)
-                    {
-                        this.devicestatus = 'Verfügbar';
-                    }
-                    else 
-                    {
-                        this.devicestatus = 'Nicht Verfügbar';
-                    }
 
                     
                     })

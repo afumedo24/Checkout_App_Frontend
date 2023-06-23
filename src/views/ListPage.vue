@@ -10,6 +10,7 @@
 import { IonContent, IonPage } from '@ionic/vue';
 import DeviceList from '@/components/list/DeviceList.vue';
 import axios from 'axios';
+import { ref } from 'vue';
 
 
 
@@ -18,12 +19,12 @@ export default {
     IonContent,
     IonPage,
     DeviceList,
-    axios
+    axios, ref
   },
   data() {
-    
+    const devices = ref('');
     return {
-      devices: [],
+      devices,
     };
   },
 
