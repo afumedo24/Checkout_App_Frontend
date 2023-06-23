@@ -1,11 +1,11 @@
 <template>
     <!-- ein IonCard soll die Informationen von dem gescannte Device darstellen -->
     <ion-card>
-        <img :alt="devicetitle" :src="deviceimage" />
+        <ion-img :alt="devicetitle" :src="deviceimage" />
         <ion-card-header>
           <ion-card-title>{{ devicetitle }}</ion-card-title>
           <!-- hier wird die class dynamisch zugewiesen damit wir die entsprechende Farbe bekommen -->
-          <ion-card-subtitle :class="devicestatus  === 'Verfügbar' ? 'status-green' : 'status-red'"> {{ devicestatus }} </ion-card-subtitle>
+          <ion-card-subtitle :class="devicestatus  === 1 ? 'status-green' : 'status-red'"> {{ dv_status }} </ion-card-subtitle>
         </ion-card-header>
 
         <ion-toolbar> 
@@ -15,7 +15,7 @@
                 <ion-label> Cancel </ion-label>
             </ion-button>
 
-            <ion-button class="ok-btn" >
+            <ion-button :disabled="isDisabled" @click="borrow()" class="ok-btn" >
                 <ion-label> Borrow  </ion-label>
             </ion-button>
         </div>
@@ -33,6 +33,30 @@ export default {
     props: [ 'devicetitle', 'deviceimage', 'devicestatus' ],
     components: {
         IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar
+    },
+    data() {
+        const dv_status =  '';
+        const isDisabled = false;
+        return { dv_status, isDisabled }; 
+    },
+    methods: {
+        borrow() {
+            console.log("Borrowing Device: " + this.devicetitle );
+        },
+    },
+    // damit wir den Device Status in einem Wort umwandeln 
+    // und falls nicht ausleihbar den Button deaktivieren
+    beforeUpdate() {
+
+            if(this.devicestatus === 1){
+                this.dv_status = 'Verfügbar';
+                this.isDisabled = false;
+            }
+            else {
+                this.dv_status = 'Nicht Verfügbar';
+                this.isDisabled = true;
+            
+            }
     }
 }
 </script>
@@ -44,6 +68,10 @@ ion-card{
     margin-top: 10vh;
     padding: 2vh;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+img{
+
+    object-fit: contain;
 }
 
 ion-card-header{

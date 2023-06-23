@@ -17,12 +17,12 @@
                       
 
                   </ion-card-content>
-                  
                   <ion-card-content >
                       
                       <ion-button @click="signUp" class="borrow-button"> LOGIN </ion-button>
                   </ion-card-content>
               </ion-card>
+              <h2> Welcome {{ loggedUser.FullName }}</h2>
           <!--ion-datetime></ion-datetime-->
       </ion-content>
     </ion-page>
@@ -42,7 +42,7 @@ components: {
       const userID = '';
         return{
           userID,
-          loggedUser: []
+          loggedUser: [],
         }
     },
     methods: {
@@ -53,6 +53,7 @@ components: {
         await axios.get(apiUrl)
          .then((response) => {
           this.loggedUser = response.data;
+          UserIsLogged  = true;
           console.log('User Data:', this.loggedUser);
         })
          .catch((err) => {

@@ -1,10 +1,11 @@
 <template>
-  <ion-list class="device-list">
-    <device-list-item 
-    v-for="device in devices"
-    :key="device.id"
-    :device="device">
 
+  <ion-list>
+    <h2 class="title"> Alle Geräte </h2>
+    <device-list-item 
+      v-for="device in devices"
+       :key="device.id"
+       :device="device">
     </device-list-item>
   </ion-list>
 </template>
@@ -13,7 +14,7 @@
 import { IonList } from '@ionic/vue'
 import DeviceListItem from './DeviceListItem.vue'
 export default {
-    props: [ 'devices' ],
+  props: [ 'devices' ],
   components: { IonList, DeviceListItem },
 
 }
@@ -21,16 +22,23 @@ export default {
 
 <style scoped>
 
-.device-list {
-    display: block;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 90%;
-    margin-top: 5%;
-    margin-left: 5%;
-    background-color: grey;
-    border-radius: 20px;
-    
-  }
+ion-list {
+  display: block;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 90%;
+  margin-top: 20%;
+  margin-left: 5%;
+  background-color: #D9D9D9;
+  border-radius: 15px 15px 0px 0px;
+  
+}
+.title{
+  font-size: 4vh;
+  font-weight: bolder;
+  margin-left: 2vh;
+}
+
+
   
 </style>
