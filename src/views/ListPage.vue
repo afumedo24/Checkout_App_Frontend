@@ -2,12 +2,23 @@
   <ion-page>
     <ion-content>
       <device-list :devices="devices"></device-list> 
+
+<!-- 
+      <ion-infinite-scroll @ionInfinite="loadData()" :disabled="allDevicesLoaded">
+        <ion-infinite-scroll-content
+          loading-text="Loading more devices..."
+          :finished-text="allDevicesLoaded ? 'All devices loaded' : ''"
+        ></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
+      <ion-spinner v-if="isLoading"></ion-spinner>
+-->
     </ion-content>
 </ion-page>
 </template>
 
 <script>
-import { IonContent, IonPage } from '@ionic/vue';
+import { IonContent, IonPage, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/vue';
 import DeviceList from '@/components/list/DeviceList.vue';
 import axios from 'axios';
 import { ref } from 'vue';
@@ -18,11 +29,12 @@ export default {
   components: {
     IonContent,
     IonPage,
-    DeviceList,
+    DeviceList, IonInfiniteScroll, IonInfiniteScrollContent,
     axios, ref
   },
   data() {
     const devices = ref('');
+
     return {
       devices,
     };
@@ -33,12 +45,7 @@ export default {
   },
 
   methods: {
-
-    borrowDevice(device) {
-      // Implement your borrowing functionality here
-      console.log('Borrowing device:' + device.name);
-    },
-
+    
     async loadDevices() {
       const apiUrl = 'http://localhost:8300/api/devices'; 
 

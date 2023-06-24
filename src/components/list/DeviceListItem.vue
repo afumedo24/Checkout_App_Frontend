@@ -25,6 +25,7 @@ export default {
   },
 
   methods: {
+    //delete it later 
     borrowFunction() {
       this.$router.push({ path: `borrow/${this.device.id}`});
     },

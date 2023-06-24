@@ -106,10 +106,6 @@ export default {
 
 
     }, 
-    borrowDevice(device) {
-      // Implement your borrowing functionality here
-      console.log('Borrowing device:' + device.name);
-    },
 
     loadDevices() {
       const apiUrl = 'http://localhost:8300/api/devices'; 
@@ -131,50 +127,4 @@ export default {
 </script>
 
 <style scoped>
-.device-list {
-  display: block;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  width: 90%;
-  margin-top: 5%;
-  margin-left: 5%;
-  background-color: #D9D9D9;
-  border-radius: 20px;
-  
-}
-.device-item {
-  padding: 10px;
-  border-block-end: 1px solid #7E7E7E;
-  display: block;
-  background-color: #D9D9D9;
-  object-fit: cover; 
-}
-
-.device-item img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.status-green{
-color: var(--ion-color-success);
-}
-.status-red{
-  color: var(--ion-color-danger);
-}
-.borrow-button{
-  --background: var( --ion-color-secondary-shade);
-  height: 4.5vh;
-  width: 9.5vh;
-  margin: 0 0;
-}
-.title{
-  font-size: 28px;
-  font-weight: bolder;
-  margin-left: 10px;
-}
-
-
 </style>
