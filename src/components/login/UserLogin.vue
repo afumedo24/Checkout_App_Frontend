@@ -54,6 +54,7 @@
   methods: {
     async signUp()
     {   
+  
       const apiUrl = 'http://localhost:8300/api/users/' + this.userID; 
 
       await axios.get(apiUrl)
