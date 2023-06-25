@@ -30,7 +30,7 @@ export default {
     IonContent,
     IonPage,
     DeviceList, IonInfiniteScroll, IonInfiniteScrollContent,
-    axios, ref
+    axios, ref, 
   },
   data() {
     const devices = ref('');
@@ -46,22 +46,18 @@ export default {
 
   methods: {
     
+    // function to get all the devices from api to display the devices
     async loadDevices() {
       const apiUrl = 'http://localhost:8300/api/devices'; 
-
-      await axios.get(apiUrl)
-          .then((response) => {
+      try {
+          const response = await axios.get(apiUrl);
           this.devices = response.data;
-          //console.log(response.data);
-          console.log('Devices:', this.devices);
-          // Do something with the device data in your app
-          })
-          .catch((err) => {
+      } catch(err) {
           console.error(err);
-          // Handle error scenarios in your app
-          });
-    },
+      }
+    }
   }
+
 }
 </script>
 

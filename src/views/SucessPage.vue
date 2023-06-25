@@ -8,6 +8,7 @@
 
 <script>
 import SuccessfullCard from '../components/success/SuccessfullCard.vue'
+import { ref } from 'vue';
 import axios from 'axios';
 
 
@@ -17,9 +18,10 @@ export default {
     },
     data() {
         const id = this.$route.params.id;
-        return { id, device: [] }
+        const device = ref('');
+        return { id, device }
     },
-    beforeCreate() {
+    mounted() {
         this.getSingleDeviceFromApi();
     },
     methods: {

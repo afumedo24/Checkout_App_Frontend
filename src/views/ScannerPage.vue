@@ -2,9 +2,15 @@
 <template>
     <ion-page>
         <ion-content>
-            <scanned-device-card 
+
+            <base-card v-if="this.scannedDevice == 0" 
+                :message="errormessage">
+            </base-card>
+
+            <scanned-device-card v-else
                 :device="this.scannedDevice">
-            </scanned-device-card>
+             </scanned-device-card>
+
         </ion-content>
       </ion-page>
 </template>
@@ -15,22 +21,26 @@ import { ref } from "vue";
 import axios from 'axios';
 import ScanModal from '../components/scanner/ScanModal.vue';
 import ScannedDeviceCard from '../components/scanner/ScannedDeviceCard.vue';
+import BaseCard from '@/components/scanner/BaseCard.vue';
 
 
 
 export default {
     components: {
-         IonContent, ref, ScanModal,  modalController, IonPage, ScannedDeviceCard, axios
+         IonContent, ref, ScanModal,  modalController, IonPage, ScannedDeviceCard, BaseCard, axios
     },
     data() {
+
         const decodedText = ref("");
         const scannedDevice = ref("");
-        var devicestatus = '';
-        //let ScanWasSucessful = true;
-      
+        const errormessage =  '';
 
-        return { decodedText, scannedDevice, devicestatus, };
+        return { decodedText, scannedDevice, errormessage };
     },
+    mounted() {
+        this.openModal();
+    },
+
     methods: {
         
         // opens the ScanModal for scanning the Qr-Code
@@ -43,33 +53,28 @@ export default {
 
             const { data, role } = await modal.onWillDismiss();
             if(role === 'confirm') {
-                this.decodedText = data.result;
+                this.decodedText = data.result;  
+                this.getDevice(this.decodedText);
 
-                const apiUrl = 'http://localhost:8300/api/devices/' + this.decodedText; 
-
-                await axios.get(apiUrl)
-                    .then((response) => {
-                    this.scannedDevice = response.data;
-                    console.log('Device Data:', this.scannedDevice);
-
-                    
-                    })
-                    .catch((err) => {
-                        console.error(err.message);
-                        console.error(err);
-                    });
             }
             else {
-               // ScanWasSucessful = false;
-                this.decodedText = 'Nothing Found to Scan';
+                this.decodedText = null ;
             }
         },
 
-    },
-    mounted() {
-        this.openModal();
-    },
+          // method for requesting data for a device from the api
+          async getDevice(device_id) {
+            const apiUrl = 'http://localhost:8300/api/devices/' + device_id; 
 
+            await axios.get(apiUrl).then((response) => {
+                this.scannedDevice = response.data;
+            }).catch((err) => {
+                if(err.response.statusText === 'Not Found')
+                this.errormessage = ("Error: QR-Code nicht gefunden" );
+                console.error(err);
+            });
+        },
+    },
 };
  
 </script>

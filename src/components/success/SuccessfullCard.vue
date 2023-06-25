@@ -1,15 +1,24 @@
 <template>
     <ion-card>
-        <ion-card-header>
-            <img :src="device.image" :alt="device.name"/> 
-            <ion-card-title> {{ device.name }}  borrowed successfully </ion-card-title>
+        <img :src="device.image" :alt="device.name"/> 
+
+        <ion-card-header v-if="device.status == 2">
+            <ion-card-title class="borrow-title"> {{ device.name }}  borrowed successfully </ion-card-title>
             <ion-card-subtitle> 
                 You borrowed {{ device.name }}  successfully! Click on the Button to go back to 
                 the HomePage
             </ion-card-subtitle>
         </ion-card-header>
+
+        <ion-card-header v-else>
+            <ion-card-title class="give-back-title"> {{ device.name }}  brought back successfully </ion-card-title>
+            <ion-card-subtitle> 
+                You gave {{ device.name }}  successfully back! Click on the Button to go back to 
+                the HomePage
+            </ion-card-subtitle>
+        </ion-card-header>
+
         <ion-card-content>
-            <ion-router-outlet></ion-router-outlet>
         <ion-button @click="goBackToHome()">
             <ion-label> Go to HomePage </ion-label>
         </ion-button>
@@ -32,9 +41,11 @@ export default {
     },
     methods: {
         goBackToHome() {
-            this.router.push({ path: "/home" });
+            this.$router.push({ path: "/home" });
         }
+
     }
+
 }
 </script>
 
@@ -46,6 +57,7 @@ ion-card{
     margin-left: 5%;
     padding: 2vh;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    
 }
 
 ion-card-header{
@@ -63,7 +75,14 @@ ion-card-title{
     font-size: 4vh;
     font-weight: bolder;
     text-align: center;
+}
+
+.borrow-title {
     color: var(--ion-color-success-shade);
+}
+
+.give-back-title {
+    color: var(--ion-color-warning-shade);
 }
 
 ion-card-subtitle{

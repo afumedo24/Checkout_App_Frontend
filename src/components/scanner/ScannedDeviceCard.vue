@@ -1,23 +1,28 @@
 <template>
-    <!-- ein IonCard soll die Informationen von dem gescannte Device darstellen -->
-    <ion-card>
+    <!-- IonCard should display the information from the scanned device -->
+    <ion-card class="success-card">
         <ion-img :alt="device.name" :src="device.image" />
         <ion-card-header>
           <ion-card-title>{{ device.name }}</ion-card-title>
-          <!-- hier wird die class dynamisch zugewiesen damit wir die entsprechende Farbe bekommen -->
-          <ion-card-subtitle :class="device.status  === 1 ? 'status-green' : 'status-red'"> {{ dv_status }} </ion-card-subtitle>
+          <!-- here the class is dynamically assigned so that we get the appropriate color -->
+          <ion-card-subtitle :class="device.status  === 1 ? 'status-green' : 'status-red'"> {{ device_status_word }} </ion-card-subtitle>
         </ion-card-header>
 
         <ion-toolbar> 
         <div class="btn-container"> 
-            <!-- $router.push() bricht den Scan Vorgang ab und leitet uns an der HmePage weiter bzw. die letzte Seite -->
-            <ion-button class="cancel-btn" @click="this.$router.push('home')">
+            <!-- $router.push(), cancels the borrowing process up and redirects us to the HomePage -->
+            <ion-button @click="this.$router.push('home')" class="cancel-btn btn-class">
                 <ion-label> Cancel </ion-label>
             </ion-button>
-
-            <ion-button :disabled="isDisabled" @click="borrowDevice()" class="ok-btn" >
+            <!-- v-if, like a normal if-statement, checks which button we should render -->  
+            <ion-button v-if="isAvailable"  @click="borrowDevice()" class="borrow-btn btn-class" >
                 <ion-label> Borrow  </ion-label>
             </ion-button>
+            <!-- is rendered if v-if=false -->
+            <ion-button v-else @click="giveBackDevice()" class="give-back-btn btn-class" >
+                <ion-label> Give Back  </ion-label>
+            </ion-button>
+
         </div>
         </ion-toolbar> 
        
@@ -36,48 +41,65 @@ export default {
         IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar, axios
     },
     data() {
-        const dv_status =  '';
-        const isDisabled = false;
-        return { dv_status, isDisabled }; 
+        const device_status_word =  '';         
+        const isAvailable = true;
+        return { device_status_word, isAvailable }; 
     },
-    methods: {
-        //method for changing the device status first prototype
-        async borrowDevice() {
-            console.log("Borrowing Device: " + this.device.name );
+    
+    // to translate the Device Status from a num to a word
+    // and render the right buttons for the necessary action
+    mounted() {
 
-            const apiUrl = 'http://localhost:8300/api/devices/' + this.device.id; 
+        if(this.device.status === 1){
+            this.device_status_word = 'Verfügbar';
+            this.isAvailable = true;
+        }
+        else {
+            this.device_status_word = 'Nicht Verfügbar';
+            this.isAvailable = false;
+
+        }
+    },
+
+    methods: {
+
+        // method for sending a update request to the api
+        async updateDeviceStatus(device, newstatus) {
+            const apiUrl = 'http://localhost:8300/api/devices/' + device.id; 
 
             try{
-                const res = await axios.put(apiUrl, { status: 2 });
-                console.log(res.data);
+                const response = await axios.put(apiUrl, { status: newstatus });
+                console.log(response.data);
+
+                // redirect us to the next page
+                // after a succesfull scan
+                this.$router.push('/borrow/' + this.device.id);     
             }
             catch(err) {
                 console.log(err);
             }
         },
-    },
-    // damit wir den Device Status in einem Wort umwandeln 
-    // und falls nicht ausleihbar den Button deaktivieren
-    beforeUpdate() {
 
-            if(this.device.status === 1){
-                this.dv_status = 'Verfügbar';
-                this.isDisabled = false;
-            }
-            else {
-                this.dv_status = 'Nicht Verfügbar';
-                this.isDisabled = true;
-            
-            }
-    }
+        //method for borrowing the device 
+        borrowDevice() {
+            console.log("Borrowing Device: " + this.device.name );
+            this.updateDeviceStatus(this.device, 2)
+        },
+
+        //method for bringing back the device
+        giveBackDevice() {
+            console.log("Giving Device back: " + this.device.name );
+            this.updateDeviceStatus(this.device, 1);
+        },
+    },
 }
 </script>
 
 <style scoped>
 
 
-ion-card{
-    margin-top: 10vh;
+.success-card {
+    margin-top: 11vh;
     padding: 2vh;
     --box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
@@ -110,20 +132,23 @@ ion-toolbar{
     align-items: center;
 }
 
-.cancel-btn{
-    --background: var(--ion-color-danger);
+.btn-class {
     width: 13vh;
     height: 6vh;  
     --border-radius: 1vh;
     --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
-.ok-btn{
+.cancel-btn{
+    --background: var(--ion-color-danger);
+}
+
+.borrow-btn{
     --background: var(--ion-color-success);
-    width: 13vh;
-    height: 6vh;  
-    --border-radius: 1vh;
-    --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.give-back-btn {
+    --background: var(--ion-color-warning);
 }
 
 ion-label{
