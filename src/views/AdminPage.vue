@@ -119,16 +119,17 @@ components: {
   font-size: 4vh;
   font-weight: bold;
   margin-left: 2vh;
-  margin-bottom: 0.8vh;
+  margin-bottom: 0.4vh;
   text-align: center;
+  color: var(--ion-color-secondary-contrast);
 }
 .subtitle{
   font-size: 3vh;
   font-weight: bold;
   margin-left: 2vh;
-  margin-bottom: 0.6vh;
+  margin-bottom: 0.2vh;
   text-align: center;
-  color: --ion-color-danger;
+  color: var(--ion-color-danger);
 }
 
 .borrow-button {

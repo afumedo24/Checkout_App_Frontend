@@ -111,7 +111,8 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
   font-weight: bold;
   margin-left: 2vh;
   margin-bottom: 4vh;
-  text-align: center;
+  text-align: center;^
+  color: var(--ion-color-secondary-contrast);
 }
 .subtitle{
   font-size: 3vh;
@@ -119,7 +120,7 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
   margin-left: 2vh;
   margin-bottom: 4vh;
   text-align: center;
-  color: --ion-color-danger;
+  color: var(--ion-color-danger);
 }
 
 .login-button {
