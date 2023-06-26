@@ -13,24 +13,25 @@
 
   <ion-card class="user-list"> <!-- v-if="!loggedUser" damit das Einloggen Card  verschwindet  -->
     <ion-card-header>
-      <ion-card-title class="title">Zum Konto Einlogen</ion-card-title>
-      <ion-card-subtitle class="subtitle">Bitte NFC-TAG scannen!</ion-card-subtitle>
+      <ion-card-title class="title">Zum Konto Einlogen
+        <ion-card-subtitle class="subtitle">Bitte NFC-TAG scannen!</ion-card-subtitle>
+      </ion-card-title>
     </ion-card-header>
           
     <ion-card-content>
-      <ion-list  class="user-item">
+      <ion-list  class="user-item" >
         <ion-item>
-          <ion-input v-model="userID" labelPlacement="standard" placeholder="User" ></ion-input>
+          <ion-input v-model="userID" labelPlacement="standard" placeholder="User"></ion-input>
         </ion-item>
       </ion-list>
     </ion-card-content>
                     
     <ion-card-content>
-      <ion-button @click="signUp" class="borrow-button"> LOGIN </ion-button>
+      <ion-button @click="signUp" class="borrow-button"> <h2 class="subtitle-button" >LOGIN</h2> </ion-button>
     </ion-card-content>
   </ion-card>
   
-  <ion-button @click="signOut" class="logout-button"> LOGOUT </ion-button>
+  <ion-button @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button>
                 
 </template>
   
@@ -77,7 +78,7 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
     flex-wrap: wrap;
     justify-content: flex-start;
     width: 60%;
-    margin-top: 10%;
+    margin-top: 15vh;
     margin-left: 20%;
     background-color: #aaa8a8;
     border-radius: 20px;
@@ -94,18 +95,21 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
     background-color: #aaa8a8;
     border-radius: 4.5vh;
     text-align: center;
+  
     
   }
   .user-item {
     padding: 10px;
     display: block;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-start;
     width: 90%;
-    margin-top: 5%;
+    height: 7vh;
+    margin-top: 2%;
     margin-left: 5%;
-    color: #D9D9D9;
+    color: --ion-color-medium-shade;
     border-radius: 20px;
+    
    
   }
   
@@ -124,10 +128,12 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
     color: var(--ion-color-danger);
   }
   .borrow-button{
-      
+    margin-top: 3%;
+    margin-bottom: 3%;
     --background: var( --ion-color-secondary-shade);
     height: 4.5vh;
-    width: 9.5vh;
+    width: 5vw;
+    
   }
   .logout-button{
     --background: var( --ion-color-danger);
@@ -138,14 +144,22 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
     margin-top: 5%;
   }
   .title{
-    font-size: 28px;
+    font-size: 2vw;
     font-weight: bolder;
-    margin-left: 10px;
+    margin-left: center;
+    margin-top: 2%;
+    height: 5vh;
   }
   .subtitle{
-    font-size: 18px;
+    font-size: 1.1vw;
     color: var( --ion-color-danger);
-    margin-left: 10px;
+    margin-left: center;
+  }
+
+  .subtitle-button{
+
+    font-size: 1.1vw;
+    margin-left: center;
 
   }
   * {

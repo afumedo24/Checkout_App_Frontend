@@ -1,66 +1,21 @@
 <template>
-    <ion-page>
-        <ion-header> 
-            <app-header> </app-header>
-        </ion-header>
-        <ion-content >
-                <ion-card class="user-list">
-                    <ion-card-header class="title" >
-                        <ion-card-title >Zum Konto Einlogen</ion-card-title>
-                        <ion-card-subtitle style="color: red">Bitte Überprüfen Sie Ihre Daten!</ion-card-subtitle>
-                    </ion-card-header>
-                   
-  
-                    <ion-card-content>
-                        <ion-list  class="user-item" >
-                            <ion-item >
-                            <ion-input v-model="user" labelPlacement="standard" placeholder="User" ></ion-input>
-                            </ion-item>
-                        </ion-list>
-                        
-  
-                    </ion-card-content>
-                    <ion-card-content>
-                        <ion-list class="user-item">
-  
-  
-                            <ion-item >
-                            <ion-select label="Geräte" label-placement="floating" placeholder="Geräte auswählen">
-                                <ion-select-option value="">No Game Console</ion-select-option>
-                                <ion-select-option value="nes">NES</ion-select-option>
-                                <ion-select-option value="n64">Nintendo64</ion-select-option>
-                                <ion-select-option value="ps">PlayStation</ion-select-option>
-                                <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                                <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                                <ion-select-option value="snes">SNES</ion-select-option>
-                            </ion-select>
-                            </ion-item>
-  
-  
-                            
-                            
-                            
-                            <!--ion-datetime slot="start"></ion-datetime>
-                        <ion-datetime presentation="month-year"></ion-datetime>
-                            <ion-datetime slot="end"></ion-datetime-->
-                           
-  
-                        </ion-list>
-                    </ion-card-content>
-                    <ion-card-content >
-                        
-                        <ion-button v-on:click="signUp" class="borrow-button"> Senden </ion-button>
-                    </ion-card-content>
-                </ion-card>
-            <!--ion-datetime></ion-datetime-->
-        </ion-content>
-      </ion-page>
+    <ion-card-content  v-if="loggedUser != 0"> 
+      <ion-list  class="user-text">
+          <ion-item>
+                <h2 class="waviy">
+                  <span style="--i:1"> Welcome </span> <span style="--i:2"> {{ loggedUser.FullName }}</span>
+                </h2>
+          </ion-item>
+          <ion-button @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button>
+      </ion-list>
+  </ion-card-content>
   </template>
   
   <script>
   import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup} from '@ionic/vue';
   import AppHeader from '../components/Header.vue';
   import axios from 'axios';
+  import UserLogin from '../components/login/UserLogin.vue'
   
   export default {
   components: {
@@ -69,19 +24,18 @@
      
       data()
       {
-          return{
-              user:'',
-          }
-      },
-      methods:{
-      async signUp()
-      {
-          let result = await axios.get("http://localhost:8300/api/users/",{
-              user:this.user
-  
-          });
-          console.warn(result)    
-      }
+        data()
+  {
+    return{
+      userID: '',
+    }
+  }
+
+  computed: {
+    loggedUser() {
+      return this.$store.getters.getUser;
+    }
+  }
   }
   };
   
