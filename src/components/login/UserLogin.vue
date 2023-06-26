@@ -59,12 +59,15 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
   methods: {
     
     signUp() {   
-      this.$store.dispatch('userLogIn', this.userID)
+      this.$store.dispatch('Login', this.userID);
+      // this.$store.dispatch('userLogIn', this.userID);
+
     },
 
     signOut()
     {   
-      this.$store.commit('userLogIn', 0)
+      this.$store.commit('userLogIn', 0);
+      localStorage.removeItem('token');
     }
   }
 };
