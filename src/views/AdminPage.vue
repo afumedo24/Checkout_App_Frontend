@@ -5,9 +5,9 @@
       </ion-header>
       <ion-content >
               <ion-card class="user-list">
-                  <ion-card-header class="title" >
-                      <ion-card-title > Konto Einfügen</ion-card-title>
-                      <ion-card-subtitle style="color: --ion-color-danger">Bitte Überprüfen Sie die Daten!</ion-card-subtitle>
+                  <ion-card-header  >
+                      <h2 class="title"> Gerät ausleihen</h2>
+                      <h2 class="subtitle" style="color: --ion-color-danger">Bitte Überprüfen Sie die Daten!</h2>
                   </ion-card-header>
                  
 
@@ -27,13 +27,13 @@
                         
                             <ion-list  class="user-item" >
                                 <ion-item >
-                                <ion-input v-model="date" labelPlacement="standard" placeholder="Date" ></ion-input>
+                                <ion-input v-model="date" labelPlacement="standard" placeholder="Name" ></ion-input>
                                 </ion-item>
                             </ion-list>
                             
                             <ion-list  class="user-item" >
                                 <ion-item >
-                                <ion-input v-model="name" labelPlacement="standard" placeholder="Name" ></ion-input>
+                                <ion-input v-model="name" labelPlacement="standard" placeholder="Datum" ></ion-input>
                                 </ion-item>
                             </ion-list>
                       
@@ -45,7 +45,7 @@
                       <ion-button v-on:click="signUp" class="borrow-button"> Senden </ion-button>
                   </ion-card-content>
               </ion-card>
-          <!--ion-datetime></ion-datetime-->
+          
       </ion-content>
     </ion-page>
 </template>
@@ -86,53 +86,65 @@ components: {
   display: block;
   flex-wrap: wrap;
   justify-content: flex-start;
-  width: 60%;
-  margin-top: 10%;
-  margin-left: 20%;
-  background-color: #6a6a6a;
-  border-radius: 20px;
+  width: 95%;
+  margin-top: 11vh;
+  margin-left: 2.5%;
+  background-color: #D9D9D9;
+  border-radius: 1vh 1vh 0 0;
   text-align: center;
   
 }
 .user-item {
-  padding: 10px;
+    justify-content: flex-start;
+    width: 90%;
+    margin-top: 5%;
+    margin-left: 5%;
+    color: #D9D9D9;
+
+   
+  }
+.user-login {
   display: block;
   flex-wrap: wrap;
   justify-content: flex-start;
-  width: 90%;
-  margin-top: 5%;
-  margin-left: 5%;
-  color: #D9D9D9;
-  border-radius: 20px;
- 
-}
-
-.device-item img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.status-green{
-color: var(--ion-color-success);
-}
-.status-red{
-  color: var(--ion-color-danger);
-}
-.borrow-button{
-    
-  --background: var( --ion-color-secondary-shade);
-  height: 4.5vh;
-  width: 9.5vh;
+  width: 95%;
+  margin-top: 20vh;
+  margin-left: 2.5%;
+  background-color: #D9D9D9;
+  border-radius: 1vh 1vh 0 0;
+  text-align: center;
+  
 }
 .title{
-  font-size: 28px;
-  font-weight: bolder;
-  margin-left: 10px;
+  font-size: 4vh;
+  font-weight: bold;
+  margin-left: 2vh;
+  margin-bottom: 0.8vh;
+  text-align: center;
+}
+.subtitle{
+  font-size: 3vh;
+  font-weight: bold;
+  margin-left: 2vh;
+  margin-bottom: 0.6vh;
+  text-align: center;
+  color: --ion-color-danger;
 }
 
+.borrow-button {
+    --background: var( --ion-color-secondary-shade);
+    --background-hover: var(--ion-color-secondary-shade);
+    height: 5.5vh;
+    width: 12.5vh;
+    
+    font-size: 2.4vh;
+    font-weight: 700;
+    color: white;
+    --border-radius: 1vh;
+    --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    
+  }
+  
 
 
 </style>
