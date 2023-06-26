@@ -1,27 +1,20 @@
 <template>
   <ion-page>
     <ion-content>
+      <!-- 
+      <ion-refresher @ionRefresh="refeshData" slot="fixed" :pull-factor="0.3" :pull-min="50" :pull-max="100">
+        <ion-refresher-content> </ion-refresher-content>
+      </ion-refresher>
+        -->
       <device-list :devices="devices"></device-list> 
-
-<!-- 
-      <ion-infinite-scroll @ionInfinite="loadData()" :disabled="allDevicesLoaded">
-        <ion-infinite-scroll-content
-          loading-text="Loading more devices..."
-          :finished-text="allDevicesLoaded ? 'All devices loaded' : ''"
-        ></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-
-      <ion-spinner v-if="isLoading"></ion-spinner>
--->
     </ion-content>
 </ion-page>
 </template>
 
 <script>
-import { IonContent, IonPage, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/vue';
+import { IonContent, IonPage, IonRefresher, IonRefresherContent } from '@ionic/vue';
 import DeviceList from '@/components/list/DeviceList.vue';
-import axios from 'axios';
-import { ref } from 'vue';
+
 
 
 
@@ -29,35 +22,27 @@ export default {
   components: {
     IonContent,
     IonPage,
-    DeviceList, IonInfiniteScroll, IonInfiniteScrollContent,
-    axios, ref, 
+    DeviceList, IonRefresher, IonRefresherContent 
   },
-  data() {
-    const devices = ref('');
-
-    return {
-      devices,
-    };
-  },
-
+  
+  // every time we inject this page in the DOM this method is called
   mounted() {
-    this.loadDevices();
+    this.$store.dispatch('showAllDevices');   // action from store being called to fetch all Devices from api
   },
 
-  methods: {
-    
-    // function to get all the devices from api to display the devices
-    async loadDevices() {
-      const apiUrl = 'http://localhost:8300/api/devices'; 
-      try {
-          const response = await axios.get(apiUrl);
-          this.devices = response.data;
-      } catch(err) {
-          console.error(err);
-      }
-    }
-  }
+  // all devices are returned to this fucntion, which is being called above for the iteration of the list 
+  computed: {
+    devices() {
+      return this.$store.getters.getAllDevices;
+    },
 
+  },
+  methods: {
+    refeshData() {
+      console.log("refresh");
+      this.$store.dispatch('showAllDevices');  
+    }
+  },
 }
 </script>
 

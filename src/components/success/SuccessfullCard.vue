@@ -11,7 +11,7 @@
         </ion-card-header>
 
         <ion-card-header v-else>
-            <ion-card-title class="give-back-title"> {{ device.name }}  brought back successfully </ion-card-title>
+            <ion-card-title class="give-back-title"> {{ device.name }}  was brought back successfully </ion-card-title>
             <ion-card-subtitle> 
                 You gave {{ device.name }}  successfully back! Click on the Button to go back to 
                 the HomePage

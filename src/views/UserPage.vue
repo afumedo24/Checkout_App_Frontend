@@ -15,7 +15,7 @@ import UserLogin from '@/components/login/UserLogin.vue';
 export default {
 components: {
   IonPage, IonContent, IonModal, IonHeader, UserLogin
-}
+},
 };
 
 

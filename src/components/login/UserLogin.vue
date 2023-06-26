@@ -35,8 +35,7 @@
 </template>
   
   <script>
-  import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup} from '@ionic/vue';
-  import axios from 'axios';
+import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonInput, IonItem, IonList, IonPopover, IonAccordion, IonNote, IonAccordionGroup} from '@ionic/vue';
   
   export default {
   components: {
@@ -45,37 +44,29 @@
      
   data()
   {
-    const userID = '';
-      return{
-        userID,
-        loggedUser: []
-      }
+    return{
+      userID: '',
+    }
   },
-  methods: {
-    async signUp()
-    {   
-  
-      const apiUrl = 'http://localhost:8300/api/users/' + this.userID; 
 
-      await axios.get(apiUrl)
-        .then((response) => {
-        this.loggedUser = response.data;
-        console.log('User Data:', this.loggedUser);
-      })
-        .catch((err) => {
-        console.error(err.message);
-        console.error(err); 
-      });  
+  computed: {
+    loggedUser() {
+      return this.$store.getters.getUser;
     },
-   
-    async signOut()
-    {   
-        this.loggedUser = 0;
+  },
 
-      
+  methods: {
+    
+    signUp() {   
+      this.$store.dispatch('userLogIn', this.userID)
+    },
+
+    signOut()
+    {   
+      this.$store.commit('userLogIn', 0)
     }
   }
-  };
+};
   
   
   </script>

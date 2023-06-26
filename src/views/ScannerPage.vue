@@ -3,12 +3,12 @@
     <ion-page>
         <ion-content>
 
-            <base-card v-if="this.scannedDevice == 0" 
+            <base-card v-if="singledevice == 0" 
                 :message="errormessage">
             </base-card>
 
             <scanned-device-card v-else
-                :device="this.scannedDevice">
+                :device="singledevice">
              </scanned-device-card>
 
         </ion-content>
@@ -17,8 +17,6 @@
 
 <script>
 import {  IonContent,  modalController, IonPage } from '@ionic/vue'
-import { ref } from "vue";
-import axios from 'axios';
 import ScanModal from '../components/scanner/ScanModal.vue';
 import ScannedDeviceCard from '../components/scanner/ScannedDeviceCard.vue';
 import BaseCard from '@/components/scanner/BaseCard.vue';
@@ -27,18 +25,24 @@ import BaseCard from '@/components/scanner/BaseCard.vue';
 
 export default {
     components: {
-         IonContent, ref, ScanModal,  modalController, IonPage, ScannedDeviceCard, BaseCard, axios
+         IonContent, ScanModal,  modalController, IonPage, ScannedDeviceCard, BaseCard, 
     },
     data() {
-
-        const decodedText = ref("");
-        const scannedDevice = ref("");
-        const errormessage =  '';
-
-        return { decodedText, scannedDevice, errormessage };
+        return { 
+            decodedText: '' , 
+        };
     },
     mounted() {
         this.openModal();
+    },
+
+    computed: {
+        singledevice() {
+            return this.$store.getters.getSingleDevice;
+        },
+        errormessage() {
+            return this.$store.getters.errormessage;
+        }
     },
 
     methods: {
@@ -54,25 +58,11 @@ export default {
             const { data, role } = await modal.onWillDismiss();
             if(role === 'confirm') {
                 this.decodedText = data.result;  
-                this.getDevice(this.decodedText);
-
+                this.$store.dispatch('showSingleDevice', this.decodedText);
             }
             else {
                 this.decodedText = null ;
             }
-        },
-
-          // method for requesting data for a device from the api
-          async getDevice(device_id) {
-            const apiUrl = 'http://localhost:8300/api/devices/' + device_id; 
-
-            await axios.get(apiUrl).then((response) => {
-                this.scannedDevice = response.data;
-            }).catch((err) => {
-                if(err.response.statusText === 'Not Found')
-                this.errormessage = ("Error: QR-Code nicht gefunden" );
-                console.error(err);
-            });
         },
     },
 };

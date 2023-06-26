@@ -23,6 +23,13 @@ export default {
     IonHeader,
     IonPage
   },
+  created() {
+    console.log("hi htere");
+    $store.dispatch('showAllDevices');
+  },
+  mounted() {
+    console.log("hi htere mounteed");
+  },
 }
 </script>
 

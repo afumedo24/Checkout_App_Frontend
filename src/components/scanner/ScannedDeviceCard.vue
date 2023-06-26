@@ -5,7 +5,7 @@
         <ion-card-header>
           <ion-card-title>{{ device.name }}</ion-card-title>
           <!-- here the class is dynamically assigned so that we get the appropriate color -->
-          <ion-card-subtitle :class="device.status  === 1 ? 'status-green' : 'status-red'"> {{ device_status_word }} </ion-card-subtitle>
+          <ion-card-subtitle :class="device.status  === 1 ? 'status-green' : 'status-red'"> {{ displaystatus(device.status) }} </ion-card-subtitle>
         </ion-card-header>
 
         <ion-toolbar> 
@@ -48,6 +48,7 @@ export default {
     
     // to translate the Device Status from a num to a word
     // and render the right buttons for the necessary action
+    /*
     mounted() {
 
         if(this.device.status === 1){
@@ -59,10 +60,25 @@ export default {
             this.isAvailable = false;
 
         }
+    }, */
+    computed: {
+        // damit wir den Device Status in einem Wort umwandeln
+        displaystatus() {
+            return (status) => {
+                if (status === 1) {
+                    this.isAvailable = true;
+                    return 'Available';
+                }
+                else {
+                    this.isAvailable = false;
+                    return "not Available";
+                }
+            }
+    }
     },
 
     methods: {
-
+        
         // method for sending a update request to the api
         async updateDeviceStatus(device, newstatus) {
             const apiUrl = 'http://localhost:8300/api/devices/' + device.id; 
@@ -83,13 +99,15 @@ export default {
         //method for borrowing the device 
         borrowDevice() {
             console.log("Borrowing Device: " + this.device.name );
-            this.updateDeviceStatus(this.device, 2)
+            this.$store.dispatch('updateDeviceStatus', this.device)
+            //this.updateDeviceStatus(this.device, 2)
         },
 
         //method for bringing back the device
         giveBackDevice() {
             console.log("Giving Device back: " + this.device.name );
-            this.updateDeviceStatus(this.device, 1);
+            this.$store.dispatch('updateDeviceStatus', this.device)
+            //this.updateDeviceStatus(this.device, 1);
         },
     },
 }

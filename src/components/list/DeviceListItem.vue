@@ -5,9 +5,9 @@
       </ion-thumbnail>
       <ion-label>
         <h2> {{ device.name }} </h2>
-        <p :class="device.status === 1 ? 'status-green' : 'status-red'"> {{ displaystatus(device.status) }}</p>
+        <p :class="device.status == 1 ? 'status-green' : 'status-red'"> {{ displaystatus(device.status) }}</p>
       </ion-label>
-      <ion-button @click="borrowDevice()"> Borrow </ion-button>
+      <ion-button @click="borrowFunction()"> Borrow </ion-button>
     </ion-item>
 </template>
 
@@ -23,30 +23,12 @@ export default {
     IonLabel , 
     IonThumbnail, axios
   },
-
   methods: {
     //delete it later 
     borrowFunction() {
+      this.$store.dispatch('updateDeviceStatus', this.device );
       this.$router.push({ path: `borrow/${this.device.id}`});
     },
-     //method for changing the device status first prototype
-     async borrowDevice() {
-            console.log("Borrowing Device: " + this.device.name );
-
-            const apiUrl = 'http://localhost:8300/api/devices/' + this.device.id; 
-
-            try{
-                const res = await axios.put(apiUrl, { status: 2 });
-                console.log(res.data);
-                if(res === 'Success'){
-              this.$router.push({ path: `borrow/${this.device.id}`});
-            }
-            }
-            catch(err) {
-                console.log(err);
-            }
-        },
-
   },
   computed: {
     
