@@ -91,6 +91,7 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
     margin-top: 5%;
     margin-left: 5%;
     color: #D9D9D9;
+    height: 7vh;
 
    
   }
@@ -111,7 +112,7 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
   font-weight: bold;
   margin-left: 2vh;
   margin-bottom: 4vh;
-  text-align: center;^
+  text-align: center;
   color: var(--ion-color-secondary-contrast);
 }
 .subtitle{
