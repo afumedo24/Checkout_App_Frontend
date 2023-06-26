@@ -7,7 +7,7 @@
               <ion-card class="user-list">
                   <ion-card-header class="title" >
                       <ion-card-title > Konto Einfügen</ion-card-title>
-                      <ion-card-subtitle style="color: red">Bitte Überprüfen Sie die Daten!</ion-card-subtitle>
+                      <ion-card-subtitle style="color: --ion-color-danger">Bitte Überprüfen Sie die Daten!</ion-card-subtitle>
                   </ion-card-header>
                  
 
@@ -39,7 +39,7 @@
                       
 
                   </ion-card-content>
-                  +
+                  
                   <ion-card-content >
                       
                       <ion-button v-on:click="signUp" class="borrow-button"> Senden </ion-button>
