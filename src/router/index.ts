@@ -32,13 +32,8 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/ListPage.vue'),
       },
       {
-        path:'user',
-        component: () => import('../views/UserPage.vue'),
-
-      },
-      {
-        path: 'login',
-        component: () => import('../views/UserPage2.vue')
+        path: 'check',
+        component: () => import('../views/AdminPage.vue')
       },
       {
         path: '/borrow/:id',

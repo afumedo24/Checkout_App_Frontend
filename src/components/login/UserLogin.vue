@@ -1,9 +1,9 @@
 <template>
   <ion-card-content  v-if="loggedUser != 0"> 
-      <ion-list  class="user-text">
+      <ion-list  class="user-login">
           <ion-item>
                 <h2 class="waviy">
-                  <span style="--i:1"> Welcome </span> <span style="--i:2"> {{ loggedUser.FullName }}</span>
+                  <span style="--i:1;" > Welcome  {{ loggedUser.FullName }}</span>
                 </h2>
           </ion-item>
       </ion-list>
@@ -11,7 +11,7 @@
 
 
 
-  <ion-card class="user-list"> <!-- v-if="!loggedUser" damit das Einloggen Card  verschwindet  -->
+  <ion-card class="user-list" v-else> <!-- v-if="!loggedUser" damit das Einloggen Card  verschwindet  -->
     <ion-card-header>
       <ion-card-title class="title">Zum Konto Einlogen
         <ion-card-subtitle class="subtitle">Bitte NFC-TAG scannen!</ion-card-subtitle>
@@ -27,11 +27,11 @@
     </ion-card-content>
                     
     <ion-card-content>
-      <ion-button @click="signUp" class="borrow-button"> <h2 class="subtitle-button" >LOGIN</h2> </ion-button>
+      <ion-button @click="signUp" class="login-button"> <h2 class="subtitle-button"  >LOGIN</h2> </ion-button>
     </ion-card-content>
   </ion-card>
   
-  <ion-button @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button>
+  <!--ion-button @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button-->
                 
 </template>
   
@@ -74,107 +74,70 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
   
   <style scoped>
   .user-list {
-    display: block;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 60%;
-    margin-top: 15vh;
-    margin-left: 20%;
-    background-color: #aaa8a8;
-    border-radius: 20px;
-    text-align: center;
-    
-  }
-  .user-text {
-    display: block;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 60%;
-    margin-top: 12%;
-    margin-left: 20%;
-    background-color: #aaa8a8;
-    border-radius: 4.5vh;
-    text-align: center;
+  display: block;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 95%;
+  margin-top: 11vh;
+  margin-left: 2.5%;
+  background-color: #D9D9D9;
+  border-radius: 1vh 1vh 0 0;
+  text-align: center;
   
-    
-  }
-  .user-item {
-    padding: 10px;
-    display: block;
-    flex-wrap: nowrap;
+}
+.user-item {
     justify-content: flex-start;
     width: 90%;
-    height: 7vh;
-    margin-top: 2%;
+    margin-top: 5%;
     margin-left: 5%;
-    color: --ion-color-medium-shade;
-    border-radius: 20px;
-    
+    color: #D9D9D9;
+
    
   }
+.user-login {
+  display: block;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 95%;
+  margin-top: 20vh;
+  margin-left: 2.5%;
+  background-color: #D9D9D9;
+  border-radius: 1vh 1vh 0 0;
+  text-align: center;
   
-  .device-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .status-green{
-  color: var(--ion-color-success);
-  }
-  .status-red{
-    color: var(--ion-color-danger);
-  }
-  .borrow-button{
-    margin-top: 3%;
-    margin-bottom: 3%;
+}
+.title{
+  font-size: 4vh;
+  font-weight: bold;
+  margin-left: 2vh;
+  margin-bottom: 4vh;
+  text-align: center;
+}
+.subtitle{
+  font-size: 3vh;
+  font-weight: bold;
+  margin-left: 2vh;
+  margin-bottom: 4vh;
+  text-align: center;
+  color: --ion-color-danger;
+}
+
+.login-button {
     --background: var( --ion-color-secondary-shade);
-    height: 4.5vh;
-    width: 5vw;
+    --background-hover: var(--ion-color-secondary-shade);
+    height: 6.5vh;
+    width: 14.5vh;
+    
+    font-size: 2.4vh;
+    font-weight: 700;
+    color: white;
+    --border-radius: 1vh;
+    --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     
   }
-  .logout-button{
-    --background: var( --ion-color-danger);
-    height: 4.5vh;
-    width: 9.5vh;
-    margin-right: auto;
-    margin-left: 5%;
-    margin-top: 5%;
-  }
-  .title{
-    font-size: 2vw;
-    font-weight: bolder;
-    margin-left: center;
-    margin-top: 2%;
-    height: 5vh;
-  }
-  .subtitle{
-    font-size: 1.1vw;
-    color: var( --ion-color-danger);
-    margin-left: center;
-  }
+  
 
-  .subtitle-button{
 
-    font-size: 1.1vw;
-    margin-left: center;
-
-  }
-  * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background-color: #111;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
 .waviy {
   position: relative;
 }
@@ -182,11 +145,13 @@ body {
   position: relative;
   display: inline-block;
   font-size: 40px;
-  color: --ion-color-success;
+  color: blue;
   text-transform: uppercase;
   animation: flip 2s infinite;
-  animation-delay: calc(.2s * var(--i))
+  animation-delay: calc(.2s * var(--i));
+  
 }
+
 @keyframes flip {
   0%,80% {
     transform: rotateY(360deg) 
