@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-      <ion-content >
+      <ion-content>
           <user-login> 
             
           </user-login>

@@ -112,6 +112,7 @@ const store = createStore({
             }) 
         },
 
+         // get a single device from api
         async userLogIn(context, userID ) {   
     
             await axios.get("http://localhost:8300/api/users" + `/${userID}`)
@@ -122,6 +123,40 @@ const store = createStore({
                 console.error(error.message);
                 console.error(error); 
           });  
+
+        },
+        
+            // get a single device from api
+            async Login(context, userID ) {   
+    
+                await axios.post("http://localhost:8300/api/users/login", {"id": userID})
+                  .then((response) => {
+                    console.log(response.data);
+                    localStorage.setItem('token', response.data.token )
+                    context.commit('userLogIn', response.data.user);
+              }).catch((error) => {
+                    console.error(error.message);
+                    console.error(error); 
+              });  
+    
+            },
+
+                 // get a single device from api
+        async getUser(context, userID ) {   
+    
+            await axios.get("http://localhost:8300/api/users" + `/${userID}`, {
+                headers: {
+                    Authorization: 'Bearer' + localStorage.getItem('token')
+                }
+            })
+              .then((response) => {
+                console.log(response.data);
+                context.commit('userLogIn', response.data);
+          }).catch((error) => {
+                console.error(error.message);
+                console.error(error); 
+          });  
+
         },
     },
 
@@ -147,6 +182,7 @@ const store = createStore({
         },
 
         userLogIn(state, fetchedUser){
+            console.log(fetchedUser);
             state.user = fetchedUser;
         },
 

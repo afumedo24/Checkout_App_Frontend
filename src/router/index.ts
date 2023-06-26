@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import TabBar from '../components/TabBar.vue'
-import { compile } from 'vue';
-import { Component } from 'ionicons/dist/types/stencil-public-runtime';
+
 
 
 
