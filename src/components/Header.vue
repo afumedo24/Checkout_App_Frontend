@@ -4,8 +4,9 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/NFC_logo.svg/2000px-NFC_logo.svg.png"/>
         </ion-avatar>
         <ion-title> Checkout App </ion-title>
-        <ion-button @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button>
+        <ion-button slot="end" @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button>
     </ion-toolbar>
+    
 </template>
 
 <script>
@@ -63,18 +64,15 @@ ion-title{
     font-size: 3.3vh;
     font-weight: 550;
 }
-.login-button {
-    --background: var( --ion-color-danger);
-    --background-hover: var(--ion-color-secondary-shade);
-    height: 6.5vh;
-    width: 14.5vh;
-    position: absolute;
+.subtitle-button {
+    color: var(--ion-color-danger);
+    
     font-size: 2.4vh;
     font-weight: 700;
-    color: var(--ion-color-danger);
+    
     --border-radius: 1vh;
     --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    
+
   }
 
 </style>
