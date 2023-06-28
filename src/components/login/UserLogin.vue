@@ -3,7 +3,7 @@
       <ion-list  class="user-login">
           <ion-item>
                 <h2 class="waviy">
-                  <span style="--i:1;" > Welcome  {{ loggedUser.FullName }}</span>
+                  <span style="--i:1;" > Welcome  {{ loggedUser.fullname }}</span>
                 </h2>
           </ion-item>
       </ion-list>
@@ -27,7 +27,7 @@
     </ion-card-content>
                     
     <ion-card-content>
-      <ion-button @click="signUp" class="login-button"> <h2 class="subtitle-button"  >LOGIN</h2> </ion-button>
+      <ion-button @click="signUp" class="login-button"> LOGIN </ion-button>
     </ion-card-content>
   </ion-card>
   
@@ -58,10 +58,17 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
 
   methods: {
     
+    signUp() {   
+      this.$store.dispatch('Login', this.userID);
+      //this.$store.dispatch('userLogIn', this.userID);
+
+    },
+
     signOut()
     {   
       this.$store.commit('userLogIn', 0);
       localStorage.removeItem('token');
+    
     }
   }
 };

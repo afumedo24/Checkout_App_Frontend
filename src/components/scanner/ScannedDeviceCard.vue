@@ -5,24 +5,32 @@
         <ion-card-header>
           <ion-card-title>{{ device.name }}</ion-card-title>
           <!-- here the class is dynamically assigned so that we get the appropriate color -->
-          <ion-card-subtitle :class="device.status  === 1 ? 'status-green' : 'status-red'"> {{ displaystatus(device.status) }} </ion-card-subtitle>
+          <ion-card-subtitle :class="device.status  === 'Available' ? 'status-green' : 'status-red'"> {{ device.status }} </ion-card-subtitle>
         </ion-card-header>
 
         <ion-toolbar> 
         <div class="btn-container"> 
-            <!-- $router.push(), cancels the borrowing process up and redirects us to the HomePage -->
+            <!-- 
+                $router.push(), clicking the button cancels the 
+                borrowing process and redirects us to the HomePage 
+            -->
             <ion-button @click="this.$router.push('home')" class="cancel-btn btn-class">
                 <ion-label> Cancel </ion-label>
             </ion-button>
-            <!-- v-if, like a normal if-statement, checks which button we should render -->  
-            <ion-button v-if="isAvailable"  @click="borrowDevice()" class="borrow-btn btn-class" >
+            <!-- 
+                v-if, like a normal if-statement, checks which button we should render 
+                true = is borrow button
+            -->  
+            <ion-button v-if="device.status === 'Available' ? true : false"  @click="pushtoForm()" class="borrow-btn btn-class" >
                 <ion-label> Borrow  </ion-label>
             </ion-button>
-            <!-- is rendered if v-if=false -->
-            <ion-button v-else @click="giveBackDevice()" class="give-back-btn btn-class" >
+            <!-- 
+                is rendered if v-if=false 
+                flase = is Give Back button
+            -->
+            <ion-button v-else @click="pushtoForm()" class="give-back-btn btn-class" >
                 <ion-label> Give Back  </ion-label>
             </ion-button>
-
         </div>
         </ion-toolbar> 
        
@@ -40,74 +48,10 @@ export default {
     components: {
         IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar, axios
     },
-    data() {
-        const device_status_word =  '';         
-        const isAvailable = true;
-        return { device_status_word, isAvailable }; 
-    },
-    
-    // to translate the Device Status from a num to a word
-    // and render the right buttons for the necessary action
-    /*
-    mounted() {
-
-        if(this.device.status === 1){
-            this.device_status_word = 'Verfügbar';
-            this.isAvailable = true;
-        }
-        else {
-            this.device_status_word = 'Nicht Verfügbar';
-            this.isAvailable = false;
-
-        }
-    }, */
-    computed: {
-        // damit wir den Device Status in einem Wort umwandeln
-        displaystatus() {
-            return (status) => {
-                if (status === 1) {
-                    this.isAvailable = true;
-                    return 'Available';
-                }
-                else {
-                    this.isAvailable = false;
-                    return "not Available";
-                }
-            }
-    }
-    },
-
     methods: {
-        
-        // method for sending a update request to the api
-        async updateDeviceStatus(device, newstatus) {
-            const apiUrl = 'http://localhost:8300/api/devices/' + device.id; 
-
-            try{
-                const response = await axios.put(apiUrl, { status: newstatus });
-                console.log(response.data);
-
-                // redirect us to the next page
-                // after a succesfull scan
-                this.$router.push('/borrow/' + this.device.id);     
-            }
-            catch(err) {
-                console.log(err);
-            }
-        },
-
-        //method for borrowing the device 
-        borrowDevice() {
-            console.log("Borrowing Device: " + this.device.name );
-            this.$store.dispatch('updateDeviceStatus', this.device)
-            //this.updateDeviceStatus(this.device, 2)
-        },
-
-        //method for bringing back the device
-        giveBackDevice() {
-            console.log("Giving Device back: " + this.device.name );
-            this.$store.dispatch('updateDeviceStatus', this.device)
-            //this.updateDeviceStatus(this.device, 1);
+        // this method just redirects us to the form page 
+        pushtoForm() {
+            this.$router.push('/borrow/form');
         },
     },
 }

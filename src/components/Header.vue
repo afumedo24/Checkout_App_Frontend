@@ -38,6 +38,7 @@ data()
     signOut()
     {   
       this.$store.commit('userLogIn', 0)
+      localStorage.removeItem('token');
     }
   }
 }

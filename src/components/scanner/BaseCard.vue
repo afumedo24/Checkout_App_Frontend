@@ -1,4 +1,5 @@
 <template>
+    <!-- IonCard to display the information/user feedback-->
     <ion-card  class="base-card"> 
         <ion-card-header>
             <ion-card-title class="base-card-title">
@@ -9,6 +10,10 @@
             <ion-label>
                 Please press the orange Button with the QR-Code Icon on it to scan a device
             </ion-label>
+            <!-- 
+                here are the error messages displayed 
+                and we are giving the message as a property to this component
+             -->
             <ion-label class="error-message">
                 {{  message }}
             </ion-label>

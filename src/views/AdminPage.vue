@@ -1,8 +1,5 @@
 <template>
   <ion-page>
-      <ion-header> 
-          <app-header> </app-header>
-      </ion-header>
       <ion-content >
               <ion-card class="user-list">
                   <ion-card-header  >

@@ -2,7 +2,7 @@
     <ion-card>
         <img :src="device.image" :alt="device.name"/> 
 
-        <ion-card-header v-if="device.status == 2">
+        <ion-card-header v-if="device.status === 'Borrowed' ">
             <ion-card-title class="borrow-title"> {{ device.name }}  borrowed successfully </ion-card-title>
             <ion-card-subtitle> 
                 You borrowed {{ device.name }}  successfully! Click on the Button to go back to 
@@ -28,20 +28,15 @@
 
 <script>
 import { IonButton, IonCard, IonCardHeader, IonImg, IonCardTitle, IonCardContent } from '@ionic/vue';
-import { useRouter } from 'vue-router';
 
 export default {
     props: [ 'device' ],
     components: {
-        IonButton, IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonImg, useRouter
-    },
-    data() {
-        const router = useRouter();
-        return { router };
+        IonButton, IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonImg, 
     },
     methods: {
         goBackToHome() {
-            this.$router.push({ path: "/home" });
+            this.$router.push("/");
         }
 
     }
