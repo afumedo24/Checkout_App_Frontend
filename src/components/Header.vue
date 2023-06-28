@@ -1,30 +1,25 @@
 <template>
     <ion-toolbar>
-        <ion-button v-if="loggedUser !=0" slot="end" @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button>
         <ion-avatar slot="start"> 
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/NFC_logo.svg/2000px-NFC_logo.svg.png"/>
         </ion-avatar>
         <ion-title> Checkout App </ion-title>
-<<<<<<< HEAD
-       
-=======
-        <!--
+       <!--
               v-if="loggedUser != 0, checks if a user is stored in loggedUser
               if yes, then it displays the button
               if not, then it disappears
         -->
         <ion-button v-if="isLogged != 0" slot="end" @click="this.$store.dispatch('userLogout')" class="logout-button"> LOGOUT </ion-button>
->>>>>>> 8cdb0257a19b27c6d2cf123ec7b13a1b5554f9e7
+
     </ion-toolbar>
     
 </template>
 
 <script>
 import { IonToolbar, IonTitle, IonAvatar, IonButton } from '@ionic/vue';
-import { ref } from 'vue';
 export default {
   components: {
-      IonToolbar ,IonTitle, IonAvatar, IonButton, ref
+      IonToolbar ,IonTitle, IonAvatar, IonButton,
   },
 
   computed: {

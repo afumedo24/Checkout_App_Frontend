@@ -2,16 +2,9 @@
   <ion-card-content  v-if="this.loggedUser != 0"> 
       <ion-list  class="user-login">
           <ion-item>
-<<<<<<< HEAD
-                <h1  class="element">
-                  Welcome  {{ loggedUser.FullName }}
-                  <span style="--i:1;" ></span>
-                </h1>
-=======
                 <h2 class="waviy">
                   <span style="--i:1;" > Welcome  {{ loggedUser.fullname }}</span>
                 </h2>
->>>>>>> 8cdb0257a19b27c6d2cf123ec7b13a1b5554f9e7
           </ion-item>
       </ion-list>
   </ion-card-content>
@@ -34,7 +27,7 @@
     </ion-card-content>
                     
     <ion-card-content>
-      <ion-button @click="signUp" class="login-button"> LOGIN </ion-button>
+      <ion-button @click="login" class="login-button"> LOGIN </ion-button>
     </ion-card-content>
   </ion-card>
   
@@ -65,25 +58,11 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
 
   methods: {
     
-    signUp() {   
-<<<<<<< HEAD
-      //this.$store.dispatch('Login', this.userID);
-       this.$store.dispatch('userLogIn', this.userID);
-
-    },
-
-   
-=======
+    login() {   
       this.$store.dispatch('Login', this.userID);
     },
 
-    signOut()
-    {   
-      this.$store.commit('userLogIn', 0);
-      localStorage.removeItem('token');
-    
-    }
->>>>>>> 8cdb0257a19b27c6d2cf123ec7b13a1b5554f9e7
+   
   }
 };
   
