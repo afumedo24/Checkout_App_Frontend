@@ -40,7 +40,7 @@
 <script>
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList } from '@ionic/vue';
 
-//for a better Date Format
+// imported for a better Date Format
 import moment from 'moment';        
  
   

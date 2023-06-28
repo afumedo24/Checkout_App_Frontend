@@ -63,22 +63,25 @@ const store = createStore({
     */ 
     actions: {
 
-        // get all devices from api
+        /* 
+            this function sends a axios request to the backend to
+            get all devices in respsone so that we can trigger
+            the mutation showAllDevices to alter our store with the 
+            response.data
+        */
         async showAllDevices(context) {
             await axios.get(apiUrl)            
             .then( response => {
-                context.commit('showAllDevices', response.data );      // firing the showAllDevices mutations
+                // firing the showAllDevices mutations , so it can save the data in our store
+                context.commit('showAllDevices', response.data );      
             }).catch(error => {
                 console.log(error);
             })
         },
 
 
-        /*  ////////////// delelte it later //////////////
-            i dont know why but in this case we need the    
-            context.commit there as a parameter or else it will 
-            treat deviceID as the wrong Object and not send the request 
-            to the right address
+        /* 
+            write something here ////////
         */
 
         // get a single device from api
@@ -103,87 +106,40 @@ const store = createStore({
             })
         },
 
-        //delete it this is old function with only status
-        // update a single device from api
-        async updateDeviceStatus( context,  device ) {
-  
-            const newstatus = device.status == 2 ? 1 : 2;
-          
-            await axios.put( (apiUrl + `/${device.id}`), { status: newstatus })
-            .then(response => {
-                console.log(response.data);
-                this.$router.push("/borrow/form"); 
-                //router.push({ path: `borrow/${device.id}`});   
-                context.commit('updateDeviceStatus', newstatus);
-
-            }).catch(error => {
-                console.log(error);
-            }) 
-        },
-
         ////////// the function for the form
         // update a the device from api
         async borrowDevice(context, data ) {
-            // const newstatus = '';
             await axios.post("http://localhost:8300/api/device/borrow", data )
             .then(response => {
-                console.log(response.data);
-                router.push("/borrow/" + data.deviceid); 
+                this.$router.push("/borrow/" + data.deviceid); 
                 context.commit('borrowDevice', response.data);
                 
             }).catch(error => {
                 console.log(error);
             }) 
         },
+   
+        // login  user with jwt token
+        async Login(context, chipID ) {   
 
-    ///old function just the first
-         // get a single device from api
-        async userLogIn(context, userID ) {   
-    
-            await axios.get("http://localhost:8300/api/users" + `/${userID}`)
-              .then((response) => {
+            await axios.post("http://localhost:8300/api/users/login", {"chipID": chipID})
+                .then((response) => {
                 console.log(response.data);
-                context.commit('userLogIn', response.data);
-          }).catch((error) => {
+                localStorage.setItem('token', response.data.token );
+
+                context.commit('userLogIn', response.data.user);
+            }).catch((error) => {
                 console.error(error.message);
                 console.error(error); 
-          });  
+            });  
 
         },
-        
-            // login  user with jwt token
-            async Login(context, chipID ) {   
-    
-                await axios.post("http://localhost:8300/api/users/login", {"chipID": chipID})
-                  .then((response) => {
-                    console.log(response.data);
-                    localStorage.setItem('token', response.data.token );
-    
-                    context.commit('userLogIn', response.data.user);
-              }).catch((error) => {
-                    console.error(error.message);
-                    console.error(error); 
-              });  
-    
-            },
 
-                 // get a single device from api
-        async getUser(context, userID ) {   
-    
-            await axios.get("http://localhost:8300/api/users" + `/${userID}`, {
-                headers: {
-                    Authorization: 'Bearer' + localStorage.getItem('token')
-                }
-            })
-              .then((response) => {
-                console.log(response.data);
-                context.commit('userLogIn', response.data);
-          }).catch((error) => {
-                console.error(error.message);
-                console.error(error); 
-          });  
-
-        },
+        // for user logout
+        userLogout(context) {
+            context.commit('userLogIn', null );
+            localStorage.removeItem('token');
+        }
     },
 
 
@@ -194,7 +150,6 @@ const store = createStore({
     mutations: {
 
         showAllDevices(state, fetchedDevices) {
-            
             state.devices = [...state.devices, ...fetchedDevices];
         },
 
@@ -202,11 +157,8 @@ const store = createStore({
             state.singledevice = fetchedDevice;
         },
 
-        updateDeviceStatus(state, id, newstatus) {
-            //state.device.status = newstatus;
-            console.log(state.singledevice);
-        },
         borrowDevice(state, data){
+            //vllt kann ich da nochmal fetchen ?????
             console.log(data);
         },
 

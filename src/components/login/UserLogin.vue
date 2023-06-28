@@ -1,5 +1,5 @@
 <template>
-  <ion-card-content  v-if="loggedUser != 0"> 
+  <ion-card-content  v-if="this.loggedUser != 0"> 
       <ion-list  class="user-login">
           <ion-item>
                 <h2 class="waviy">
@@ -60,8 +60,6 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
     
     signUp() {   
       this.$store.dispatch('Login', this.userID);
-      //this.$store.dispatch('userLogIn', this.userID);
-
     },
 
     signOut()
