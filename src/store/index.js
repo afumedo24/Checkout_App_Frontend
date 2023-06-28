@@ -1,10 +1,9 @@
 
 import { createStore } from 'vuex'
-import axios from 'axios';
+import AxiosReq from '../helpers/axios/axios.config'
 import router from '@/router';
 import VueJwtDecode from 'vue-jwt-decode';
 
-const apiUrl = "http://localhost:8300/api/devices";
 
 // Create a new store instance.
 const store = createStore({
@@ -70,7 +69,7 @@ const store = createStore({
             response.data
         */
         async showAllDevices(context) {
-            await axios.get(apiUrl)            
+            await AxiosReq.get('/devices')            
             .then( response => {
                 // firing the showAllDevices mutations , so it can save the data in our store
                 context.commit('showAllDevices', response.data );      
@@ -86,7 +85,7 @@ const store = createStore({
 
         // get a single device from api
         async showSingleDevice(context, deviceID) {
-            await axios.get(apiUrl + `/${deviceID}`)
+            await AxiosReq.get(`/devices/${deviceID}`)
             .then( response => {
                 context.commit('showSingleDevice', response.data);      // firing the showSingleDevice mutation     
             }).catch( error => {
@@ -109,9 +108,9 @@ const store = createStore({
         ////////// the function for the form
         // update a the device from api
         async borrowDevice(context, data ) {
-            await axios.post("http://localhost:8300/api/device/borrow", data )
+            await AxiosReq.post('/device/borrow', data )
             .then(response => {
-                this.$router.push("/borrow/" + data.deviceid); 
+                router.push("/borrow/" + data.deviceid); 
                 context.commit('borrowDevice', response.data);
                 
             }).catch(error => {
@@ -122,7 +121,7 @@ const store = createStore({
         // login  user with jwt token
         async Login(context, chipID ) {   
 
-            await axios.post("http://localhost:8300/api/users/login", {"chipID": chipID})
+            await AxiosReq.post('/users/login', {"chipID": chipID})
                 .then((response) => {
                 console.log(response.data);
                 localStorage.setItem('token', response.data.token );
