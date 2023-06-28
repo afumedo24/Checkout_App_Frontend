@@ -34,8 +34,14 @@ const routes: Array<RouteRecordRaw> = [
         path: 'check',
         component: () => import('../views/AdminPage.vue')
       },
+      // delete it later
       {
-        path: '/borrow/:id',
+        path: 'borrow/form',
+        component: () => import('../views/FormPage.vue')
+      },
+
+      {
+        path: 'borrow/:id',
         component: () => import('../views/SucessPage.vue'),
       }, 
     ],

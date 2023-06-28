@@ -3,12 +3,12 @@
     <ion-page>
         <ion-content>
 
-            <base-card v-if="singledevice == 0" 
+            <base-card v-if="getDevice == 0" 
                 :message="errormessage">
             </base-card>
 
             <scanned-device-card v-else
-                :device="singledevice">
+                :device="getDevice">
              </scanned-device-card>
 
         </ion-content>
@@ -37,8 +37,8 @@ export default {
     },
 
     computed: {
-        singledevice() {
-            return this.$store.getters.getSingleDevice;
+        getDevice() {
+            return this.$store.getters.getDevice;
         },
         errormessage() {
             return this.$store.getters.errormessage;

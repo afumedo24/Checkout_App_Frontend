@@ -1,7 +1,8 @@
 
 import { createStore } from 'vuex'
 import axios from 'axios';
-import router from '../router/index'
+import router from '@/router';
+import VueJwtDecode from 'vue-jwt-decode';
 
 const apiUrl = "http://localhost:8300/api/devices";
 
@@ -35,10 +36,10 @@ const store = createStore({
             return JSON.parse(JSON.stringify(state.devices));   
         },
         // give back a single device
-        getSingleDevice(state){
+        getDevice(state){
             return JSON.parse(JSON.stringify(state.singledevice));
         },
-
+        // give back a the user     
         getUser(state) {
             return JSON.parse(JSON.stringify(state.user));
         },
@@ -62,102 +63,83 @@ const store = createStore({
     */ 
     actions: {
 
-        // get all devices from api
-        async showAllDevices() {
+        /* 
+            this function sends a axios request to the backend to
+            get all devices in respsone so that we can trigger
+            the mutation showAllDevices to alter our store with the 
+            response.data
+        */
+        async showAllDevices(context) {
             await axios.get(apiUrl)            
-            .then(response => {
-                this.commit('showAllDevices', response.data );      // firing the showAllDevices mutations
+            .then( response => {
+                // firing the showAllDevices mutations , so it can save the data in our store
+                context.commit('showAllDevices', response.data );      
             }).catch(error => {
                 console.log(error);
             })
         },
 
 
-        /*  
-            i dont know why but in this case you need the commit 
-            deconstruction there as a parameter or else it will 
-            treat deviceID as a Object and not send the request 
-            to the right address
+        /* 
+            write something here ////////
         */
+
         // get a single device from api
-        async showSingleDevice({commit}, deviceID) {
+        async showSingleDevice(context, deviceID) {
             await axios.get(apiUrl + `/${deviceID}`)
-            .then(response => {
-                commit('showSingleDevice', response.data);      // firing the showSingleDevice mutation 
-                
-            }).catch(error => {
-                // here a feedback function for the User when scanning the QR-Code
+            .then( response => {
+                context.commit('showSingleDevice', response.data);      // firing the showSingleDevice mutation     
+            }).catch( error => {
+               
+                /* 
+                    here a feedback function for the User when scanning the QR-Code
+                    we can add more cases here to give the user more support while 
+                    scanning a QR-code
+                */
+
                 if(error.response.statusText === 'Not Found')
                 {
-                    commit('setErrorMessage', "Error: Device not Found" );      // firing the setErrorMessage mutation
+                    context.commit('setErrorMessage', "Error: Device not Found" );      // firing the setErrorMessage mutation
                 }
                 console.error(error);
 
             })
         },
 
-        // update a single device from api
-        async updateDeviceStatus( context,  device ) {
-  
-            const newstatus = device.status == 2 ? 1 : 2;
-          
-            await axios.put( (apiUrl + `/${device.id}`), { status: newstatus })
+        ////////// the function for the form
+        // update a the device from api
+        async borrowDevice(context, data ) {
+            await axios.post("http://localhost:8300/api/device/borrow", data )
             .then(response => {
-                console.log(response.data);
-                router.push({ path: `borrow/${device.id}`});   
-                context.commit('updateDeviceStatus', newstatus);
-
+                this.$router.push("/borrow/" + data.deviceid); 
+                context.commit('borrowDevice', response.data);
+                
             }).catch(error => {
                 console.log(error);
             }) 
         },
+   
+        // login  user with jwt token
+        async Login(context, chipID ) {   
 
-         // get a single device from api
-        async userLogIn(context, userID ) {   
-    
-            await axios.get("http://localhost:8300/api/users" + `/${userID}`)
-              .then((response) => {
+            await axios.post("http://localhost:8300/api/users/login", {"chipID": chipID})
+                .then((response) => {
                 console.log(response.data);
-                context.commit('userLogIn', response.data);
-          }).catch((error) => {
+                localStorage.setItem('token', response.data.token );
+
+                context.commit('userLogIn', response.data.user);
+            }).catch((error) => {
                 console.error(error.message);
                 console.error(error); 
-          });  
+            });  
 
         },
-        
-            // get a single device from api
-            async Login(context, userID ) {   
-    
-                await axios.post("http://localhost:8300/api/users/login", {"id": userID})
-                  .then((response) => {
-                    console.log(response.data);
-                    localStorage.setItem('token', response.data.token )
-                    context.commit('userLogIn', response.data.user);
-              }).catch((error) => {
-                    console.error(error.message);
-                    console.error(error); 
-              });  
-    
-            },
 
-                 // get a single device from api
-        async getUser(context, userID ) {   
-    
-            await axios.get("http://localhost:8300/api/users" + `/${userID}`, {
-                headers: {
-                    Authorization: 'Bearer' + localStorage.getItem('token')
-                }
-            })
-              .then((response) => {
-                console.log(response.data);
-                context.commit('userLogIn', response.data);
-          }).catch((error) => {
-                console.error(error.message);
-                console.error(error); 
-          });  
-
-        },
+        // for user logout
+        userLogout(context) {
+            context.commit('userLogIn', null );
+            localStorage.removeItem('token');
+        }
     },
 
 
@@ -168,7 +150,6 @@ const store = createStore({
     mutations: {
 
         showAllDevices(state, fetchedDevices) {
-            
             state.devices = [...state.devices, ...fetchedDevices];
         },
 
@@ -176,14 +157,34 @@ const store = createStore({
             state.singledevice = fetchedDevice;
         },
 
-        updateDeviceStatus(state, id, newstatus) {
-            //state.device.status = newstatus;
-            console.log(state.singledevice);
+        borrowDevice(state, data){
+            //vllt kann ich da nochmal fetchen ?????
+            console.log(data);
         },
 
         userLogIn(state, fetchedUser){
             console.log(fetchedUser);
             state.user = fetchedUser;
+        },
+
+        // for getting the logged User with the jwt token
+        getLoggedUser(state) {
+
+            // get the token from localstorage
+            const token = localStorage.getItem("token");
+            try {
+                // decode token here and attach to the user object
+                const decoded = VueJwtDecode.decode(token);
+
+                // delete the unnecessary properties
+                delete decoded.alg;
+                delete decoded.typ;
+
+                // save in our store
+                state.user = decoded;      
+            } catch (error) {
+                console.log(error, 'error from decoding token in getLoggedUser Mutation')
+            }
         },
 
         setErrorMessage(state, message) {

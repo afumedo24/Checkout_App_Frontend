@@ -5,7 +5,7 @@
       </ion-thumbnail>
       <ion-label>
         <h2> {{ device.name }} </h2>
-        <p :class="device.status == 1 ? 'status-green' : 'status-red'"> {{ displaystatus(device.status) }}</p>
+        <p :class="device.status == 'Available' ? 'status-green' : 'status-red'"> {{ device.status  }}</p>
       </ion-label>
       <ion-button @click="borrowFunction()"> Borrow </ion-button>
     </ion-item>
@@ -13,7 +13,6 @@
 
 <script>
 import { IonItem, IonLabel, IonThumbnail, IonImg } from '@ionic/vue';
-import axios from 'axios';
 
 export default {
   props: ['device'],
@@ -21,29 +20,16 @@ export default {
     IonImg, 
     IonItem, 
     IonLabel , 
-    IonThumbnail, axios
+    IonThumbnail
   },
   methods: {
-    //delete it later 
     borrowFunction() {
-      this.$store.dispatch('updateDeviceStatus', this.device );
-      this.$router.push({ path: `borrow/${this.device.id}`});
+      //this.$store.dispatch('updateDeviceStatus', this.device );
+      this.$store.commit('showSingleDevice', this.device );
+      this.$router.push("borrow/form");
     },
   },
-  computed: {
-    
-    // damit wir den Device Status in einem Wort umwandeln
-    displaystatus() {
-      return (status) => {
-        if (status === 1) {
-          return 'Available';
-        }
-        else {
-          return "not Available";
-        }
-      }
-    }
-  },
+
 }
 </script>
 

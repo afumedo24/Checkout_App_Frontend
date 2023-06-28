@@ -5,42 +5,34 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/NFC_logo.svg/2000px-NFC_logo.svg.png"/>
         </ion-avatar>
         <ion-title> Checkout App </ion-title>
+<<<<<<< HEAD
        
+=======
+        <!--
+              v-if="loggedUser != 0, checks if a user is stored in loggedUser
+              if yes, then it displays the button
+              if not, then it disappears
+        -->
+        <ion-button v-if="isLogged != 0" slot="end" @click="this.$store.dispatch('userLogout')" class="logout-button"> LOGOUT </ion-button>
+>>>>>>> 8cdb0257a19b27c6d2cf123ec7b13a1b5554f9e7
     </ion-toolbar>
     
 </template>
 
 <script>
 import { IonToolbar, IonTitle, IonAvatar, IonButton } from '@ionic/vue';
+import { ref } from 'vue';
 export default {
-components: {
-    IonToolbar ,IonTitle, IonAvatar, IonButton
-},
-   
-data()
-  {
-    return{
-      userID: '',
-    }
+  components: {
+      IonToolbar ,IonTitle, IonAvatar, IonButton, ref
   },
 
   computed: {
     loggedUser() {
       return this.$store.getters.getUser;
     },
-  },
+  }, 
 
-  methods: {
-    
-    signUp() {   
-      this.$store.dispatch('userLogIn', this.userID)
-    },
-
-    signOut()
-    {   
-      this.$store.commit('userLogIn', 0)
-    }
-  }
 }
 </script>
 
@@ -65,15 +57,19 @@ ion-title{
     font-size: 3.3vh;
     font-weight: 550;
 }
-.subtitle-button {
-    color: var(--ion-color-danger);
-    
-    font-size: 2.4vh;
-    font-weight: 700;
-    
-    --border-radius: 1vh;
-    --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
-  }
+.logout-button {
+  --background: var( --ion-color-tertiary);
+  --background-hover: var(--ion-color-tertiary-shade);
+  height: 5vh;
+  width: 12vh;
+  margin-right: 1.3vh;
+  font-size: 1.7vh;
+  font-weight: 450;
+  color: var(--ion-color-danger);
+  --border-radius: 1vh;
+  --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+}
 
 </style>
