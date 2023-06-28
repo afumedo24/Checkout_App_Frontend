@@ -1,7 +1,7 @@
 <template>
     <ion-toolbar>
         <ion-avatar slot="start"> 
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/NFC_logo.svg/2000px-NFC_logo.svg.png"/>
+            <img src="../assests/nfc-logo.png"/> <!-- change logo later -->
         </ion-avatar>
         <ion-title> Checkout App </ion-title>
        <!--
@@ -9,7 +9,7 @@
               if yes, then it displays the button
               if not, then it disappears
         -->
-        <ion-button v-if="isLogged != 0" slot="end" @click="this.$store.dispatch('userLogout')" class="logout-button"> LOGOUT </ion-button>
+        <ion-button v-if="loggedUser != 0" slot="end" @click="this.$store.dispatch('userLogout')" class="logout-button"> LOGOUT </ion-button>
 
     </ion-toolbar>
     

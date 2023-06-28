@@ -30,8 +30,6 @@
       <ion-button @click="login" class="login-button"> LOGIN </ion-button>
     </ion-card-content>
   </ion-card>
-  
-  <!--ion-button @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button-->
                 
 </template>
   
@@ -89,6 +87,7 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
     margin-left: 5%;
     color: #D9D9D9;
     height: 7vh;
+    border-radius: 1vh;
 
    
   }
