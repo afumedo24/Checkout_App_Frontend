@@ -1,10 +1,11 @@
 <template>
     <ion-toolbar>
+        <ion-button v-if="loggedUser !=0" slot="end" @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button>
         <ion-avatar slot="start"> 
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/NFC_logo.svg/2000px-NFC_logo.svg.png"/>
         </ion-avatar>
         <ion-title> Checkout App </ion-title>
-        <ion-button slot="end" @click="signOut" class="logout-button"> <h2 class="subtitle-button">LOGOUT</h2> </ion-button>
+       
     </ion-toolbar>
     
 </template>

@@ -2,9 +2,10 @@
   <ion-card-content  v-if="loggedUser != 0"> 
       <ion-list  class="user-login">
           <ion-item>
-                <h2 class="waviy">
-                  <span style="--i:1;" > Welcome  {{ loggedUser.FullName }}</span>
-                </h2>
+                <h1  class="element">
+                  Welcome  {{ loggedUser.FullName }}
+                  <span style="--i:1;" ></span>
+                </h1>
           </ion-item>
       </ion-list>
   </ion-card-content>
@@ -58,11 +59,13 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
 
   methods: {
     
-    signOut()
-    {   
-      this.$store.commit('userLogIn', 0);
-      localStorage.removeItem('token');
-    }
+    signUp() {   
+      //this.$store.dispatch('Login', this.userID);
+       this.$store.dispatch('userLogIn', this.userID);
+
+    },
+
+   
   }
 };
   
@@ -156,7 +159,30 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
     transform: rotateY(360deg) 
   }
 }
-  
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+h1 {
+  font-family: 'Arial', sans-serif;
+  font-size: 4rem;
+  color: #ffffff;
+  text-align: center;
+  background-color: #1e90ff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+.element {
+  animation: slide-in 2s ease-in-out forwards;}
+
   
   
   </style>
