@@ -2,7 +2,7 @@
     <ion-toolbar>
         <ion-avatar slot="start"> 
           <!-- you can change the logo here -->
-            <img src="../assests/nfc-logo.png"/> 
+            <img src="@/assests/nfc_logo.png"/> 
         </ion-avatar>
         <ion-title> Checkout App </ion-title>
        <!--

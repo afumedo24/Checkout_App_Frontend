@@ -129,7 +129,7 @@ const store = createStore({
             await AxiosRequest.post('/users/login', {"chipID": chipID})
                 .then((response) => {
                 console.log(response.data);
-                localStorage.setItem('user', response.data.token );
+                sessionStorage.setItem('user', response.data.token );
 
                 context.commit('saveUser', response.data.user);
             }).catch((error) => {
@@ -142,10 +142,10 @@ const store = createStore({
         // for user logout
         userLogout(context) {
             context.commit('saveUser', null );
-            localStorage.removeItem('user');
+            sessionStorage.removeItem('user');
         },
 
-        // gta all user 
+        // get all user 
         async showAllUsers(context){
             await AxiosRequest.get('/users')
                 .then((response) => {
@@ -191,7 +191,7 @@ const store = createStore({
         getLoggedUser(state) {
 
             // get the token from localstorage
-            const token = localStorage.getItem("user");
+            const token = sessionStorage.getItem("user");
             
             try {
                 // decode token here and attach to the user object
