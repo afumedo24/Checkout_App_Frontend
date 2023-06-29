@@ -1,5 +1,5 @@
 <template>
-    <!-- IonCard to display the information/user feedback-->
+    <!-- IonCard to display the information and some user feedback -->
     <ion-card  class="base-card"> 
         <ion-card-header>
             <ion-card-title class="base-card-title">

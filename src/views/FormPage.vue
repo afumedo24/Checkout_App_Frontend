@@ -14,8 +14,6 @@
     components: {
         IonPage, IonContent, BorrowForm
     },
-    data() {
-    },
   };
   
   

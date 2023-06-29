@@ -1,8 +1,13 @@
 <template>
+    <!-- 
+        this component is for the verfication page when the borrow/returnung Process is successful
+        also the device is passed down as a property
+    -->
     <ion-card>
         <img :src="device.image" :alt="device.name"/> 
 
-        <ion-card-header v-if="device.status === 'Borrowed' ">
+        <!-- if we borrowed the device, it will render this part with green text -->
+        <ion-card-header v-if="device.status === 'Available' ">
             <ion-card-title class="borrow-title"> {{ device.name }}  borrowed successfully </ion-card-title>
             <ion-card-subtitle> 
                 You borrowed {{ device.name }}  successfully! Click on the Button to go back to 
@@ -10,6 +15,7 @@
             </ion-card-subtitle>
         </ion-card-header>
 
+        <!-- and on returning the device, it will render this part with orange text -->
         <ion-card-header v-else>
             <ion-card-title class="give-back-title"> {{ device.name }}  was brought back successfully </ion-card-title>
             <ion-card-subtitle> 
@@ -19,6 +25,7 @@
         </ion-card-header>
 
         <ion-card-content>
+            <!-- this button will bring us back to the HomPage -->
         <ion-button @click="goBackToHome()">
             <ion-label> Go to HomePage </ion-label>
         </ion-button>
@@ -35,6 +42,7 @@ export default {
         IonButton, IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonImg, 
     },
     methods: {
+        // just redirects us to the give url
         goBackToHome() {
             this.$router.push("/");
         }

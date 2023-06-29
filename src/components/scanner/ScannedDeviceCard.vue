@@ -1,5 +1,5 @@
 <template>
-    <!-- IonCard should display the information from the scanned device -->
+    <!-- this should display the information from the scanned device which is passed as a property -->
     <ion-card class="success-card">
         <ion-img :alt="device.name" :src="device.image" />
         <ion-card-header>
@@ -11,22 +11,24 @@
         <ion-toolbar> 
         <div class="btn-container"> 
             <!-- 
-                $router.push(), clicking the button cancels the 
-                borrowing process and redirects us to the HomePage 
+                Cancel Button:
+                it redirects us to the HomePage with $router.push('home')
             -->
             <ion-button @click="this.$router.push('home')" class="cancel-btn btn-class">
                 <ion-label> Cancel </ion-label>
             </ion-button>
             <!-- 
-                v-if, like a normal if-statement, checks which button we should render 
-                true = is borrow button
+                Borrow Button:
+                is displayed if the status is Available
+                and calls the pushtoForm() method
             -->  
             <ion-button v-if="device.status === 'Available' ? true : false"  @click="pushtoForm()" class="borrow-btn btn-class" >
                 <ion-label> Borrow  </ion-label>
             </ion-button>
             <!-- 
-                is rendered if v-if=false 
-                flase = is Give Back button
+                Give Back Button:
+                is displayed if the status is Unavailable, hence you bring back the device
+                and calls the pushtoForm() method
             -->
             <ion-button v-else @click="pushtoForm()" class="give-back-btn btn-class" >
                 <ion-label> Give Back  </ion-label>

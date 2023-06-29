@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import TabBar from '../components/TabBar.vue'
+import TabBar from '../components/tabbar/TabBar.vue'
+import SuccessPage from '../views/SucessPage.vue'
 
 
 
@@ -19,30 +20,29 @@ const routes: Array<RouteRecordRaw> = [
         redirect: '/home',
       },
       {
-        path: 'home',
+        path: '/home',
         component: () => import('../views/UserPage.vue'),
       },
       {
-        path: 'add',
+        path: '/add',
         component: () => import('../views/ScannerPage.vue'),
       },
       {
-        path: 'list',
+        path: '/list',
         component: () => import('../views/ListPage.vue'),
       },
       {
-        path: 'check',
+        path: '/check',
         component: () => import('../views/AdminPage.vue')
       },
-      // delete it later
       {
-        path: 'borrow/form',
+        path: '/borrow/form',
         component: () => import('../views/FormPage.vue')
       },
 
       {
-        path: 'borrow/:id',
-        component: () => import('../views/SucessPage.vue'),
+        path: '/borrow/form/success',
+        component: SuccessPage,
       }, 
     ],
   },

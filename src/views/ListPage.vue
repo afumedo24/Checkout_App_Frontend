@@ -1,33 +1,34 @@
 <template>
   <ion-page>
     <ion-content>
-      <!-- 
-      <ion-refresher @ionRefresh="refeshData" slot="fixed" :pull-factor="0.3" :pull-min="50" :pull-max="100">
-        <ion-refresher-content> </ion-refresher-content>
-      </ion-refresher>
-        -->
+      <!-- we pass all stored devices as a Property for the component -->
       <device-list :devices="devices"></device-list> 
     </ion-content>
 </ion-page>
 </template>
 
 <script>
-import { IonContent, IonPage, IonRefresher, IonRefresherContent } from '@ionic/vue';
-import DeviceList from '@/components/list/DeviceList.vue';
-
-
-
+import { IonContent, IonPage } from '@ionic/vue';
+import DeviceList from '../components/list/DeviceList.vue';
 
 export default {
   components: {
     IonContent,
     IonPage,
-    DeviceList, IonRefresher, IonRefresherContent 
+    DeviceList
   },
   
-  // every time we inject this page in the DOM this method is called
+  /*
+    every time we mount this page in the DOM this method is called
+    the getAllDevices() action is being dispatched and it fetches
+    all Devices from the server, 
+    we are calling it so often because when we borrow a device 
+    it will always display the new status of all devices, you could 
+    see it as a page refresh
+  */
+
   mounted() {
-    this.$store.dispatch('showAllDevices');   // action from store being called to fetch all Devices from api
+    this.$store.dispatch('getAllDevices');   
   },
 
   // all devices are returned to this fucntion, which is being called above for the iteration of the list 
@@ -36,12 +37,6 @@ export default {
       return this.$store.getters.getAllDevices;
     },
 
-  },
-  methods: {
-    refeshData() {
-      console.log("refresh");
-      this.$store.dispatch('showAllDevices');  
-    }
   },
 }
 </script>

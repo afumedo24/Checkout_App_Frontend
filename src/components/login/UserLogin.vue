@@ -20,7 +20,7 @@
           
     <ion-card-content>
       <ion-list  class="user-item" >
-        <ion-item>
+        <ion-item >
           <ion-input v-model="userID" labelPlacement="standard" placeholder="User"></ion-input>
         </ion-item>
       </ion-list>
@@ -44,23 +44,38 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
   data()
   {
     return{
+      // this will contain the scanned chips data
       userID: '',
     }
   },
 
+  /* 
+    every time this page is mounted, this function will kick in and 
+    call the getLoggedUser() mutation, this will decodes the jwt token from 
+    the localstorage and commit the user in our store, so that we can access it 
+    with the computed fuction loggedUser() below it
+      why? -> because when you refresh the page it will also refresh the store with it 
+              so every data saved in there is also deleted and our app wont know if somebody 
+              is logged or not, but by saving it in the localstorage we have access to it till we
+              logout, then the data in the localstorage is deleted
+  */
+  mounted() {
+    this.$store.commit('getLoggedUser');
+  },
+
+  // here we are accessing our user which is saved in the store with the getter getUser()
   computed: {
     loggedUser() {
       return this.$store.getters.getUser;
     },
   },
 
+  
   methods: {
-    
+    // this will trigger when the chipID is read
     login() {   
       this.$store.dispatch('Login', this.userID);
-    },
-
-   
+    }, 
   }
 };
   
@@ -102,6 +117,13 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
   border-radius: 1vh 1vh 0 0;
   text-align: center;
   
+}
+
+ion-input{
+font-size: 3vh;
+align-content: center;
+
+
 }
 .title{
   font-size: 4vh;

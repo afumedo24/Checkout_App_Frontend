@@ -1,11 +1,17 @@
 <template>
+  <!-- 
+      this is the structure for all the items in the device list 
+      a thumbnail for the device images, the device name and
+      the device status also a button to borrow the device
+  -->
     <ion-item>
       <ion-thumbnail slot="start"> 
         <ion-img :src="device.image" :alt="device.name"/>
       </ion-thumbnail>
       <ion-label>
         <h2> {{ device.name }} </h2>
-        <p :class="device.status == 'Available' ? 'status-green' : 'status-red'"> {{ device.status  }}</p>
+        <!-- here the class is dynamically assigned so that we get the appropriate color -->
+        <p :class="device.status == 'Available' ? 'status-green' : 'status-red'"> {{ device.status }}</p>
       </ion-label>
       <ion-button @click="borrowFunction()"> Borrow </ion-button>
     </ion-item>
@@ -23,9 +29,16 @@ export default {
     IonThumbnail
   },
   methods: {
+
+    /* 
+      this is for the Borrow button, it commits the chosen device in the store 
+      so it can be called in the form page 
+      also it redirects us to the formpage
+    */
     borrowFunction() {
-      //this.$store.dispatch('updateDeviceStatus', this.device );
-      this.$store.commit('showSingleDevice', this.device );
+      // here the saveSingleDevice() mutation is commited with the selected device
+      this.$store.commit('saveSingleDevice', this.device );
+      // this just redirects us to the form page 
       this.$router.push("borrow/form");
     },
   },

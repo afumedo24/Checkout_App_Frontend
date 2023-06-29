@@ -1,7 +1,12 @@
 <template>
-
+<!-- here is the list component -->
   <ion-list>
     <h2 class="title"> List of all Devices </h2>
+    <!--
+        our custom structure for every item in the list 
+        we iterate like normal for-loop through all devices, 
+        which are passed as a property
+    -->
     <device-list-item 
       v-for="device in devices"
        :key="device.id"
@@ -13,6 +18,7 @@
 <script>
 import { IonList } from '@ionic/vue'
 import DeviceListItem from './DeviceListItem.vue'
+
 export default {
   props: [ 'devices' ],
   components: { IonList, DeviceListItem },

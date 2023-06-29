@@ -1,13 +1,14 @@
 <template>
     <ion-toolbar>
         <ion-avatar slot="start"> 
-            <img src="../assests/nfc-logo.png"/> <!-- change logo later -->
+          <!-- you can change the logo here -->
+            <img src="../assests/nfc-logo.png"/> 
         </ion-avatar>
         <ion-title> Checkout App </ion-title>
        <!--
               v-if="loggedUser != 0, checks if a user is stored in loggedUser
               if yes, then it displays the button
-              if not, then it disappears
+              if not, then isnt
         -->
         <ion-button v-if="loggedUser != 0" slot="end" @click="this.$store.dispatch('userLogout')" class="logout-button"> LOGOUT </ion-button>
 
@@ -22,6 +23,7 @@ export default {
       IonToolbar ,IonTitle, IonAvatar, IonButton,
   },
 
+  // get the currently logged user 
   computed: {
     loggedUser() {
       return this.$store.getters.getUser;
@@ -48,7 +50,7 @@ ion-avatar {
 }
 
 ion-title{
-    color: white;
+    color: var(--ion-color-tertiary);
     font-size: 3.3vh;
     font-weight: 550;
 }

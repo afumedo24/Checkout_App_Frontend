@@ -16,6 +16,7 @@ const store = createStore({
             singledevice: '' ,
             devices: [],
             user: '',
+            allusers: '',
             errormessage: ''
         }
     },
@@ -38,9 +39,15 @@ const store = createStore({
         getDevice(state){
             return JSON.parse(JSON.stringify(state.singledevice));
         },
+        
         // give stored user back 
         getUser(state) {
             return JSON.parse(JSON.stringify(state.user));
+        }, 
+
+        //give back all users
+        getAllUsers(state) {
+            return JSON.parse(JSON.stringify(state.allusers));
         },
 
         // give the errormessage back
@@ -55,24 +62,23 @@ const store = createStore({
         cant make async calls, so we cant fetch data from 
         our api 
         --> thats why we have actions as some sort of middleware
-            you dispatch the action in your required code and then
-            it makes the api calls and commits to the necessary 
-            mutation with the data as the payload and the mutations 
-            changes the data
+            you can dispatch a action in your required code and then
+            it makes the api calls and commits to the mutation with 
+            the data as the payload, so that it can change the data
     */ 
     actions: {
 
         /* 
             this function sends a axios request to the backend to
             get all devices in respsone so that we can trigger
-            the mutation showAllDevices to alter our store with the 
-            response.data
+            the mutation showAllDevices() to alter our store with the 
+            fetched devices in response.data
         */
-        async showAllDevices(context) {
+        async getAllDevices(context) {
             await AxiosRequest.get('/devices')            
             .then( response => {
-                // firing the showAllDevices mutations , so it can save the data in our store
-                context.commit('showAllDevices', response.data );      
+                // firing the showAllDevices() mutations , so it can commit the data in our store
+                context.commit('saveAllDevices', response.data );      
             }).catch(error => {
                 console.log(error);
             })
@@ -87,7 +93,8 @@ const store = createStore({
         async showSingleDevice(context, deviceID) {
             await AxiosRequest.get(`/devices/${deviceID}`)
             .then( response => {
-                context.commit('showSingleDevice', response.data);      // firing the showSingleDevice mutation     
+                // firing the showSingleDevice() mutation
+                context.commit('saveSingleDevice', response.data);       
             }).catch( error => {
                
                 /* 
@@ -110,9 +117,7 @@ const store = createStore({
         async borrowDevice(context, data ) {
             await AxiosRequest.post('/device/borrow', data )
             .then(response => {
-                router.push("/borrow/" + data.deviceid); 
-                context.commit('borrowDevice', response.data);
-                
+                context.commit('borrowDevice', response.data);             
             }).catch(error => {
                 console.log(error);
             }) 
@@ -124,9 +129,9 @@ const store = createStore({
             await AxiosRequest.post('/users/login', {"chipID": chipID})
                 .then((response) => {
                 console.log(response.data);
-                localStorage.setItem('token', response.data.token );
+                localStorage.setItem('user', response.data.token );
 
-                context.commit('userLogIn', response.data.user);
+                context.commit('saveUser', response.data.user);
             }).catch((error) => {
                 console.error(error.message);
                 console.error(error); 
@@ -136,8 +141,20 @@ const store = createStore({
 
         // for user logout
         userLogout(context) {
-            context.commit('userLogIn', null );
-            localStorage.removeItem('token');
+            context.commit('saveUser', null );
+            localStorage.removeItem('user');
+        },
+
+        // gta all user 
+        async showAllUsers(context){
+            await AxiosRequest.get('/users')
+                .then((response) => {
+                    console.log(response.data);
+                    context.commit('saveAllUsers', response.data);
+                }).catch((error) => {
+                    console.error(error.message);
+                    console.error(error); 
+                })
         }
     },
 
@@ -148,29 +165,34 @@ const store = createStore({
     */ 
     mutations: {
 
-        showAllDevices(state, fetchedDevices) {
+        // for saving all fetched devices to the our store
+        saveAllDevices(state, fetchedDevices) {
             state.devices = [...state.devices, ...fetchedDevices];
         },
 
-        showSingleDevice(state, fetchedDevice) {
+        // saving only one device
+        saveSingleDevice(state, fetchedDevice) {
             state.singledevice = fetchedDevice;
         },
 
+        /////////// i think we will delete i tlater ////////////
         borrowDevice(state, data){
-            //vllt kann ich da nochmal fetchen ?????
             console.log(data);
         },
 
-        userLogIn(state, fetchedUser){
+        
+        // for setting the fetched user as our current user
+        saveUser(state, fetchedUser){
             console.log(fetchedUser);
             state.user = fetchedUser;
         },
 
-        // for getting the logged User with the jwt token
+        // for getting the logged User from the jwt token
         getLoggedUser(state) {
 
             // get the token from localstorage
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("user");
+            
             try {
                 // decode token here and attach to the user object
                 const decoded = VueJwtDecode.decode(token);
@@ -179,13 +201,21 @@ const store = createStore({
                 delete decoded.alg;
                 delete decoded.typ;
 
-                // save in our store
+                // save it in our store
                 state.user = decoded;      
             } catch (error) {
                 console.log(error, 'error from decoding token in getLoggedUser Mutation')
-            }
+            } 
+        }, 
+
+        // save all users 
+        saveAllUsers(state, fetchedUser) {
+            console.log(fetchedUser);
+            state.allusers = fetchedUser;
         },
 
+
+        // for setting error messages in our store
         setErrorMessage(state, message) {
             state.errormessage = message;
         }

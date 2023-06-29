@@ -1,17 +1,18 @@
 <template>
     <div>
+        <!-- the tabbar component -->
         <ion-tabs>  
+            <!-- we need this to define the router behaviour -->
             <ion-router-outlet></ion-router-outlet>
        
+            <!-- here we define the first tab, the home tab -->
             <ion-tab-bar slot="bottom" color="light">  
                 <ion-tab-button tab="home" class="home-tab" href="/home">
                     <ion-icon :icon="homeSharp" aria-hidden="true"></ion-icon>
                     <ion-label>Home</ion-label>  
                 </ion-tab-button>  
-
-                <!-- -->
             
-
+                <!-- here we define the second tab, the list tab -->
                 <ion-tab-button tab="list" class="list-tab" href="/list">  
                     <ion-icon :icon="listSharp" aria-hidden="true"></ion-icon>
                     <ion-label>List</ion-label>  
@@ -19,6 +20,7 @@
             </ion-tab-bar>  
         </ion-tabs> 
 
+        <!-- this is the fabbutton for the qr-code scanning -->
         <ion-fab vertical="bottom" horizontal="center" slot="fixed"> 
             <ion-fab-button href="/add">
                 <ion-icon  :icon="qrCodeSharp" size="large"></ion-icon>
@@ -30,15 +32,16 @@
 <script>
 
 import { IonTabs, IonTabBar, IonTabButton, IonRouterOutlet, IonIcon, IonFab, IonFabButton, IonLabel } from '@ionic/vue';
+// import the icon needed from the IonIcon library
 import { homeSharp, listSharp, qrCodeSharp} from 'IonIcons/icons'
 
 export default {
 components: {
     IonTabs, IonTabBar, IonTabButton, IonRouterOutlet, IonIcon, IonFab, IonFabButton, IonLabel, 
 },
-data() {
-    
 
+// return the icons because there are treated as data
+data() {
     return {
         homeSharp, qrCodeSharp, listSharp, 
     };
