@@ -1,6 +1,6 @@
 
 import { createStore } from 'vuex'
-import AxiosReq from '../helpers/axios/axios.config'
+import AxiosRequest from '../helpers/axios/axios.config'
 import router from '@/router';
 import VueJwtDecode from 'vue-jwt-decode';
 
@@ -30,20 +30,20 @@ const store = createStore({
             because else they will be returned as a Proxy
             --> this way they are returned as a Object
         */
-        // give back all devices
+        // give all stored devices back
         getAllDevices(state) {
             return JSON.parse(JSON.stringify(state.devices));   
         },
-        // give back a single device
+        // give the stored device back
         getDevice(state){
             return JSON.parse(JSON.stringify(state.singledevice));
         },
-        // give back a the user     
+        // give stored user back 
         getUser(state) {
             return JSON.parse(JSON.stringify(state.user));
         },
 
-        // give back a errormessage
+        // give the errormessage back
         errormessage(state){
             return state.errormessage;
         }
@@ -69,7 +69,7 @@ const store = createStore({
             response.data
         */
         async showAllDevices(context) {
-            await AxiosReq.get('/devices')            
+            await AxiosRequest.get('/devices')            
             .then( response => {
                 // firing the showAllDevices mutations , so it can save the data in our store
                 context.commit('showAllDevices', response.data );      
@@ -85,7 +85,7 @@ const store = createStore({
 
         // get a single device from api
         async showSingleDevice(context, deviceID) {
-            await AxiosReq.get(`/devices/${deviceID}`)
+            await AxiosRequest.get(`/devices/${deviceID}`)
             .then( response => {
                 context.commit('showSingleDevice', response.data);      // firing the showSingleDevice mutation     
             }).catch( error => {
@@ -108,7 +108,7 @@ const store = createStore({
         ////////// the function for the form
         // update a the device from api
         async borrowDevice(context, data ) {
-            await AxiosReq.post('/device/borrow', data )
+            await AxiosRequest.post('/device/borrow', data )
             .then(response => {
                 router.push("/borrow/" + data.deviceid); 
                 context.commit('borrowDevice', response.data);
@@ -121,7 +121,7 @@ const store = createStore({
         // login  user with jwt token
         async Login(context, chipID ) {   
 
-            await AxiosReq.post('/users/login', {"chipID": chipID})
+            await AxiosRequest.post('/users/login', {"chipID": chipID})
                 .then((response) => {
                 console.log(response.data);
                 localStorage.setItem('token', response.data.token );
