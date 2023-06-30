@@ -114,6 +114,8 @@ export default {
             date: this.currentDate
         };
 
+        console.log(data);
+
         // call the borrowDevice() action from the store with the object from above 
         // to send the data to the server 
         this.$store.dispatch('borrowDevice', data);

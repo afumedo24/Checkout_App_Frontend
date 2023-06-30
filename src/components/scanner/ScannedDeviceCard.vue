@@ -31,7 +31,7 @@
                 and calls the pushtoForm() method
             -->
             <ion-button v-else @click="pushtoForm()" class="give-back-btn btn-class" >
-                <ion-label> Give Back  </ion-label>
+                <ion-label> Return </ion-label>
             </ion-button>
         </div>
         </ion-toolbar> 

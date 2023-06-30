@@ -1,8 +1,8 @@
 <template>
   <!-- 
-      this is the structure for all the items in the device list 
-      a thumbnail for the device images, the device name and
-      the device status also a button to borrow the device
+      this is the structure for all the items in the borrowed device list 
+      a thumbnail for the device images, the device name, device status and 
+      when it was borrowed,  also a button to return the device
   -->
     <ion-item>
       <ion-thumbnail slot="start"> 
@@ -11,10 +11,10 @@
       <ion-label>
         <h2> {{ device.name }} </h2>
         <!-- here the class is dynamically assigned so that we get the appropriate color -->
-        <p :class="device.status == 'Available' ? 'status-green' : 'status-red'"> {{ device.status }}</p>
+        <p :class="device.status == 'Available' ? 'status-green' : 'status-red'"> {{ device.status }} </p>
+        <p> on {{ device.receive_date }} </p>
       </ion-label>
-      <ion-button v-if="device.status === 'Available'" @click="borrowFunction()" class="borrow-btn"> Borrow </ion-button>
-      <ion-button v-else @click="borrowFunction()"> Return </ion-button>
+      <ion-button @click="returnFunction()"> Return </ion-button>
     </ion-item>
 </template>
 
@@ -22,6 +22,7 @@
 import { IonItem, IonLabel, IonThumbnail, IonImg } from '@ionic/vue';
 
 export default {
+  // the devices property
   props: ['device'],
   components: {
     IonImg, 
@@ -32,13 +33,23 @@ export default {
   methods: {
 
     /* 
-      this is for the Borrow button, it commits the chosen device in the store 
-      so it can be called in the form page 
+      this is for the Return button, it commits the chosen device in the store for the retrun process
       also it redirects us to the formpage
     */
-    borrowFunction() {
+    returnFunction() {
+
+      /*
+        we need to filter the data out from the device Property because we
+        are receiving a different object than in the "all device list"
+        and therefor to make it workout we are only storing the properties we need
+        and then commit it to our store
+      */
+      const devicedata = {
+        id: this.device.device_id,
+        name: this.device.name
+      }
       // here the saveSingleDevice() mutation is commited with the selected device
-      this.$store.commit('saveSingleDevice', this.device );
+      this.$store.commit('saveSingleDevice', devicedata );
       // this just redirects us to the form page 
       this.$router.push("borrow/form");
     },
@@ -94,6 +105,7 @@ ion-img {
   p{
     font-size: 2vh;
     font-weight: 380;
+    display: inline;
   }
 
   ion-button {
@@ -107,12 +119,6 @@ ion-img {
     color: white;
     --border-radius: 1vh;
     --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    
   }
-
-  .borrow-btn{
-    --background: var( --ion-color-secondary-tint);
-  }
-
-
-
 </style>

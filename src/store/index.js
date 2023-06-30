@@ -26,6 +26,7 @@ const store = createStore({
         return {
             singledevice: '' ,
             devices: [],
+            borrowdevice: '',
             user: '',
             allusers: '',
             errormessage: ''
@@ -51,6 +52,10 @@ const store = createStore({
         // give the stored device back
         getDevice(state){
             return JSON.parse(JSON.stringify(state.singledevice));
+        },
+
+        getBorrowedDevice(state){
+            return JSON.parse(JSON.stringify(state.borrowdevice));
         },
         
         // give stored user back 
@@ -147,12 +152,24 @@ const store = createStore({
             */
             await AxiosRequest.post('/device/borrow', data )
             .then(response => {
-                // we dont commit the data here because we just get back a success message 
+                // we dont commit the data here because we just get a success message as a answer
                 // or a error in worst case
                 console.log(response.data);
             }).catch(error => {
                 console.log(error);
             }) 
+        },
+        /*
+            ---------------show All Borrowed Device by User------------------
+
+        */
+        async showAllBorrowedDevicesByUser(context, name) {
+            await AxiosRequest.get(`/users/borrowed/${name}`)
+            .then( response => {
+                context.commit('saveBorrowedDevices', response.data);
+            }).catch( error => {
+                console.log(error);
+            })
         },
    
         /*
@@ -208,6 +225,17 @@ const store = createStore({
                 }).catch((error) => {
                     console.error(error); 
                 })
+        },
+
+        // ----create User-------
+        async createUser(context, data) {
+            await AxiosRequest.post('/users/create', data)
+            .then((response) => {
+                // 
+                console.log(response.data);
+            }).catch((error) => {
+                console.error(error); 
+            })
         }
     },
 
@@ -227,6 +255,12 @@ const store = createStore({
         saveSingleDevice(state, fetchedDevice) {
             state.singledevice = fetchedDevice;
         },
+
+        // for saving all fetched devices to the our store
+        saveBorrowedDevices(state, fetchedDevices) {
+            state.borrowdevice = fetchedDevices;
+        },
+
 
         // for saving the fetched user as our current logged user
         saveUser(state, fetchedUser){
