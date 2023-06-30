@@ -4,6 +4,7 @@ import router from './router';
 
 import { IonicVue } from '@ionic/vue';
 
+// imported the store so that it can be accessed from every component in the app
 import store from '../src/store/index';
 
 /* Core CSS required for Ionic components to work properly */
@@ -27,7 +28,8 @@ import './theme/variables.css';
 
 const app = createApp(App)
   .use(IonicVue)
-  .use(store)                 // add the vuex store to the app
+  // add the vuex store to the app
+  .use(store)                
   .use(router);
   
 router.isReady().then(() => {

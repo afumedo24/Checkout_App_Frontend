@@ -1,15 +1,26 @@
 
+// import the createStore from Vuex
 import { createStore } from 'vuex'
+// import the axios config file wwith the baseurl
 import AxiosRequest from '../helpers/axios/axios.config'
-import router from '@/router';
+// import the jsonwebtoken decoding library
 import VueJwtDecode from 'vue-jwt-decode';
 
 
-// Create a new store instance.
+// Create a new store instance and import it in the root file(main.ts) 
+// so that every component can access it 
 const store = createStore({
     
     /*
-        ///////////////////   schreibe was hier über state   ///////////////////////
+        State is a collection of data at a given time. This state can be 
+        changed with user interactions via dispatch and commit methods,
+        when the user modifies data, a dispatch event is executed, which 
+        passes data to a mutation and updates the state object
+
+        Vuex stores are reactive, so if you want to retrieve the state from 
+        it, you will need to access it from within a computed property 
+        (look in the Pages for examples)
+
     */
     state () {
         return {
@@ -22,7 +33,9 @@ const store = createStore({
     },
 
     /* 
-        ///////////////////   schreibe was hier über getters   ///////////////////////
+        getters help us to retrieve the current state of our store
+        for our components, if you want to access a stored state you 
+        will have to define a getter
     */
     getters: {
         /*
@@ -69,15 +82,17 @@ const store = createStore({
     actions: {
 
         /* 
-            this function sends a axios request to the backend to
-            get all devices in respsone so that we can trigger
-            the mutation showAllDevices() to alter our store with the 
-            fetched devices in response.data
+            -----------------Get All Devices-----------------------
+            this function sends a axios request to the server to
+            get all devices in the database, so that we can trigger
+            the mutation showAllDevices() to commit to our store 
+            with the fetched devices in response.data
         */
         async getAllDevices(context) {
+            // axios get request at baseurl/devices
             await AxiosRequest.get('/devices')            
             .then( response => {
-                // firing the showAllDevices() mutations , so it can commit the data in our store
+                // calling the showAllDevices() mutations , so it can commit the data in our store
                 context.commit('saveAllDevices', response.data );      
             }).catch(error => {
                 console.log(error);
@@ -86,14 +101,17 @@ const store = createStore({
 
 
         /* 
-            write something here ////////
+            ----------------Get a single Device by their ID------------------
+            here we are fetching a single device by their id with a axios get 
+            request from our server,  and then we call the saveSingleDevice() 
+            mutation to commit it 
+            and also we give the user  feedback if the deviceID isnt found
         */
-
-        // get a single device from api
         async showSingleDevice(context, deviceID) {
+            // axios get request at baseurl/devices/$deviceID
             await AxiosRequest.get(`/devices/${deviceID}`)
             .then( response => {
-                // firing the showSingleDevice() mutation
+                // calling the showSingleDevice() mutation, to commit the device
                 context.commit('saveSingleDevice', response.data);       
             }).catch( error => {
                
@@ -105,54 +123,89 @@ const store = createStore({
 
                 if(error.response.statusText === 'Not Found')
                 {
-                    context.commit('setErrorMessage', "Error: Device not Found" );      // firing the setErrorMessage mutation
+                    // calling the setErrorMessage() mutation, to commit it, so that 
+                    // it can be displayed in the BaseCard Component (ScannerPage)
+                    context.commit('setErrorMessage', "Error: Device not Found" ); 
                 }
                 console.error(error);
 
             })
         },
 
-        ////////// the function for the form
-        // update a the device from api
+        /*
+            -----------------Borrow/Return a Device------------------------
+            this here will a axios post request to borrow/return the device 
+            all the data from the form component will be send to the server 
+            and then it will update the database based on if you borrow/return
+            also we have to pass the context as a parameter here because else 
+            it wont treat the data parameter as a payload 
+        */
         async borrowDevice(context, data ) {
+            /* 
+                axios post request at baseurl/devices/borrow 
+                and the data is being passed in the body
+            */
             await AxiosRequest.post('/device/borrow', data )
             .then(response => {
-                context.commit('borrowDevice', response.data);             
+                // we dont commit the data here because we just get back a success message 
+                // or a error in worst case
+                console.log(response.data);
             }).catch(error => {
                 console.log(error);
             }) 
         },
    
-        // login  user with jwt token
+        /*
+            -----------------------User Login------------------------------
+            after scanning the nfc chip, we will send a axios post request to 
+            the server with the scanned chipID in the body, then the server will send us 
+            a jsonwebtoken, where the user information is stored, and this we save in our 
+            sessionstorage so that we can identify the user later,
+            we are doing it like this because as you now the store is reactive so whenever you 
+            reload the app it will also refresh the store so our logged user will be lost but 
+            with the user token we save it in our sessionstorage and it will be saved there till we
+            manually delete it(Logout) or the App is closed
+        */
         async Login(context, chipID ) {   
-
+            /* 
+                axios post request at baserl/users/login 
+                and the chipID is being passed in the body
+            */
             await AxiosRequest.post('/users/login', {"chipID": chipID})
                 .then((response) => {
-                console.log(response.data);
+                // save the token in the sessionstorage with the key as user
                 sessionStorage.setItem('user', response.data.token );
-
+                // saveUser() mutation, to commit the user
                 context.commit('saveUser', response.data.user);
             }).catch((error) => {
-                console.error(error.message);
                 console.error(error); 
             });  
 
         },
 
-        // for user logout
+        /*
+            -----------------------User Logout------------------------------
+            this is a simple function it will just call the saveUser() mutation 
+            to set the user as null and delete the user token from the sessionstorage
+        */
         userLogout(context) {
             context.commit('saveUser', null );
             sessionStorage.removeItem('user');
         },
 
-        // get all user 
+        /*
+            --------------------Get All the User------------------------
+            this action will be called when the admin is logged and wants to 
+            borrow/return a device for other users, it sends a axios get request 
+            to get all the users from the database and then commit it to our store
+        */
         async showAllUsers(context){
+            // axios get request at baseurl/users
             await AxiosRequest.get('/users')
                 .then((response) => {
-                    console.log(response.data);
+                    // saveAllUsers() mutation, commits all the retrieved users
                     context.commit('saveAllUsers', response.data);
                 }).catch((error) => {
-                    console.error(error.message);
                     console.error(error); 
                 })
         }
@@ -170,45 +223,38 @@ const store = createStore({
             state.devices = [...state.devices, ...fetchedDevices];
         },
 
-        // saving only one device
+        // for saving only one device
         saveSingleDevice(state, fetchedDevice) {
             state.singledevice = fetchedDevice;
         },
 
-        /////////// i think we will delete i tlater ////////////
-        borrowDevice(state, data){
-            console.log(data);
-        },
-
-        
-        // for setting the fetched user as our current user
+        // for saving the fetched user as our current logged user
         saveUser(state, fetchedUser){
-            console.log(fetchedUser);
             state.user = fetchedUser;
         },
 
-        // for getting the logged User from the jwt token
+        // for getting the logged User Information from the user token in our sessionStorage
         getLoggedUser(state) {
 
-            // get the token from localstorage
+            // get the user token from sessionstorage
             const token = sessionStorage.getItem("user");
             
             try {
                 // decode token here and attach to the user object
-                const decoded = VueJwtDecode.decode(token);
+                const decodeduser = VueJwtDecode.decode(token);
 
                 // delete the unnecessary properties
-                delete decoded.alg;
-                delete decoded.typ;
+                delete decodeduser.alg;
+                delete decodeduser.typ;
 
                 // save it in our store
-                state.user = decoded;      
+                state.user = decodeduser;      
             } catch (error) {
                 console.log(error, 'error from decoding token in getLoggedUser Mutation')
             } 
         }, 
 
-        // save all users 
+        // for saving all the users 
         saveAllUsers(state, fetchedUser) {
             console.log(fetchedUser);
             state.allusers = fetchedUser;
@@ -222,5 +268,6 @@ const store = createStore({
     },
 })
 
+// export the store
 export default store;
 
