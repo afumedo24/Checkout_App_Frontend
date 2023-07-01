@@ -1,10 +1,8 @@
 <template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button color="primary" @click="cancel">Cancel</ion-button>
-        </ion-buttons>
-        <ion-title>Qr-Code Scanner</ion-title>
+    <ion-header class="header">
+      <ion-toolbar class="toolbar">
+          <ion-button @click="cancel" class="btn">Cancel</ion-button>   
+        <ion-title class="title">Qr-Code Scanner</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -43,4 +41,37 @@
       },
     });
   </script>
+
+  <style scoped>
+  .header{
+    height: 9vh;
+  }
+
+  .toolbar{
+    --background: var(--ion-color-primary);
+    height: 100%;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.15)  0 2.6px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title{
+    font-size: 3vh;
+    font-weight: 600;
+  }
+
+  .btn{
+    --background: var( --ion-color-tertiary);
+    height: 5vh;
+    width: 12vh;
+    color: var(--ion-color-light);
+    margin-left: 1vh;
+    font-size: 2.6vh;
+    font-weight: 450;
+    --border-radius: 1vh;
+    --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+
+  </style>
 

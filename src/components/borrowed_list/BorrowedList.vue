@@ -43,6 +43,7 @@ ion-list {
 }
 .title{
   font-size: 4vh;
+  color: black;
   font-weight: bold;
   margin-left: 2vh;
   margin-bottom: 4vh;

@@ -1,6 +1,8 @@
 <template>
   <ion-page>
       <ion-content>
+
+      
           <user-login> 
           </user-login>
 
@@ -13,12 +15,13 @@
             </ion-label>
             
           </ion-button>
+        
       </ion-content>
     </ion-page>
 </template>
 
 <script>
-import { IonContent, IonPage,IonModal, IonHeader} from '@ionic/vue';
+import { IonContent, IonPage,IonModal, IonHeader, IonButton, modalController} from '@ionic/vue';
 import UserLogin from '@/components/login/UserLogin.vue';
 
 import BorrowedDeviceList from '../components/borrowed_list/BorrowedList.vue'
@@ -26,14 +29,19 @@ import BorrowedDeviceList from '../components/borrowed_list/BorrowedList.vue'
 import LoginModal from '@/components/loginmodal/LoginModal.vue';
 
 
+
 export default {
 components: {
-  IonPage, IonContent, IonModal, IonHeader, UserLogin, BorrowedDeviceList, LoginModal
+  IonPage, IonContent, IonModal, IonHeader, IonButton, UserLogin, BorrowedDeviceList, LoginModal
 },
 
-mounted() {
-  this.$store.commit('getLoggedUser');
-  this.$store.dispatch('showAllBorrowedDevicesByUser', this.loggedUser.fullname )
+  mounted() {
+    this.$store.commit('getLoggedUser');
+    this.$store.dispatch('showAllBorrowedDevicesByUser', this.loggedUser.fullname );
+
+    if(this.loggedUser == 0){
+      this.openModal();
+    }
 
   },
 
@@ -46,9 +54,24 @@ computed: {
     },
 },
 
-method: {
+methods: {
   createNewUser() {
     // send to nect page 
+  },
+
+  // the nfc chip modal at the start
+  async openModal() {
+    console.log("Modal opened")
+    const modal = await modalController.create({
+      component: LoginModal,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
   },
 }
 
@@ -64,7 +87,6 @@ method: {
   height: 13%;
   width: 95%;
   margin-left: 2.5%;
-  padding: 2vh;
   font-size: 3vh;
   font-weight: 800;
   text-align: center;
@@ -75,7 +97,7 @@ method: {
 }
 
 .create-user-btn:hover{
-  background-color: var(--ion-color-primary-tint);
+  background-color: var(--ion-color-tertiary-tint);
 }
 
 </style>

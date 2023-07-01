@@ -1,4 +1,5 @@
 <template>
+    
     <!-- this should display the information from the scanned device which is passed as a property -->
     <ion-card class="success-card">
         <ion-img :alt="device.name" :src="device.image" />

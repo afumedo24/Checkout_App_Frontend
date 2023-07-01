@@ -32,6 +32,7 @@
                     </ion-select-option>           
                 </ion-select>
             </ion-item>
+
             <!-- 
                  and if the loggedUser is not admin this part is rendered 
                  and we just display the current loggedUsers fullname  
@@ -53,28 +54,31 @@
             
         </ion-card-content>
         <div class="form-btn-container">
-            <ion-button @click.prevent="submitForm" class="send-form-btn"> Send </ion-button>
+            <ion-button @click="submitForm"  class="send-form-btn" id="btn"> Send </ion-button>
         </div>
+
     </ion-card>
             
   </template>
   
 <script>
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList, IonSelect, IonSelectOption } from '@ionic/vue';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList, IonSelect, IonSelectOption, } from '@ionic/vue';
 
 // imported for a better Date Format
-import moment from 'moment';        
+import moment from 'moment';    
+
+
  
   
 export default {
   components: {
-    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList, IonSelect, IonSelectOption
+    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList, IonSelect, IonSelectOption, 
   },    
-  data() {   
+  data() {  
     return {
         // in this variable the user is stored who wants to borrow the device
         // it could also be selected from the admin or its just the currently loggedUser
-        selectedUser: ''
+        selectedUser: '',
     }
   },
 
@@ -122,7 +126,7 @@ export default {
         
         // this doesnt work
         this.$router.push('/borrow/form/success'); 
-    }
+    },
   },
   computed: {
     
@@ -158,7 +162,6 @@ export default {
         const date = moment();
         return date.format('D-MM-YYYY')
     },
-
   }
 } 
   
@@ -248,7 +251,7 @@ ion-select::part(text) {
     font-size: 2.3vh;
     font-weight: 500;
     margin-left: 3vh; 
-  }
+}
 
 /*
 ion-select {
@@ -264,6 +267,23 @@ ion-select::part(icon) {
     margin-left: 0%;
 }  
 */
+
+.custom-alert{
+    --height: 40%;
+    --width: 100%;
+    --max-width: 60%;
+    --margin-left: 20%;
+}
+
+ion-alert::part(header){
+  font-size: 5vh;
+}
+.div{
+    text-align: center;
+    font-size: 4vh;
+    color: red;
+    font-weight: 700;
+}
 </style>
   
   

@@ -61,6 +61,7 @@ import { IonContent, IonPage,IonModal, IonHeader,IonDatetime, IonCard, IonCardCo
   */
   mounted() {
     this.$store.commit('getLoggedUser');
+
   },
 
   // here we are accessing our user which is saved in the store with the getter getUser()
