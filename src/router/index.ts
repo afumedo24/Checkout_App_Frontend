@@ -32,10 +32,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/ListPage.vue'),
       },
       {
-        path: '/check',
-        component: () => import('../views/AdminPage.vue')
-      },
-      {
         path: '/borrow/form',
         component: () => import('../views/FormPage.vue')
       },
