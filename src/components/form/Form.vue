@@ -1,33 +1,49 @@
 <template>
+    <!-- 
+        this is the structure for the form component 
+        everything is in a ion card, then we define the heder
+    -->
     <ion-card class="form-card">
 
         <ion-card-header>
-            <ion-card-title class="form-title"> Borrow Device  </ion-card-title>
+            <!-- 
+                here we check the device status to get the appropriat title 
+                if its available then it displays "Borrow ..." else "Return ..."
+            -->
+            <ion-card-title v-if="this.device.status === 'Available'" class="form-title"> Borrow Device  </ion-card-title>
+            
+            <!-- this will render when the statement aboce is false -->
+            <ion-card-title v-else class="form-title"> Return Device  </ion-card-title>
             <ion-card-subtitle class="form-subtitle">  Please Check your Data before submitting! </ion-card-subtitle>
         </ion-card-header>
         
 
         <ion-card-content>
 
+            <!-- the device field -->
             <ion-item>
                 <h2 class="form-item-title"> Device  </h2>
                 <ion-label class="form-item-text"> {{ device.name }} </ion-label>
             </ion-item>
 
 
-            <!-- here we check if the loggedUser is admin, and if he is 
-                 then this part with the dropdown option is displayed where 
-                 all the other users are listed 
-                 the admin can choose other users and borrow devices for them
+            <!-- 
+                the User field  
+                here we check if the loggedUser is admin, and if he is 
+                then this part with the dropdown option is displayed where 
+                all the other users are listed 
+                the admin can choose other users and borrow devices for them
             -->
             <ion-item v-if="loggedUser.is_admin == 1">
-                <h2 class="form-item-title"> User </h2>                
+                <h2 class="form-item-title"> User </h2>    
+                <!-- this is the dropdown/select element where all users are listed -->            
                 <ion-select v-model="selectedUser" :value="selectedUser" aria-label="Select a User" slot="end">
-                    <!-- put here the logic for user name -->
+                    <!-- we iterate through the users object to display all the Fullname of the users -->
                     <ion-select-option 
                         v-for="user in users"
                         :key="user.id"
-                        :value="user.fullname">                           
+                        :value="user.fullname">    
+                        <!-- display the fullname of the users -->                      
                                 {{  user.fullname }}                       
                     </ion-select-option>           
                 </ion-select>
@@ -42,18 +58,25 @@
                 <ion-label class="form-item-text"> {{ selectedUser }}</ion-label>
             </ion-item>
 
+            <!-- the status field -->
             <ion-item>
                 <h2 class="form-item-title"> Status </h2>
                 <ion-label class="form-item-text"> {{ newstatus }} </ion-label>
             </ion-item>
 
+            <!-- the date field -->
             <ion-item>
                 <h2 class="form-item-title"> Date </h2>
                 <ion-label class="form-item-text"> {{ currentDate }}  </ion-label>
             </ion-item>
             
         </ion-card-content>
+
         <div class="form-btn-container">
+            <!-- 
+                we perform the submitForm() function which sends the form to the server and opens
+                up a modal for verification
+            -->
             <ion-button @click="submitForm"  class="send-form-btn" id="btn"> Send </ion-button>
         </div>
 
@@ -63,10 +86,9 @@
   
 <script>
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList, IonSelect, IonSelectOption, modalController} from '@ionic/vue';
-
 // imported for a better Date Format
 import moment from 'moment';    
-
+// imported the SuccessCard from the components for the Modal
 import SuccessfullCard from '../success/SuccessfullCard.vue';
  
   
@@ -118,15 +140,13 @@ export default {
             date: this.currentDate
         };
 
-        console.log(data);
-
-        // call the borrowDevice() action from the store with the object from above 
+        // call the borrowDevice() action from the store with the data object from above 
         // to send the data to the server 
         this.$store.dispatch('borrowDevice', data);
         
+        // after sending the Data, we open a Modal, which is more like verification that we 
+        // borrowed/returned a device 
         this.openModal();
-        // this doesnt work
-        //this.$router.push('/borrow/form/success'); 
     },
   },
   computed: {
@@ -164,17 +184,30 @@ export default {
         return date.format('D-MM-YYYY')
     },
 
-     // the nfc chip modal at the start
+
+    /*
+        here we create a Modal with this function and the SuccessfullCard 
+        is the passed down as a component, so it will render the SuccessfullPage
+        on this Modal
+    */
     async openModal() {
-        console.log("Modal opened")
+        // create a modal with the SuccessfullCard as the component
         const modal = await modalController.create({
-        component: SuccessfullCard,
+            component: SuccessfullCard,
         });
+        // open/present it on the screen
         modal.present();
 
-        const { data, role } = await modal.onWillDismiss();
+        /*  
+            we wait till the modal is closed and then we destructure the 
+            role Variable which is emited from the SuccesfullCard component
+            and if the role is confirm we send our User to the Home Page
+        */
+        const { role } = await modal.onWillDismiss();
 
+        // check role 
         if (role === 'confirm') {
+            // redirect us to the Home Page
             this.$router.push('/home');
         }
   },

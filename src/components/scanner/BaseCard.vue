@@ -24,6 +24,7 @@
 <script>
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonLabel } from '@ionic/vue'
 export default {
+    // the message as a prop
     props: [ 'message' ],
     components: {
         IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonLabel

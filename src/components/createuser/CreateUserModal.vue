@@ -1,25 +1,34 @@
 <template>
+  <!-- this will be the form to create a User -->
+
+  <!-- the header -->
     <ion-header class="header">
       <ion-toolbar class="toolbar"> 
+        <!-- a Button to cancel the Process -->
           <ion-button  @click="cancel" slot="start" class="btn">Cancel</ion-button>
         <ion-title class="title">Create a new User</ion-title>
       </ion-toolbar>
     </ion-header>
+
     <ion-content class="ion-padding">
       <ion-card class="card">
         <ion-card-title class="label"> Fill out the field </ion-card-title>
+
+        <!-- the input field for the Username (ChipID), which is binded to the data.username -->
         <ion-item class="item">
-        <ion-input label-placement="stacked" label="Enter the Username" v-model="data.username" placeholder="Username"></ion-input>
-      </ion-item>
+          <ion-input label-placement="stacked" label="Enter the Username" v-model="data.username" placeholder="Username"></ion-input>
+        </ion-item>
 
-      <ion-item class="item">
-        <ion-input label-placement="stacked" label="Enter the Fullname" v-model="data.fullname" placeholder="Fullname"></ion-input>
-      </ion-item>
+        <!-- the input field for the Fullname of the new User,  which is binded to the data.fullname -->  
+        <ion-item class="item">
+          <ion-input label-placement="stacked" label="Enter the Fullname" v-model="data.fullname" placeholder="Fullname"></ion-input>
+        </ion-item>
 
-
-      <ion-item class="item">
-        <ion-checkbox v-model="data.is_admin"> Is User is admin? </ion-checkbox>
-      </ion-item>
+        <!-- to set the admin rights of the new User,  which is binded to the data.is_admin -->  
+        <ion-item class="item">
+          <ion-checkbox v-model="data.is_admin"> Is User is admin? </ion-checkbox>
+        </ion-item>
+      <!-- a button that closes the modal and sends the data to the modalcontroller -->
       <ion-button expand="block" @click="confirm" :strong="true" class="confirm"> Create User </ion-button>
     </ion-card>
     </ion-content>
@@ -40,10 +49,10 @@
     import { defineComponent } from 'vue';
   
     export default defineComponent({
-      name: 'Modal',
       components: { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonInput, IonCheckbox },
       data() {
         return { 
+          // the neccessary data of a new User for the request 
             data: { 
                     username: '', 
                     fullname: '', 
@@ -52,9 +61,13 @@
             }
       },
       methods: {
+        // it will close the modal and pass null as the data with the role cancel 
+        // so that our modalcontroller knows how to handle this case
         cancel() {
           return modalController.dismiss(null, 'cancel');
         },
+        // it will also close the modal and pass the new User data with the role confirm 
+        // so that the modalcontroller knows that everything went fine
         confirm() {
           return modalController.dismiss(this.data, 'confirm');
         },

@@ -5,14 +5,20 @@
       the device status also a button to borrow the device
   -->
     <ion-item>
+      <!-- the image for the displayed device -->
       <ion-thumbnail slot="start"> 
         <ion-img :src="device.image" :alt="device.name"/>
       </ion-thumbnail>
+      <!-- the name for the displayed device -->
       <ion-label>
         <h2> {{ device.name }} </h2>
         <!-- here the class is dynamically assigned so that we get the appropriate color -->
         <p :class="device.status == 'Available' ? 'status-green' : 'status-red'"> {{ device.status }}</p>
       </ion-label>
+      <!-- 
+          we check the device.status to render the right button 
+          if available, then its a Button with Borrow Text, else with Return
+      -->
       <ion-button v-if="device.status === 'Available'" @click="borrowFunction()" class="borrow-btn"> Borrow </ion-button>
       <ion-button v-else @click="borrowFunction()"> Return </ion-button>
     </ion-item>
@@ -22,6 +28,7 @@
 import { IonItem, IonLabel, IonThumbnail, IonImg } from '@ionic/vue';
 
 export default {
+  // device as a prop
   props: ['device'],
   components: {
     IonImg, 

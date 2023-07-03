@@ -47,6 +47,7 @@ import {
 import axios from 'axios';
 
 export default {
+    // device passed as a prop
     props: [ 'device' ],
     components: {
         IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonButton, IonLabel, IonToolbar, axios

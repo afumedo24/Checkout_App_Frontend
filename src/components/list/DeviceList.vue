@@ -1,6 +1,7 @@
 <template>
 <!-- here is the list component -->
   <ion-list>
+    <!-- the list tilte is passed as prop so that we can set dynamically -->
     <h2 class="title"> {{ this.listtitle }} </h2>
     <!--
         our custom structure for every item in the list 
@@ -20,6 +21,7 @@ import { IonList } from '@ionic/vue'
 import DeviceListItem from './DeviceListItem.vue'
 
 export default {
+  // devices and listtitle prop
   props: [ 'devices', 'listtitle' ],
   components: { IonList, DeviceListItem },
 

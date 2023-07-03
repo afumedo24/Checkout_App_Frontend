@@ -1,6 +1,8 @@
 <template>
+    <!-- this is the Login Modal where yuo scann the chip to identify the user -->
     <ion-header class="header">
         <ion-toolbar class="toolbar">
+            <!-- a button that cancels the Process -->
                 <ion-button @click="cancel" class="btn" slot="start">Cancel</ion-button>
           <ion-title class="title">Scan your NFC chip</ion-title>
         </ion-toolbar>
@@ -25,22 +27,23 @@ export default {
     },
     
     methods: {
-
+    // it will close the modal and pass null as the data with the role cancel 
+    // so that our modalcontroller knows what do in that case
     cancel() {
         return modalController.dismiss(null, 'cancel');
     },
 
-    onDecode(result) {
-        return modalController.dismiss(result, 'confirm');
-    },
-/*
-      // Function to handle NFC scanning and data processing
-      handleNfcScanning() {
+    // it will also close the modal and pass the chipID with the role confirm 
+    // so that the modalcontroller knows that everything went fine
+    /*
         // Implement NFC scanning logic using the USB NFC chip scanner
         // Process the scanned NFC data (e.g., extract the username)
         // Close the modal programmatically
-        this.isScanned = false;
-      },*/
+    */
+    onDecode(result) {
+        return modalController.dismiss(result, 'confirm');
+    },
+
    
     }
 }
