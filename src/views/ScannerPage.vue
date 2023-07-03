@@ -47,7 +47,7 @@ export default {
 
     methods: {
         
-        // opens the ScanModal for scanning the Qr-Code
+        // opens the ScanModal  for scanning the Qr-Code
         async openModal() {
             const modal = await modalController.create({
                 component: ScanModal,

@@ -6,4 +6,5 @@ const AxiosRequest = axios.create({
     baseURL: 'http://localhost:8300/api'
 })
 
+// export it
 export default AxiosRequest;

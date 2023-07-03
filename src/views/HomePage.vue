@@ -5,15 +5,15 @@
       
           <user-login> 
           </user-login>
+         
 
-          <borrowed-device-list v-if="loggedUser != 0" :devices="borrowedDevices" >
-          </borrowed-device-list>
+          <device-list v-if="loggedUser != 0" :listtitle="title" :devices="borrowedDevices"></device-list>
 
-          <ion-button v-if="loggedUser.is_admin === 1" class="create-user-btn" @click="createNewUser">
+
+          <ion-button v-if="loggedUser.is_admin === 1" class="create-user-btn" @click="openCreateUserModal">
             <ion-label> 
               create a new User?
             </ion-label>
-            
           </ion-button>
         
       </ion-content>
@@ -23,16 +23,25 @@
 <script>
 import { IonContent, IonPage,IonModal, IonHeader, IonButton, modalController} from '@ionic/vue';
 import UserLogin from '@/components/login/UserLogin.vue';
+import DeviceList from '@/components/list/DeviceList.vue';
 
-import BorrowedDeviceList from '../components/borrowed_list/BorrowedList.vue'
 
 import LoginModal from '@/components/loginmodal/LoginModal.vue';
+
+import CreateUserModal from '../components/createuser/CreateUserModal.vue'
 
 
 
 export default {
 components: {
-  IonPage, IonContent, IonModal, IonHeader, IonButton, UserLogin, BorrowedDeviceList, LoginModal
+  IonPage, IonContent, IonModal, IonHeader, IonButton, UserLogin, LoginModal, CreateUserModal, DeviceList
+},
+data() 
+{
+  const title = 'Your Borrowed Devices';
+  return {
+    title
+  }
 },
 
   mounted() {
@@ -70,9 +79,24 @@ methods: {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      this.message = `Hello, ${data}!`;
+      this.$store.dispatch('Login', data );
+      this.$router.push('/home');
     }
   },
+
+  async openCreateUserModal() {
+        const modal = await modalController.create({
+          component: CreateUserModal,
+        });
+        modal.present();
+
+        const { data, role } = await modal.onWillDismiss();
+
+        if (role === 'confirm') {
+          this.$store.dispatch('createUser', data );
+        }
+      },
+  
 }
 
 
@@ -87,6 +111,7 @@ methods: {
   height: 13%;
   width: 95%;
   margin-left: 2.5%;
+  margin-top: 2vh;
   font-size: 3vh;
   font-weight: 800;
   text-align: center;

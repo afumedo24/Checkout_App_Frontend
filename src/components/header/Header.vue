@@ -10,7 +10,10 @@
               if yes, then it displays the button
               if not, then isnt
         -->
-        <ion-button v-if="loggedUser != 0" slot="end" @click="this.$store.dispatch('userLogout')" class="logout-button"> LOGOUT </ion-button>
+        <ion-button v-if="loggedUser != 0" slot="end" @click="this.$store.dispatch('userLogout')" 
+                    href="/home" class="logout-button"> 
+          LOGOUT 
+        </ion-button>
 
     </ion-toolbar>
     
@@ -50,7 +53,7 @@ ion-avatar {
 }
 
 ion-title{
-    color: var(--ion-color-tertiary);
+    color: var(--ion-color-light);
     font-size: 3.3vh;
     font-weight: 550;
 }

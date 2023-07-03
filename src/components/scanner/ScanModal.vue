@@ -1,7 +1,7 @@
 <template>
     <ion-header class="header">
       <ion-toolbar class="toolbar">
-          <ion-button @click="cancel" class="btn">Cancel</ion-button>   
+          <ion-button @click="cancel" class="btn" slot="start">Cancel</ion-button>   
         <ion-title class="title">Qr-Code Scanner</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -57,8 +57,10 @@
   }
 
   .title{
+    color:  var(--ion-color-light);
     font-size: 3vh;
     font-weight: 600;
+    margin-left: 2vh;
   }
 
   .btn{
@@ -66,8 +68,8 @@
     height: 5vh;
     width: 12vh;
     color: var(--ion-color-light);
-    margin-left: 1vh;
-    font-size: 2.6vh;
+    margin-left: 3vh;
+    font-size: 2vh;
     font-weight: 450;
     --border-radius: 1vh;
     --box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;

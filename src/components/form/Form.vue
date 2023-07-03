@@ -62,17 +62,17 @@
   </template>
   
 <script>
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList, IonSelect, IonSelectOption, } from '@ionic/vue';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList, IonSelect, IonSelectOption, modalController} from '@ionic/vue';
 
 // imported for a better Date Format
 import moment from 'moment';    
 
-
+import SuccessfullCard from '../success/SuccessfullCard.vue';
  
   
 export default {
   components: {
-    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList, IonSelect, IonSelectOption, 
+    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonList, IonSelect, IonSelectOption, SuccessfullCard,
   },    
   data() {  
     return {
@@ -124,8 +124,9 @@ export default {
         // to send the data to the server 
         this.$store.dispatch('borrowDevice', data);
         
+        this.openModal();
         // this doesnt work
-        this.$router.push('/borrow/form/success'); 
+        //this.$router.push('/borrow/form/success'); 
     },
   },
   computed: {
@@ -162,6 +163,21 @@ export default {
         const date = moment();
         return date.format('D-MM-YYYY')
     },
+
+     // the nfc chip modal at the start
+    async openModal() {
+        console.log("Modal opened")
+        const modal = await modalController.create({
+        component: SuccessfullCard,
+        });
+        modal.present();
+
+        const { data, role } = await modal.onWillDismiss();
+
+        if (role === 'confirm') {
+            this.$router.push('/home');
+        }
+  },
   }
 } 
   

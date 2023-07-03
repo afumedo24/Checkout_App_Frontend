@@ -1,7 +1,7 @@
 <template>
 <!-- here is the list component -->
   <ion-list>
-    <h2 class="title"> List of all Devices </h2>
+    <h2 class="title"> {{ this.listtitle }} </h2>
     <!--
         our custom structure for every item in the list 
         we iterate like normal for-loop through all devices, 
@@ -20,7 +20,7 @@ import { IonList } from '@ionic/vue'
 import DeviceListItem from './DeviceListItem.vue'
 
 export default {
-  props: [ 'devices' ],
+  props: [ 'devices', 'listtitle' ],
   components: { IonList, DeviceListItem },
 
 }
@@ -40,6 +40,7 @@ ion-list {
   
 }
 .title{
+  color: black;
   font-size: 4vh;
   font-weight: bold;
   margin-left: 2vh;

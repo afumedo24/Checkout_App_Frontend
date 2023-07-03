@@ -1,10 +1,10 @@
 <template>
     <!-- 
-        this component is for the verfication page when the borrow/returnung Process is successful
-        also the device is passed down as a property
+        this component is for the verfication page when the borrow/return Process is successful
+        also the device retrieved from the store
     -->
     <ion-card>
-        <img :src="device.image" :alt="device.name"/> 
+        <ion-img :src="device.image" :alt="device.name"/> 
 
         <!-- if we borrowed the device, it will render this part with green text -->
         <ion-card-header v-if="device.status === 'Available' ">
@@ -17,15 +17,15 @@
 
         <!-- and on returning the device, it will render this part with orange text -->
         <ion-card-header v-else>
-            <ion-card-title class="give-back-title"> {{ device.name }}  was brought back successfully </ion-card-title>
+            <ion-card-title class="give-back-title"> {{ device.name }}  returned  back successfully </ion-card-title>
             <ion-card-subtitle> 
-                You gave {{ device.name }}  successfully back! Click on the Button to go back to 
+                You returned {{ device.name }}  successfully back! Click on the Button to go back to 
                 the HomePage
             </ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
-            <!-- this button will bring us back to the HomPage -->
+            <!-- this button will close the Modal Page -->
         <ion-button @click="goBackToHome()">
             <ion-label> Go to HomePage </ion-label>
         </ion-button>
@@ -34,19 +34,28 @@
 </template>
 
 <script>
-import { IonButton, IonCard, IonCardHeader, IonImg, IonCardTitle, IonCardContent } from '@ionic/vue';
+import { IonButton, IonCard, IonCardHeader, IonImg, IonCardTitle, IonCardContent, modalController } from '@ionic/vue';
 
 export default {
-    props: [ 'device' ],
     components: {
         IonButton, IonCard, IonCardTitle, IonCardContent, IonCardHeader, IonImg, 
     },
     methods: {
-        // just redirects us to the give url
+        // closes the modal and sends a confirm message to the parent component
         goBackToHome() {
-            this.$router.push("/");
+            return modalController.dismiss(null, 'confirm');
         }
 
+    },
+    computed: {
+        /*
+            the device() property here, calls/returns us the state of the 
+            stored device in our store by calling the getter getDevice(),
+            we can use the device() as a normal variable
+        */
+        device() {
+            return this.$store.getters.getDevice;
+        }
     }
 
 }
@@ -55,9 +64,10 @@ export default {
 <style scoped>
 
 ion-card{
-    width: 90%;
-    margin-top: 10vh;
-    margin-left: 5%;
+    width: 95%;
+    height: 90%;
+    margin-top: 5%;
+    margin-left: 2.5%;
     padding: 2vh;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     
@@ -66,18 +76,23 @@ ion-card{
 ion-card-header{
     justify-items: center;
     align-items: center;
+    display: bloc;;
 }
 
 ion-img {
-    width: 25vh;
-    margin-top: 10vh;
-    margin-bottom: 5vh;
+    width: 60%;
+    justify-content: center;
+    margin: auto;
     object-fit: scale-down;
 }
 ion-card-title{
     font-size: 4vh;
     font-weight: bolder;
     text-align: center;
+}
+
+ion-card-subtitle {
+
 }
 
 .borrow-title {

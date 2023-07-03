@@ -53,7 +53,7 @@ const store = createStore({
         getDevice(state){
             return JSON.parse(JSON.stringify(state.singledevice));
         },
-
+        // give all borrowed devices of a User back
         getBorrowedDevice(state){
             return JSON.parse(JSON.stringify(state.borrowdevice));
         },
@@ -113,7 +113,7 @@ const store = createStore({
             and also we give the user  feedback if the deviceID isnt found
         */
         async showSingleDevice(context, deviceID) {
-            // axios get request at baseurl/devices/$deviceID
+            // axios get request at baseurl/devices/deviceID
             await AxiosRequest.get(`/devices/${deviceID}`)
             .then( response => {
                 // calling the showSingleDevice() mutation, to commit the device
@@ -152,7 +152,7 @@ const store = createStore({
             */
             await AxiosRequest.post('/device/borrow', data )
             .then(response => {
-                // we dont commit the data here because we just get a success message as a answer
+                // we dont commit anything here because we just get a success message back
                 // or a error in worst case
                 console.log(response.data);
             }).catch(error => {
@@ -161,11 +161,15 @@ const store = createStore({
         },
         /*
             ---------------show All Borrowed Device by User------------------
-
+            with this action you send a axios get request to the server to fetch
+            all borrowed devices for a user from the database and store them in the
+            and then we save them with the mutation saveBorrowedDevices() in our store
         */
         async showAllBorrowedDevicesByUser(context, name) {
+            // axios get request at baseurl/users/borrowed/username
             await AxiosRequest.get(`/users/borrowed/${name}`)
             .then( response => {
+                // calling the saveBorrowedDevices() mutation, to commit the retrieved data
                 context.commit('saveBorrowedDevices', response.data);
             }).catch( error => {
                 console.log(error);
@@ -185,7 +189,7 @@ const store = createStore({
         */
         async Login(context, chipID ) {   
             /* 
-                axios post request at baserl/users/login 
+                axios post request at baseurl/users/login 
                 and the chipID is being passed in the body
             */
             await AxiosRequest.post('/users/login', {"chipID": chipID})
@@ -227,11 +231,17 @@ const store = createStore({
                 })
         },
 
-        // ----create User-------
+         /*
+            --------------------create User------------------------
+            this action is also a admin feature, it sends a axios post 
+            request with data as payload to the server to crate a new user 
+        */
         async createUser(context, data) {
+            // axios get request at baseurl/users/create
             await AxiosRequest.post('/users/create', data)
             .then((response) => {
-                // 
+                // we dont commit anything here because we just get a success message back
+                // or a error in worst case
                 console.log(response.data);
             }).catch((error) => {
                 console.error(error); 
@@ -248,7 +258,8 @@ const store = createStore({
 
         // for saving all fetched devices to the our store
         saveAllDevices(state, fetchedDevices) {
-            state.devices = [...state.devices, ...fetchedDevices];
+            //state.devices = [...state.devices, ...fetchedDevices];
+            state.devices = fetchedDevices;
         },
 
         // for saving only one device
@@ -256,44 +267,41 @@ const store = createStore({
             state.singledevice = fetchedDevice;
         },
 
-        // for saving all fetched devices to the our store
+        // for saving all fetched borrowed devices for a user to the our store
         saveBorrowedDevices(state, fetchedDevices) {
             state.borrowdevice = fetchedDevices;
         },
-
 
         // for saving the fetched user as our current logged user
         saveUser(state, fetchedUser){
             state.user = fetchedUser;
         },
 
-        // for getting the logged User Information from the user token in our sessionStorage
+        // for getting the logged User Information from the user token in the sessionStorage
         getLoggedUser(state) {
 
             // get the user token from sessionstorage
             const token = sessionStorage.getItem("user");
             
             try {
-                // decode token here and attach to the user object
+                // decode token here and attach it to the user object
                 const decodeduser = VueJwtDecode.decode(token);
 
                 // delete the unnecessary properties
                 delete decodeduser.alg;
                 delete decodeduser.typ;
 
-                // save it in our store
+                // save it again in our store
                 state.user = decodeduser;      
             } catch (error) {
                 console.log(error, 'error from decoding token in getLoggedUser Mutation')
             } 
         }, 
 
-        // for saving all the users 
+        // for saving all the users (when admin is logged)
         saveAllUsers(state, fetchedUser) {
-            console.log(fetchedUser);
             state.allusers = fetchedUser;
         },
-
 
         // for setting error messages in our store
         setErrorMessage(state, message) {
