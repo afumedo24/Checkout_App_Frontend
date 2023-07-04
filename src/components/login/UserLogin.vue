@@ -1,10 +1,10 @@
 <template>
   <ion-card-content  v-if="this.loggedUser != 0"> 
       <ion-list  class="user-login">
-          <ion-item>
-                <h2 class="waviy">
+          <ion-item style="text-align: center; align-items: center;">
+                <h1 >
                   <span style="--i:1;" > Welcome  {{ loggedUser.fullname }}</span>
-                </h2>
+                </h1>
           </ion-item>
       </ion-list>
   </ion-card-content>
@@ -190,11 +190,8 @@ align-content: center;
 h1 {
   font-family: 'Arial', sans-serif;
   font-size: 4rem;
-  color: #ffffff;
-  text-align: center;
-  background-color: #1e90ff;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 5px;
+  border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
