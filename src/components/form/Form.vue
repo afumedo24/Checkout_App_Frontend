@@ -89,7 +89,7 @@ import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, 
 // imported for a better Date Format
 import moment from 'moment';    
 // imported the SuccessCard from the components for the Modal
-import SuccessfullCard from '../success/SuccessfullCard.vue';
+import SuccessfullCard from '../success/SuccessfullCardModal.vue';
  
   
 export default {

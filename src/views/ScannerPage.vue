@@ -15,6 +15,8 @@
                 :device="Device">
              </scanned-device-card>
 
+             <h1> this is the scanned device {{  test  }} </h1>
+
         </ion-content>
       </ion-page>
 </template>
@@ -34,7 +36,9 @@ export default {
     components: {
          IonContent, modalController, IonPage, ScanModal, ScannedDeviceCard, BaseCard, 
     },
-
+data(){
+return { test: '' };
+},
     // everytime we mount this Page to the DOM it will open the ScanModal
     mounted() {
         this.openModal();
@@ -86,6 +90,7 @@ export default {
                 // dispatch showSingleDevice() with the scanned QR-Code to 
                 // fetch the device from the Server and save it in our store
                 this.$store.dispatch('showSingleDevice', data.result);
+                this.test = data.result;
             }
         },
     },

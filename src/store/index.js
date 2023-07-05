@@ -93,6 +93,7 @@ const store = createStore({
             the mutation showAllDevices() to commit to our store 
             with the fetched devices in response.data
         */
+
         async getAllDevices(context) {
             // axios get request at baseurl/devices
             await AxiosRequest.get('/devices')            

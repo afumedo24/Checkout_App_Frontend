@@ -1,7 +1,8 @@
 {
-  "name": "app",
+  "name": "Checkout App",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {
+    }
   },
   "type": "vue-vite"
-}
+  }
